@@ -879,6 +879,126 @@
       border-color: var(--cream);
     }
 
+    /* Giving Back Section */
+    .giving-back {
+      padding: 10rem 3rem;
+      background: linear-gradient(180deg, transparent, rgba(201, 162, 39, 0.05), transparent);
+      position: relative;
+    }
+
+    .giving-container {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .giving-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .charity-icon {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 2rem;
+      animation: gentlePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    .charity-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--smoke);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.5rem;
+    }
+
+    .giving-content h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .giving-description {
+      font-size: 1.1rem;
+      color: var(--smoke);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .giving-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .giving-feature {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .giving-feature svg {
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .giving-feature h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .giving-feature p {
+      font-size: 0.9rem;
+      color: var(--smoke);
+      line-height: 1.6;
+    }
+
+    .giving-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .giving-cta:hover {
+      color: var(--cream);
+    }
+
+    .giving-cta svg {
+      transition: transform 0.3s ease;
+    }
+
+    .giving-cta:hover svg {
+      transform: translateX(4px);
+    }
+
     /* CTA Section */
     .cta {
       padding: 10rem 3rem;
@@ -1090,6 +1210,29 @@
       .pricing-card.featured:hover {
         transform: translateY(-8px);
       }
+
+      .giving-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+
+      .giving-visual {
+        order: -1;
+      }
+
+      .charity-icon {
+        width: 120px;
+        height: 120px;
+      }
+
+      .stat-number {
+        font-size: 3rem;
+      }
+
+      .giving-features {
+        text-align: left;
+      }
     }
 
     @media (max-width: 768px) {
@@ -1150,6 +1293,7 @@
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
       <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="events.html">Events</a></li>
     </ul>
     <button class="nav-cta">Get Started</button>
   </nav>
@@ -1391,6 +1535,74 @@
     </div>
   </section>
 
+  <!-- Giving Back -->
+  <section class="giving-back" id="giving-back">
+    <div class="giving-container">
+      <div class="giving-visual">
+        <div class="charity-icon">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="38" stroke="var(--gold)" stroke-width="1" opacity="0.3"/>
+            <circle cx="40" cy="40" r="28" stroke="var(--gold)" stroke-width="1" opacity="0.5"/>
+            <path d="M40 20C40 20 25 32 25 42C25 52 32 58 40 58C48 58 55 52 55 42C55 32 40 20 40 20Z" fill="none" stroke="var(--gold)" stroke-width="2"/>
+            <path d="M40 30V50M32 40H48" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="charity-stat">
+          <span class="stat-number">10%</span>
+          <span class="stat-label">of proceeds donated</span>
+        </div>
+      </div>
+      
+      <div class="giving-content">
+        <div class="section-tag">
+          <span>Art for Good</span>
+        </div>
+        <h2>Technology with <em class="serif-italic">purpose</em></h2>
+        <p class="giving-description">
+          We believe art has the power to change lives. That's why 10% of all Meta Gallery proceeds go directly to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
+        </p>
+        <div class="giving-features">
+          <div class="giving-feature">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+            <div>
+              <h4>Arts Education</h4>
+              <p>Funding school programs, workshops, and museum visits for young people</p>
+            </div>
+          </div>
+          <div class="giving-feature">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+            <div>
+              <h4>Charity Events</h4>
+              <p>Regular fundraising exhibitions and AR experiences for causes that matter</p>
+            </div>
+          </div>
+          <div class="giving-feature">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <div>
+              <h4>Community Access</h4>
+              <p>Free Meta Gallery access for non-profit galleries and community spaces</p>
+            </div>
+          </div>
+        </div>
+        <a href="events.html" class="btn-secondary giving-cta">
+          <span>View Upcoming Charity Events</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section class="cta">
     <div class="cta-content">
@@ -1410,7 +1622,8 @@
     <div class="footer-content">
       <div class="footer-logo">Meta Gallery</div>
       <ul class="footer-links">
-        <li><a href="#">Features</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="events.html">Events</a></li>
         <li><a href="#">Documentation</a></li>
         <li><a href="#">Contact</a></li>
         <li><a href="#">Privacy</a></li>
