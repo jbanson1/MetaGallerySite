@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta Gallery — AR Art Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0a0a;
+      --cream: #f8f6f1;
+      --gold: #c9a227;
+      --gold-dim: #9a7b1a;
+      --smoke: #6b6b6b;
+      --glass: rgba(248, 246, 241, 0.03);
+      --border: rgba(201, 162, 39, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--ink);
+      color: var(--cream);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .serif-italic {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      mix-blend-mode: difference;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.75rem 1.75rem;
+      background: transparent;
+      border: 1px solid var(--cream);
+      color: var(--cream);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-tag span {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.4s;
+    }
+
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero h1 .line span {
+      display: inline-block;
+    }
+
+    .hero h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-description {
+      font-size: 1.15rem;
+      color: var(--smoke);
+      max-width: 480px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 2.5rem;
+      background: var(--gold);
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--cream);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .btn-primary:hover::before {
+      transform: translateX(0);
+    }
+
+    .btn-primary span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary svg {
+      position: relative;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 0;
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      color: var(--gold);
+    }
+
+    .btn-secondary svg {
+      width: 40px;
+      height: 40px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      padding: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover svg {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+      height: 600px;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      animation-delay: 0.5s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    /* Smart Glasses */
+    .hero-glasses {
+      position: relative;
+      z-index: 3;
+      animation: floatGlasses 4s ease-in-out infinite;
+    }
+
+    .glasses-svg {
+      width: 340px;
+      height: auto;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+    }
+
+    .lens {
+      transition: all 0.3s ease;
+    }
+
+    .ar-overlay {
+      opacity: 0;
+      animation: arReveal 3s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+
+    @keyframes arReveal {
+      0%, 20%, 100% { opacity: 0; }
+      30%, 90% { opacity: 1; }
+    }
+
+    .audio-bars {
+      animation: audioPulse 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes audioPulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .led-indicator {
+      animation: ledBlink 2s ease-in-out infinite;
+    }
+
+    @keyframes ledBlink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0.3; }
+    }
+
+    @keyframes floatGlasses {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(-10px) rotate(0deg); }
+    }
+
+    .glasses-label,
+    .phone-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      margin-top: 1rem;
+    }
+
+    .label-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(201, 162, 39, 0.15);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2rem;
+    }
+
+    .label-text {
+      font-size: 0.8rem;
+      color: var(--smoke);
+    }
+
+    /* Connection line */
+    .connection-line {
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 180px;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    .connection-path {
+      stroke-dashoffset: 100;
+      animation: dashFlow 3s linear infinite;
+    }
+
+    @keyframes dashFlow {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .hero-phone {
+      position: relative;
+      z-index: 2;
+      width: 220px;
+      height: 450px;
+      background: #1a1a1a;
+      border-radius: 32px;
+      padding: 10px;
+      box-shadow: 
+        0 60px 120px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .phone-notch {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 22px;
+      background: #000;
+      border-radius: 14px;
+      z-index: 10;
+    }
+
+    .phone-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-artwork {
+      flex: 1;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg') center/cover;
+      position: relative;
+    }
+
+    .phone-artwork::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.8));
+    }
+
+    .scan-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .scan-indicator::before,
+    .scan-indicator::after {
+      content: '';
+      position: absolute;
+      background: var(--gold);
+    }
+
+    .scan-indicator::before {
+      top: -2px;
+      left: 15px;
+      right: 15px;
+      height: 2px;
+      animation: scanLine 2s ease-in-out infinite;
+    }
+
+    @keyframes scanLine {
+      0%, 100% { top: -2px; }
+      50% { top: calc(100% - 2px); }
+    }
+
+    .phone-info-card {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--cream);
+      color: var(--ink);
+      padding: 16px;
+      border-radius: 16px 16px 0 0;
+      transform: translateY(60%);
+      animation: slideCard 3s ease-in-out infinite;
+      animation-delay: 1s;
+    }
+
+    @keyframes slideCard {
+      0%, 40%, 100% { transform: translateY(60%); }
+      50%, 90% { transform: translateY(0); }
+    }
+
+    .phone-info-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .phone-info-card p {
+      font-size: 0.7rem;
+      color: var(--smoke);
+    }
+
+    /* Floating elements */
+    .floating-element {
+      position: absolute;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+
+    .float-1 {
+      top: 10%;
+      right: 20%;
+      width: 300px;
+      height: 300px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .float-2 {
+      bottom: 20%;
+      left: 10%;
+      width: 200px;
+      height: 200px;
+      animation: float 6s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    /* Features Section */
+    .features {
+      padding: 10rem 3rem;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 6rem;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-tag::before,
+    .section-tag::after {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-tag span {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .section-header h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: var(--smoke);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      background: rgba(201, 162, 39, 0.05);
+      transform: translateY(-8px);
+    }
+
+    .feature-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 400;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--smoke);
+      line-height: 1.7;
+    }
+
+    /* How It Works */
+    .how-it-works {
+      padding: 10rem 3rem;
+      background: linear-gradient(180deg, transparent, rgba(201, 162, 39, 0.03), transparent);
+    }
+
+    .steps-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .steps-visual {
+      position: relative;
+      height: 500px;
+    }
+
+    .step-image {
+      position: absolute;
+      width: 280px;
+      height: 380px;
+      object-fit: cover;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .step-image:nth-child(1) {
+      top: 0;
+      left: 0;
+      z-index: 3;
+    }
+
+    .step-image:nth-child(2) {
+      top: 60px;
+      left: 160px;
+      z-index: 2;
+      filter: brightness(0.7);
+    }
+
+    .step-image:nth-child(3) {
+      top: 120px;
+      left: 320px;
+      z-index: 1;
+      filter: brightness(0.5);
+    }
+
+    .steps-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--gold);
+      transition: all 0.3s ease;
+    }
+
+    .step:hover .step-number {
+      background: var(--gold);
+      color: var(--ink);
+      border-color: var(--gold);
+    }
+
+    .step h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      color: var(--smoke);
+      font-size: 0.95rem;
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 10rem 3rem;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--gold);
+      transform: scale(1.05);
+    }
+
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--ink);
+      padding: 0.5rem 1.5rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-8px);
+    }
+
+    .pricing-tier {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .pricing-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-amount span {
+      font-size: 1rem;
+      color: var(--smoke);
+    }
+
+    .pricing-description {
+      color: var(--smoke);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      font-size: 0.9rem;
+      color: var(--smoke);
+    }
+
+    .pricing-features li svg {
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .pricing-btn {
+      width: 100%;
+      padding: 1rem;
+      background: transparent;
+      border: 1px solid var(--cream);
+      color: var(--cream);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-btn:hover {
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .pricing-card.featured .pricing-btn {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    .pricing-card.featured .pricing-btn:hover {
+      background: var(--cream);
+      border-color: var(--cream);
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 10rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta p {
+      font-size: 1.15rem;
+      color: var(--smoke);
+      margin-bottom: 3rem;
+    }
+
+    .cta .btn-primary {
+      display: inline-flex;
+    }
+
+    /* Footer */
+    footer {
+      padding: 4rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--smoke);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--cream);
+    }
+
+    .footer-copy {
+      color: var(--smoke);
+      font-size: 0.85rem;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.05); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        height: auto;
+        padding: 2rem 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .hero-glasses {
+        order: 1;
+        width: 100%;
+      }
+
+      .glasses-svg {
+        width: 280px;
+      }
+
+      .hero-phone {
+        order: 2;
+        width: 160px;
+        height: 340px;
+        border-radius: 24px;
+        padding: 8px;
+      }
+
+      .phone-screen {
+        border-radius: 18px;
+      }
+
+      .phone-notch {
+        width: 50px;
+        height: 16px;
+        top: 6px;
+        border-radius: 10px;
+      }
+
+      .scan-indicator {
+        width: 60px;
+        height: 60px;
+      }
+
+      .phone-info-card {
+        padding: 10px;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .phone-info-card h4 {
+        font-size: 0.75rem;
+      }
+
+      .phone-info-card p {
+        font-size: 0.6rem;
+      }
+
+      .connection-line {
+        display: none;
+      }
+
+      .glasses-label,
+      .phone-label {
+        margin-top: 0.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+
+      .steps-container {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-visual {
+        display: none;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .pricing-card.featured {
+        transform: none;
+      }
+
+      .pricing-card.featured:hover {
+        transform: translateY(-8px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 6rem 1.5rem 3rem;
+      }
+
+      .hero-visual {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .glasses-svg {
+        width: 240px;
+      }
+
+      .hero-phone {
+        width: 140px;
+        height: 300px;
+      }
+
+      .label-tag {
+        font-size: 0.55rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .label-text {
+        font-size: 0.7rem;
+      }
+
+      .features,
+      .how-it-works,
+      .pricing,
+      .cta {
+        padding: 5rem 1.5rem;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">Meta Gallery</div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+    </ul>
+    <button class="nav-cta">Get Started</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="floating-element float-1"></div>
+    <div class="floating-element float-2"></div>
+    
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span>Augmented Reality for Art</span>
+        </div>
+        <h1>
+          <span class="line"><span>Transform how</span></span>
+          <span class="line"><span>visitors <em>experience</em></span></span>
+          <span class="line"><span>your gallery</span></span>
+        </h1>
+        <p class="hero-description">
+          Meta Gallery brings artwork to life with AR overlays, audio guides, and instant access to rich context. No app download required.
+        </p>
+        <div class="hero-buttons">
+          <a href="#how-it-works" class="btn-primary">
+            <span>See How It Works</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="#how-it-works" class="btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Watch Demo
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Smart Glasses -->
+        <div class="hero-glasses">
+          <svg viewBox="0 0 400 160" class="glasses-svg">
+            <!-- Left lens -->
+            <defs>
+              <linearGradient id="lensGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:0.9" />
+                <stop offset="50%" style="stop-color:#16213e;stop-opacity:0.85" />
+                <stop offset="100%" style="stop-color:#0f0f1a;stop-opacity:0.95" />
+              </linearGradient>
+              <linearGradient id="frameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#2a2a2a" />
+                <stop offset="50%" style="stop-color:#1a1a1a" />
+                <stop offset="100%" style="stop-color:#0a0a0a" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            
+            <!-- Frame -->
+            <path d="M 20 80 Q 20 40 60 40 L 140 40 Q 180 40 185 60 L 215 60 Q 220 40 260 40 L 340 40 Q 380 40 380 80 Q 380 120 340 120 L 260 120 Q 220 120 215 100 L 185 100 Q 180 120 140 120 L 60 120 Q 20 120 20 80 Z" 
+                  fill="url(#frameGradient)" 
+                  stroke="#333" 
+                  stroke-width="1"/>
+            
+            <!-- Left lens -->
+            <rect x="35" y="50" width="130" height="60" rx="12" fill="url(#lensGradient)" class="lens left-lens"/>
+            
+            <!-- Right lens -->
+            <rect x="235" y="50" width="130" height="60" rx="12" fill="url(#lensGradient)" class="lens right-lens"/>
+            
+            <!-- AR Display on right lens -->
+            <g class="ar-overlay" filter="url(#glow)">
+              <!-- AR info card -->
+              <rect x="245" y="58" width="110" height="44" rx="4" fill="rgba(201, 162, 39, 0.15)" stroke="var(--gold)" stroke-width="0.5"/>
+              <text x="255" y="74" fill="var(--gold)" font-family="Playfair Display" font-size="10" font-weight="600">Starry Night</text>
+              <text x="255" y="88" fill="rgba(248, 246, 241, 0.7)" font-family="Outfit" font-size="7">Van Gogh · 1889</text>
+              
+              <!-- Audio indicator -->
+              <circle cx="340" cy="70" r="6" fill="none" stroke="var(--gold)" stroke-width="0.5"/>
+              <path d="M337 68 L337 72 M339 66 L339 74 M341 68 L341 72" stroke="var(--gold)" stroke-width="0.8" class="audio-bars"/>
+            </g>
+            
+            <!-- Temple arms hints -->
+            <path d="M 20 70 Q 5 70 0 65" stroke="#222" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <path d="M 380 70 Q 395 70 400 65" stroke="#222" stroke-width="8" fill="none" stroke-linecap="round"/>
+            
+            <!-- Nose bridge detail -->
+            <ellipse cx="200" cy="85" rx="8" ry="4" fill="#1a1a1a"/>
+            
+            <!-- Subtle LED indicator -->
+            <circle cx="370" cy="55" r="2" fill="var(--gold)" class="led-indicator"/>
+          </svg>
+          
+          <div class="glasses-label">
+            <span class="label-tag">Coming Soon</span>
+            <span class="label-text">Smart Glasses Ready</span>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="hero-phone">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="phone-content">
+              <div class="phone-artwork">
+                <div class="scan-indicator"></div>
+              </div>
+              <div class="phone-info-card">
+                <h4>Starry Night</h4>
+                <p>Vincent van Gogh · 1889</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="phone-label">
+            <span class="label-tag">Available Now</span>
+            <span class="label-text">Mobile Web AR</span>
+          </div>
+        </div>
+        
+        <!-- Connection line -->
+        <svg class="connection-line" viewBox="0 0 200 300">
+          <path d="M 100 0 Q 100 150 100 150 Q 100 150 50 300" stroke="url(#connectionGradient)" stroke-width="1" fill="none" stroke-dasharray="4 4" class="connection-path"/>
+          <defs>
+            <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:var(--gold);stop-opacity:0.5" />
+              <stop offset="100%" style="stop-color:var(--gold);stop-opacity:0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <div class="section-tag">
+        <span>Why Meta Gallery</span>
+      </div>
+      <h2>Everything you need to create <em class="serif-italic">unforgettable</em> gallery visits</h2>
+      <p>A complete platform for galleries, museums, and artists to enhance the visitor experience with AR technology.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-number">01</div>
+        <h3>Instant Recognition</h3>
+        <p>Visitors simply point their phone at any artwork. QR codes or image recognition triggers an immediate overlay with rich context and stories.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-number">02</div>
+        <h3>Audio Storytelling</h3>
+        <p>Upload narrated guides that bring each piece to life. Visitors can listen hands-free while they absorb the art — museum quality, zero infrastructure.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-number">03</div>
+        <h3>Smart Glasses Ready</h3>
+        <p>Built from day one for the AR glasses future. When visitors walk through your gallery wearing Meta Ray-Bans or similar devices, artwork info appears right in their field of view — hands-free, magical.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-number">04</div>
+        <h3>Simple Dashboard</h3>
+        <p>Add exhibitions and artworks in minutes. Upload images, write descriptions, attach audio, and generate QR codes — all from one intuitive interface.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-number">05</div>
+        <h3>Visitor Analytics</h3>
+        <p>Understand what captivates your audience. See which artworks get the most attention, average viewing times, and popular tour paths.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-number">06</div>
+        <h3>No App Required</h3>
+        <p>Pure web technology means zero friction. Visitors scan and go — no App Store, no downloads, no waiting. Works on any smartphone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-header">
+      <div class="section-tag">
+        <span>Simple Setup</span>
+      </div>
+      <h2>Live in <em class="serif-italic">minutes</em>, not months</h2>
+      <p>No technical expertise required. If you can upload a photo, you can launch Meta Gallery.</p>
+    </div>
+
+    <div class="steps-container">
+      <div class="steps-visual">
+        <img src="https://images.unsplash.com/photo-1577720643272-265f09367456?w=600&q=80" alt="Gallery view" class="step-image">
+        <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80" alt="Artwork detail" class="step-image">
+        <img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69d98?w=600&q=80" alt="Visitor experience" class="step-image">
+      </div>
+
+      <div class="steps-content">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div>
+            <h3>Create your gallery</h3>
+            <p>Sign up and add your gallery profile with name, logo, and location. Takes about 30 seconds.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div>
+            <h3>Add your artworks</h3>
+            <p>For each piece, upload an image, add title/artist/year, write a description, and optionally attach an audio guide.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <div>
+            <h3>Print & place QR codes</h3>
+            <p>We generate unique QR codes for each artwork. Print the sheet and place labels beside your pieces.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">4</div>
+          <div>
+            <h3>Go live</h3>
+            <p>Hit publish and you're done. Visitors can start scanning immediately — no app install needed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Ready to transform your <em class="serif-italic">gallery?</em></h2>
+      <p>Join forward-thinking galleries and museums already using Meta Gallery to create deeper connections between visitors and art.</p>
+      <a href="#" class="btn-primary">
+        <span>Get In Touch</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">Meta Gallery</div>
+      <ul class="footer-links">
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+      <p class="footer-copy">© 2025 Meta Gallery. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
