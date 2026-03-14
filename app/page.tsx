@@ -306,17 +306,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA / Waiting List */}
       <section className="cta">
         <div className="cta-content">
           <h2>Ready to transform your <em className="serif-italic">gallery?</em></h2>
           <p>Join forward-thinking galleries and museums already using Meta Gallery to create deeper connections between visitors and art.</p>
-          <Link href="#" className="btn-primary">
-            <span>Get In Touch</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+          
+          <form 
+            className="waitlist-form"
+            action="https://formspree.io/f/xoqbqnpd" 
+            method="POST"
+          >
+            <div className="waitlist-fields">
+              <input 
+                type="text" 
+                name="name"
+                placeholder="Your name" 
+                required 
+              />
+              <input 
+                type="email" 
+                name="email"
+                placeholder="Email address" 
+                required 
+              />
+              <select name="type" required>
+                <option value="">I am a...</option>
+                <option value="gallery_owner">Gallery Owner</option>
+                <option value="artist">Artist</option>
+                <option value="museum">Museum</option>
+                <option value="curator">Curator</option>
+                <option value="collector">Collector</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <input type="hidden" name="_subject" value="New Meta Gallery Waitlist Signup" />
+            <button type="submit" className="btn-primary">
+              <span>Join the Waitlist</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </form>
+          <p className="waitlist-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
-          </Link>
+            
+          </p>
         </div>
       </section>
     </>

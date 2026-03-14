@@ -259,10 +259,21 @@ export default function EventsPage() {
         <div className="newsletter-container">
           <h2>Stay in the <em className="serif-italic">loop</em></h2>
           <p>Get notified about upcoming events, charity initiatives, and the latest from Meta Gallery.</p>
-          <form className="newsletter-form">
-            <input type="email" placeholder="Enter your email" />
+          <form 
+            className="newsletter-form"
+            action="https://formspree.io/f/xoqbqnpd" 
+            method="POST"
+          >
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Enter your email" 
+              required 
+            />
+            <input type="hidden" name="_subject" value="New Meta Gallery Events Subscriber" />
             <button type="submit">Subscribe</button>
           </form>
+          <p className="form-note">Join 2,400+ art lovers. No spam, unsubscribe anytime.</p>
         </div>
       </section>
     </>
