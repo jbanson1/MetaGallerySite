@@ -28,12 +28,6 @@ export default function Home() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </Link>
-              <Link href="#how-it-works" className="btn-secondary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-                Watch Demo
-              </Link>
             </div>
           </div>
 

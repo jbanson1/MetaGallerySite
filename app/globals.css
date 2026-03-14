@@ -14,6 +14,90 @@
   --font-outfit: 'Outfit', sans-serif;
 }
 
+/* Light mode */
+[data-theme="light"] {
+  --ink: #f0ede6;
+  --cream: #1f1f1f;
+  --smoke: #5f5f5f;
+  --glass: rgba(10, 10, 10, 0.03);
+  --border: rgba(201, 162, 39, 0.25);
+}
+
+[data-theme="light"] body::before {
+  opacity: 0.02;
+}
+
+[data-theme="light"] nav.solid {
+  background: rgba(248, 246, 241, 0.95);
+}
+
+[data-theme="light"] .hero-phone {
+  background: #e8e6e1;
+  box-shadow: 
+    0 60px 120px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .phone-screen {
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+}
+
+[data-theme="light"] .phone-notch {
+  background: #ccc;
+}
+
+[data-theme="light"] .nav-menu {
+  background: #f8f6f1b0;
+}
+
+[data-theme="light"] .menu-bar {
+  background: #1a1a1a;
+}
+
+[data-theme="light"] .menu-bar {
+  background: var(--cream);
+}
+
+[data-theme="light"] .logo {
+  color: #1a1a1a;
+}
+
+[data-theme="light"] .theme-toggle {
+  color: #1a1a1a;
+  border-color: rgba(26, 26, 26, 0.3);
+}
+
+[data-theme="light"] .menu-bar {
+  background: #1a1a1a;
+}
+
+[data-theme="light"] .page-header h1 {
+  color: #1a1a1a;
+}
+
+[data-theme="light"] .page-tag span {
+  color: var(--gold);
+}
+[data-theme="light"] nav {
+  mix-blend-mode: normal;
+}
+
+[data-theme="light"] nav.solid .logo,
+[data-theme="light"] nav .logo {
+  color: #1a1a1a !important;
+}
+
+[data-theme="light"] nav.solid .theme-toggle,
+[data-theme="light"] nav .theme-toggle {
+  color: #1a1a1a !important;
+  border-color: rgba(26, 26, 26, 0.3) !important;
+}
+
+[data-theme="light"] nav.solid .menu-bar,
+[data-theme="light"] nav .menu-bar {
+  background: #1a1a1a !important;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -74,6 +158,27 @@ nav.solid {
   background: rgba(10, 10, 10, 0.9);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--cream);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 1rem;
+}
+
+.theme-toggle:hover {
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 .logo {
@@ -2137,6 +2242,13 @@ footer {
     justify-content: space-between;
     align-items: center;
   }
+
+.theme-toggle {
+  position: absolute;
+  right: 60px;
+  width: 36px;
+  height: 36px;
+}
 
   nav.solid {
     backdrop-filter: none;
