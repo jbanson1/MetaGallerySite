@@ -1,6 +1,38 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 
 export default function Home() {
+  const [waitlistStatus, setWaitlistStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
+  const handleWaitlistSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setWaitlistStatus('loading')
+    
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xoqbqnpd', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      
+      if (response.ok) {
+        setWaitlistStatus('success')
+        form.reset()
+      } else {
+        setWaitlistStatus('error')
+      }
+    } catch {
+      setWaitlistStatus('error')
+    }
+  }
+
   return (
     <>
       {/* Hero Section */}
@@ -306,42 +338,52 @@ export default function Home() {
           <h2>Ready to transform your <em className="serif-italic">gallery?</em></h2>
           <p>Join forward-thinking galleries and museums already using Meta Gallery to create deeper connections between visitors and art.</p>
           
-          <form 
-            className="waitlist-form"
-            action="https://formspree.io/f/xoqbqnpd" 
-            method="POST"
-          >
-            <div className="waitlist-fields">
-              <input 
-                type="text" 
-                name="name"
-                placeholder="Your name" 
-                required 
-              />
-              <input 
-                type="email" 
-                name="email"
-                placeholder="Email address" 
-                required 
-              />
-              <select name="type" required>
-                <option value="">I am a...</option>
-                <option value="gallery_owner">Gallery Owner</option>
-                <option value="artist">Artist</option>
-                <option value="museum">Museum</option>
-                <option value="curator">Curator</option>
-                <option value="collector">Collector</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <input type="hidden" name="_subject" value="New Meta Gallery Waitlist Signup" />
-            <button type="submit" className="btn-primary">
-              <span>Join the Waitlist</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+          {waitlistStatus === 'success' ? (
+            <div className="form-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
-            </button>
-          </form>
+              <p>Thanks for joining! We&apos;ll be in touch soon.</p>
+            </div>
+          ) : (
+            <form className="waitlist-form" onSubmit={handleWaitlistSubmit}>
+              <div className="waitlist-fields">
+                <input 
+                  type="text" 
+                  name="name"
+                  placeholder="Your name" 
+                  required 
+                />
+                <input 
+                  type="email" 
+                  name="email"
+                  placeholder="Email address" 
+                  required 
+                />
+                <select name="type" required>
+                  <option value="">I am a...</option>
+                  <option value="gallery_owner">Gallery Owner</option>
+                  <option value="artist">Artist</option>
+                  <option value="museum">Museum</option>
+                  <option value="curator">Curator</option>
+                  <option value="collector">Collector</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <input type="hidden" name="_subject" value="New Meta Gallery Waitlist Signup" />
+              <button type="submit" className="btn-primary" disabled={waitlistStatus === 'loading'}>
+                <span>{waitlistStatus === 'loading' ? 'Joining...' : 'Join the Waitlist'}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+              {waitlistStatus === 'error' && (
+                <p className="form-error">Something went wrong. Please try again.</p>
+              )}
+            </form>
+          )}
+          
           <p className="waitlist-note">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>

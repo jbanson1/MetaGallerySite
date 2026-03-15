@@ -1,11 +1,38 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 
-export const metadata = {
-  title: 'Events — Meta Gallery',
-  description: 'Join us for exhibitions, workshops, and charity fundraisers where creativity meets purpose.',
-}
-
 export default function EventsPage() {
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
+  const handleNewsletterSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setNewsletterStatus('loading')
+    
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    
+    try {
+      const response = await fetch('https://formspree.io/f/xoqbqnpd', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      
+      if (response.ok) {
+        setNewsletterStatus('success')
+        form.reset()
+      } else {
+        setNewsletterStatus('error')
+      }
+    } catch {
+      setNewsletterStatus('error')
+    }
+  }
+
   return (
     <>
       {/* Page Header */}
@@ -259,20 +286,34 @@ export default function EventsPage() {
         <div className="newsletter-container">
           <h2>Stay in the <em className="serif-italic">loop</em></h2>
           <p>Get notified about upcoming events, charity initiatives, and the latest from Meta Gallery.</p>
-          <form 
-            className="newsletter-form"
-            action="https://formspree.io/f/xoqbqnpd" 
-            method="POST"
-          >
-            <input 
-              type="email" 
-              name="email"
-              placeholder="Enter your email" 
-              required 
-            />
-            <input type="hidden" name="_subject" value="New Meta Gallery Events Subscriber" />
-            <button type="submit">Subscribe</button>
-          </form>
+          
+          {newsletterStatus === 'success' ? (
+            <div className="form-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <p>You&apos;re subscribed! Check your inbox soon.</p>
+            </div>
+          ) : (
+            <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
+              <input type="hidden" name="_subject" value="New Meta Gallery Events Subscriber" />
+              <input 
+                type="email" 
+                name="email"
+                placeholder="Enter your email" 
+                required 
+              />
+              <button type="submit" disabled={newsletterStatus === 'loading'}>
+                {newsletterStatus === 'loading' ? 'Subscribing...' : 'Subscribe'}
+              </button>
+            </form>
+          )}
+          
+          {newsletterStatus === 'error' && (
+            <p className="form-error">Something went wrong. Please try again.</p>
+          )}
+          
           <p className="form-note">Join 2,400+ art lovers. No spam, unsubscribe anytime.</p>
         </div>
       </section>
