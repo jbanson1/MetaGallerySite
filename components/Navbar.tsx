@@ -105,7 +105,7 @@ export default function Navbar() {
   return (
     <>
       <nav className={`solid ${menuOpen ? 'menu-open' : ''} ${isScrolled ? 'scrolled' : ''}`}>
-        <Link href="/" className="logo logo-full" onClick={closeMenu}>Confidential Gallery</Link>
+        <Link href="/" className="logo logo-full" onClick={closeMenu}>The Confidential Gallery</Link>
         <Link href="/" className="logo logo-short" onClick={closeMenu}>CG</Link>
 
         <div className="desktop-theme-toggle"><ThemeToggleButton /></div>
@@ -178,7 +178,7 @@ export default function Navbar() {
               </svg>
             </button>
             <h2>Sign in</h2>
-            <p>Access your Confidential Gallery account</p>
+            <p>Access your The Confidential Gallery account</p>
             <form onSubmit={handleLogin}>
               <input
                 type="text" value={email} required autoFocus

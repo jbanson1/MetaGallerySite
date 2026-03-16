@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer>
       <div className="footer-content">
-        <div className="footer-logo">Confidential Gallery</div>
+        <div className="footer-logo">The Confidential Gallery</div>
         <ul className="footer-links">
           <li><Link href="/privacy">Privacy</Link></li>
           <li><Link href="/terms">Terms</Link></li>
@@ -22,7 +22,7 @@ export default function Footer() {
             }
           </li>
         </ul>
-        <div className="footer-copy">© 2026 Confidential Gallery. All rights reserved.</div>
+        <div className="footer-copy">© 2026 The Confidential Gallery. All rights reserved.</div>
       </div>
     </footer>
   )

@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabase'
 export interface Profile {
   id: string
   full_name: string | null
+  username: string | null
   avatar_url: string | null
   location: string | null
   bio: string | null
@@ -26,6 +27,7 @@ const DEV_USER = {
 const DEV_PROFILE: Profile = {
   id: 'dev-admin-000',
   full_name: 'Admin',
+  username: 'Admin',
   avatar_url: null,
   location: null,
   bio: null,
@@ -38,7 +40,7 @@ interface AuthContextValue {
   profile: Profile | null
   loading: boolean
   signIn: (username: string, password: string) => Promise<{ error: string | null }>
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: string | null; needsConfirmation: boolean }>
+  signUp: (email: string, password: string, fullName: string, username: string) => Promise<{ error: string | null; needsConfirmation: boolean }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Omit<Profile, 'id'>>) => Promise<{ error: string | null }>
 }
@@ -101,12 +103,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error: error?.message ?? null }
   }, [])
 
-  const signUp = useCallback(async (email: string, password: string, fullName: string) => {
+  const signUp = useCallback(async (email: string, password: string, fullName: string, username: string) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { full_name: fullName },
+        data: { full_name: fullName, username },
         emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
       },
     })
