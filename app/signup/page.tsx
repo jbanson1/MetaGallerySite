@@ -159,12 +159,12 @@ export default function SignupPage() {
             <p className={styles.subtitle}>Welcome back.</p>
             <form onSubmit={handleLogin} className={styles.form}>
               <div className={styles.field}>
-                <label htmlFor="loginEmail">Email</label>
+                <label htmlFor="loginUsername">Username</label>
                 <input
-                  id="loginEmail" type="email" value={email} required
+                  id="loginUsername" type="text" value={email} required
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  autoComplete="email" autoFocus
+                  placeholder="Your username"
+                  autoComplete="username" autoFocus
                 />
               </div>
               <div className={styles.field}>

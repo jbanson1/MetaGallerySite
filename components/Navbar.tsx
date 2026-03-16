@@ -73,7 +73,7 @@ export default function Navbar() {
     const { error } = await signIn(email, password)
     setLoginLoading(false)
     if (error) {
-      setLoginError('Incorrect email or password.')
+      setLoginError(error ?? 'Incorrect username or password.')
       return
     }
     closeModal()
@@ -181,10 +181,10 @@ export default function Navbar() {
             <p>Access your Meta Gallery account</p>
             <form onSubmit={handleLogin}>
               <input
-                type="email" value={email} required autoFocus
+                type="text" value={email} required autoFocus
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email address"
-                autoComplete="email"
+                placeholder="Username"
+                autoComplete="username"
               />
               <input
                 type="password" value={password} required
