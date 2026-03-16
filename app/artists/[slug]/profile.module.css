@@ -1,0 +1,823 @@
+/* ============================================
+   ARTIST PROFILE PAGE - CSS MODULE
+   ============================================ */
+
+/* Serif Italic */
+.serifItalic {
+  font-family: var(--font-playfair), serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Artist Hero Section */
+.artistHero {
+  position: relative;
+}
+
+.coverImage {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(10, 10, 10, 0.9) 100%);
+}
+
+.heroContent {
+  position: relative;
+  padding: 0 3rem;
+  margin-top: -120px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.artistProfile {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+}
+
+.artistAvatarLarge {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 4px solid var(--ink);
+  flex-shrink: 0;
+}
+
+.artistInfo {
+  flex: 1;
+  padding-bottom: 1rem;
+}
+
+.artistName {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.artistName h1 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--cream);
+}
+
+.verifiedBadge {
+  flex-shrink: 0;
+}
+
+.artistMeta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.artistMeta span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--cream-muted);
+}
+
+.artistBio {
+  font-size: 1rem;
+  color: var(--cream-muted);
+  line-height: 1.7;
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+}
+
+.artistStats {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--cream-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.artistActions {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.btnFollow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnFollow:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+.btnShare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--cream);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnShare:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Achievements */
+.artistAchievements {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.achievement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.achievementIcon {
+  font-size: 1.2rem;
+}
+
+.achievementTitle {
+  color: var(--cream);
+  font-weight: 500;
+}
+
+.achievementDescription {
+  color: var(--cream-muted);
+  font-size: 0.8rem;
+}
+
+/* Tabs */
+.artistTabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 0 3rem;
+  max-width: 1200px;
+  margin: 3rem auto 0;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--cream-muted);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.tabBtn:hover {
+  color: var(--cream);
+}
+
+.tabBtnActive {
+  color: var(--cream);
+}
+
+.tabBtnActive::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+
+/* Tab Content */
+.artistContent {
+  padding: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Works Tab */
+.artistWorks h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  color: var(--cream);
+}
+
+.worksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.workCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.workCard:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+.workImage {
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.workBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.workBadgeOriginal {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.workBadgePrint {
+  background: #4a9eff;
+  color: white;
+}
+
+.workBadgeAr {
+  background: #9b59b6;
+  color: white;
+}
+
+.workArBadge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.workContent {
+  padding: 1.5rem;
+}
+
+.workContent h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.workFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.workPrice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.price {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.edition {
+  font-size: 0.8rem;
+  color: var(--cream-muted);
+}
+
+.workCta {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.workCta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* About Tab */
+.artistAbout h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  color: var(--cream);
+}
+
+.aboutContent {
+  max-width: 700px;
+}
+
+.aboutText {
+  margin-bottom: 3rem;
+}
+
+.aboutText p {
+  font-size: 1rem;
+  color: var(--cream-muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.aboutDetails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailLabel {
+  font-size: 0.75rem;
+  color: var(--cream-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.detailValue {
+  font-size: 1rem;
+  color: var(--cream);
+}
+
+.artistSocialLinks h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: var(--cream);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--cream-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.socialLink:hover {
+  border-color: var(--gold);
+  color: var(--cream);
+}
+
+/* Exhibitions Tab */
+.artistExhibitions h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  color: var(--cream);
+}
+
+.exhibitionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.exhibitionItem {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.exhibitionDate {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.9rem;
+  color: var(--gold);
+  min-width: 80px;
+}
+
+.exhibitionDetails {
+  flex: 1;
+}
+
+.exhibitionDetails h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+
+.exhibitionDetails p {
+  font-size: 0.9rem;
+  color: var(--cream-muted);
+}
+
+.exhibitionType {
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  color: var(--cream-muted);
+}
+
+.exhibitionType.solo {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Reviews Tab */
+.artistReviews h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cream);
+}
+
+.reviewsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.reviewsSummary {
+  text-align: right;
+}
+
+.ratingBig {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.ratingNumber {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--cream);
+}
+
+.ratingStars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.ratingCount {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+}
+
+.reviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reviewCard {
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.reviewerInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.reviewerAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.reviewerName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.verifiedPurchase {
+  font-size: 0.75rem;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.reviewDate {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  display: block;
+}
+
+.reviewRating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.reviewTitle {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.75rem;
+}
+
+.reviewText {
+  font-size: 0.95rem;
+  color: var(--cream-muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.reviewArtwork {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .artistProfile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .artistAvatarLarge {
+    width: 140px;
+    height: 140px;
+  }
+
+  .artistActions {
+    margin-top: 1rem;
+  }
+
+  .artistAchievements {
+    flex-wrap: wrap;
+  }
+
+  .worksGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .coverImage {
+    height: 280px;
+  }
+
+  .heroContent {
+    padding: 0 1.5rem;
+    margin-top: -80px;
+  }
+
+  .artistAvatarLarge {
+    width: 100px;
+    height: 100px;
+  }
+
+  .artistName h1 {
+    font-size: 1.75rem;
+  }
+
+  .artistMeta {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .artistStats {
+    gap: 1.5rem;
+  }
+
+  .statValue {
+    font-size: 1.25rem;
+  }
+
+  .artistAchievements {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .achievement {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .artistTabs {
+    padding: 0 1.5rem;
+    overflow-x: auto;
+  }
+
+  .tabBtn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .artistContent {
+    padding: 2rem 1.5rem;
+  }
+
+  .worksGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .workImage {
+    height: 220px;
+  }
+
+  .aboutDetails {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .exhibitionItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .reviewsHeader {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .reviewsSummary {
+    text-align: left;
+  }
+
+  .ratingBig {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .ratingNumber {
+    font-size: 2rem;
+  }
+
+  .reviewCard {
+    padding: 1.5rem;
+  }
+
+  .reviewHeader {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .heroContent {
+    padding: 0 1rem;
+  }
+
+  .artistAvatarLarge {
+    width: 80px;
+    height: 80px;
+  }
+
+  .artistName h1 {
+    font-size: 1.5rem;
+  }
+
+  .artistTabs {
+    padding: 0 1rem;
+  }
+
+  .artistContent {
+    padding: 1.5rem 1rem;
+  }
+
+  .socialLinks {
+    flex-direction: column;
+  }
+
+  .socialLink {
+    width: 100%;
+  }
+}

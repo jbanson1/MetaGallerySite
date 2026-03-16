@@ -1,0 +1,911 @@
+/* ============================================
+   ACCOUNT PAGE - CSS MODULE
+   ============================================ */
+
+/* Header Actions */
+.headerActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.btnLogout {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(231, 76, 60, 0.5);
+  color: #e74c3c;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnLogout:hover {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  color: white;
+}
+
+/* Account Header */
+.accountHeader {
+  padding: 8rem 3rem 3rem;
+  background: linear-gradient(180deg, rgba(199, 172, 128, 0.05) 0%, transparent 100%);
+}
+
+.accountHeaderContent {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.accountAvatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid var(--gold);
+  flex-shrink: 0;
+}
+
+.accountInfo {
+  flex: 1;
+}
+
+.accountInfo h1 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.accountMeta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.accountMeta span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--cream-muted);
+}
+
+.accountMeta svg {
+  color: var(--gold);
+}
+
+.accountStats {
+  display: flex;
+  gap: 2rem;
+}
+
+.accountStat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statNumber {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--cream);
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--cream-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.btnEditProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnEditProfile:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Account Tabs */
+.accountTabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 0 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--cream-muted);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.tabBtn:hover {
+  color: var(--cream);
+}
+
+.tabBtnActive {
+  color: var(--cream);
+}
+
+.tabBtnActive::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+}
+
+/* Account Content */
+.accountContent {
+  padding: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Section Headers */
+.sectionHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.sectionHeaderRow h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cream);
+}
+
+.sectionCount {
+  font-size: 0.9rem;
+  color: var(--cream-muted);
+}
+
+/* Purchases Section */
+.purchasesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.purchaseCard {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  align-items: center;
+}
+
+.purchaseImage {
+  width: 140px;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.purchaseBadge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.purchaseBadge.original {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.purchaseBadge.limited-print {
+  background: #4a9eff;
+  color: white;
+}
+
+.purchaseBadge.ar-collectible {
+  background: #9b59b6;
+  color: white;
+}
+
+.purchaseDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+
+.purchaseInfo h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+
+.purchaseArtist {
+  font-size: 0.9rem;
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.purchaseArtist:hover {
+  text-decoration: underline;
+}
+
+.purchaseDate {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  margin-top: 0.5rem;
+}
+
+.purchaseMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.purchasePrice {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.purchaseStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #27ae60;
+}
+
+.purchaseActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--cream-muted);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.8rem;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actionBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.actionBtn.review {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Favorites Section */
+.favoritesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.favoriteCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.favoriteCard:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+.favoriteImage {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.removeFavorite {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.removeFavorite:hover {
+  background: var(--gold);
+}
+
+.favoriteBadge {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--cream);
+}
+
+.favoriteContent {
+  padding: 1.25rem;
+}
+
+.favoriteContent h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+
+.favoriteArtist {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  margin-bottom: 1rem;
+}
+
+.favoriteFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.favoritePrice {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--cream);
+}
+
+.favoriteCta {
+  padding: 0.4rem 0.8rem;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.favoriteCta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* Following Section */
+.followingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.followingCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.followingCard:hover {
+  border-color: var(--gold);
+}
+
+.followingAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.newWorksBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  padding: 0.2rem 0.5rem;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.followingInfo {
+  flex: 1;
+}
+
+.followingInfo h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+
+.followingInfo p {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+}
+
+.btnUnfollow {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--cream-muted);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnUnfollow:hover {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.discoverMore {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.discoverMore p {
+  font-size: 1rem;
+  color: var(--cream-muted);
+  margin-bottom: 1rem;
+}
+
+.btnDiscover {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btnDiscover:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+/* Settings Section */
+.settingsSection h2 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 2rem;
+}
+
+.settingsGroup {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.settingsGroup h3 {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formRow label {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.formRow input {
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.95rem;
+}
+
+.formRow input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.btnSave {
+  align-self: flex-start;
+  padding: 0.75rem 1.5rem;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnSave:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+/* Toggle Switches */
+.settingsToggles {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toggleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggleRow:last-child {
+  border-bottom: none;
+}
+
+.toggleLabel {
+  font-size: 0.95rem;
+  color: var(--cream);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.toggleDesc {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  display: block;
+}
+
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border);
+  transition: 0.3s;
+  border-radius: 26px;
+}
+
+.toggleSlider::before {
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--cream);
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.toggle input:checked + .toggleSlider {
+  background-color: var(--gold);
+}
+
+.toggle input:checked + .toggleSlider::before {
+  transform: translateX(24px);
+}
+
+/* Danger Zone */
+.dangerZone {
+  border-color: rgba(231, 76, 60, 0.3);
+}
+
+.dangerZone h3 {
+  color: #e74c3c;
+}
+
+.dangerActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btnDangerOutline {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--cream-muted);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnDangerOutline:hover {
+  border-color: var(--cream);
+  color: var(--cream);
+}
+
+.btnDanger {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnDanger:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+
+  .headerActions {
+    flex-direction: row;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .btnEditProfile,
+  .btnLogout {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .accountHeader {
+    padding: 7rem 1.5rem 2rem;
+  }
+
+  .accountHeaderContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .accountAvatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .accountInfo h1 {
+    font-size: 1.5rem;
+  }
+
+  .accountMeta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .accountStats {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .statNumber {
+    font-size: 1.25rem;
+  }
+
+  .btnEditProfile {
+    align-self: flex-start;
+  }
+
+  .accountTabs {
+    padding: 0 1.5rem;
+    overflow-x: auto;
+  }
+
+  .tabBtn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .accountContent {
+    padding: 2rem 1.5rem;
+  }
+
+  .purchaseCard {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .purchaseImage {
+    width: 100%;
+    height: 150px;
+  }
+
+  .purchaseDetails {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .purchaseMeta {
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .purchaseActions {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .actionBtn {
+    flex: 1;
+  }
+
+  .favoritesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .favoriteImage {
+    height: 140px;
+  }
+
+  .favoriteContent {
+    padding: 1rem;
+  }
+
+  .followingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .settingsGroup {
+    padding: 1.5rem;
+  }
+
+  .toggleRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .dangerActions {
+    flex-direction: column;
+  }
+
+  .btnDangerOutline,
+  .btnDanger {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .accountHeader {
+    padding: 6rem 1rem 1.5rem;
+  }
+
+  .accountTabs {
+    padding: 0 1rem;
+  }
+
+  .accountContent {
+    padding: 1.5rem 1rem;
+  }
+
+  .favoritesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
