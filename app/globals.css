@@ -632,3 +632,89 @@ footer {
     gap: 1rem;
   }
 }
+
+/* ============================================
+   SCAN BUTTON — NAVBAR
+   ============================================ */
+
+/* Mobile right-side group: stacks scan icon above hamburger */
+.nav-right-group {
+  display: contents; /* invisible on desktop — children lay out normally */
+}
+
+/* Desktop scan link in nav-links */
+.scan-desktop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.scan-desktop-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scan-desktop-btn:hover::after,
+.scan-desktop-btn.active::after { width: 100%; }
+.scan-desktop-btn.active { color: var(--gold); }
+.scan-desktop-btn svg { flex-shrink: 0; }
+
+/* Mobile scan icon button — hidden on desktop */
+.scan-icon-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* On mobile the right-group becomes a flex column */
+  .nav-right-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    z-index: 103;
+  }
+
+  /* Hide the desktop scan link (it'll show in the slide-out menu instead via nav-links) */
+  .desktop-scan-link {
+    display: none;
+  }
+
+  /* Scan icon button — visible below the hamburger on mobile */
+  .scan-icon-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--smoke);
+    text-decoration: none;
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    line-height: 1;
+  }
+
+  .scan-icon-btn:hover,
+  .scan-icon-btn.active { color: var(--gold); }
+
+  .scan-icon-btn svg {
+    display: block;
+  }
+}
