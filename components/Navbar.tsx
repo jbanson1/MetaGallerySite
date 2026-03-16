@@ -73,7 +73,7 @@ export default function Navbar() {
     const { error } = await signIn(email, password)
     setLoginLoading(false)
     if (error) {
-      setLoginError('Incorrect email or password.')
+      setLoginError(error ?? 'Incorrect username or password.')
       return
     }
     closeModal()
@@ -105,8 +105,8 @@ export default function Navbar() {
   return (
     <>
       <nav className={`solid ${menuOpen ? 'menu-open' : ''} ${isScrolled ? 'scrolled' : ''}`}>
-        <Link href="/" className="logo logo-full" onClick={closeMenu}>Meta Gallery</Link>
-        <Link href="/" className="logo logo-short" onClick={closeMenu}>MG</Link>
+        <Link href="/" className="logo logo-full" onClick={closeMenu}>Confidential Gallery</Link>
+        <Link href="/" className="logo logo-short" onClick={closeMenu}>CG</Link>
 
         <div className="desktop-theme-toggle"><ThemeToggleButton /></div>
 
@@ -178,13 +178,13 @@ export default function Navbar() {
               </svg>
             </button>
             <h2>Sign in</h2>
-            <p>Access your Meta Gallery account</p>
+            <p>Access your Confidential Gallery account</p>
             <form onSubmit={handleLogin}>
               <input
-                type="email" value={email} required autoFocus
+                type="text" value={email} required autoFocus
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email address"
-                autoComplete="email"
+                placeholder="Username"
+                autoComplete="username"
               />
               <input
                 type="password" value={password} required

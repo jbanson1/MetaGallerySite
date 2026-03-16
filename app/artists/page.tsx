@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styles from './artists.module.css'
 
 export const metadata = {
-  title: 'Artists — Meta Gallery',
+  title: 'Artists — Confidential Gallery',
   description: 'Discover talented artists from galleries worldwide. Browse portfolios, explore AR-enhanced artwork, and connect with creators.',
 }
 
@@ -117,7 +117,7 @@ export default function ArtistsPage() {
           <span>Artists</span>
         </div>
         <h1>Discover <em className={styles.serifItalic}>extraordinary</em> creators</h1>
-        <p>Explore the talented artists bringing their work to life through Meta Gallery. Follow your favorites and be the first to see new pieces.</p>
+        <p>Explore the talented artists bringing their work to life through Confidential Gallery. Follow your favorites and be the first to see new pieces.</p>
       </header>
 
       {/* Filters */}

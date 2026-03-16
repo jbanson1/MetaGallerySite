@@ -5,14 +5,14 @@ import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import { AuthProvider } from '@/lib/auth/context'
 
 export const metadata: Metadata = {
-  title: 'Meta Gallery — AR Art Guide',
+  title: 'Confidential Gallery — Every Artwork Has a Secret',
   description:
     'Transform how visitors experience your gallery with AR overlays, audio guides, and instant access to rich context.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Meta Gallery',
+    title: 'Confidential Gallery',
   },
   formatDetection: { telephone: false },
 }

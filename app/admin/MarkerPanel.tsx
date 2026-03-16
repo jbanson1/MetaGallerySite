@@ -14,7 +14,7 @@ interface Props {
 
 function generateMarkerId(): string {
   const chars = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
-  let id = 'MG-'
+  let id = 'CG-'
   for (let i = 0; i < 6; i++) {
     id += chars[Math.floor(Math.random() * chars.length)]
   }
@@ -83,7 +83,7 @@ export default function MarkerPanel({ galleryId, artworks, markers, onMarkersCha
   }
 
   function getScanUrl(markerId: string): string {
-    const base = typeof window !== 'undefined' ? window.location.origin : 'https://metagallery.art'
+    const base = typeof window !== 'undefined' ? window.location.origin : 'https://theconfidential.gallery'
     return `${base}/scan/${markerId}`
   }
 

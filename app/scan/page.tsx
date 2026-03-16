@@ -9,7 +9,7 @@ import { getScanHistory } from '@/lib/utils/storage'
 import type { ScanHistoryItem } from '@/lib/utils/storage'
 import styles from './scanner.module.css'
 
-const SCANNER_ELEMENT_ID = 'mg-qr-reader'
+const SCANNER_ELEMENT_ID = 'cg-qr-reader'
 
 export default function ScanPage() {
   const router = useRouter()
@@ -93,7 +93,7 @@ export default function ScanPage() {
               </svg>
             </Link>
             <span className={styles.topBarTitle}>
-              {isScanning ? 'Scanning…' : 'Meta Gallery Scanner'}
+              {isScanning ? 'Scanning…' : 'Confidential Gallery Scanner'}
             </span>
             <button
               className={styles.historyToggleBtn}
@@ -132,7 +132,7 @@ export default function ScanPage() {
                   </svg>
                 </div>
                 <p className={styles.promptText}>
-                  Point your camera at a Meta Gallery QR code
+                  Point your camera at a Confidential Gallery QR code
                 </p>
                 <button className={styles.startBtn} onClick={handleStart}>
                   Open Camera
@@ -177,7 +177,7 @@ export default function ScanPage() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
-                Not a Meta Gallery QR code
+                Not a Confidential Gallery QR code
               </div>
             )}
 

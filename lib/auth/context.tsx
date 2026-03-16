@@ -17,7 +17,7 @@ const DEV_USERNAME = 'Admin'
 const DEV_PASSWORD = 'CG2026!'
 const DEV_USER = {
   id: 'dev-admin-000',
-  email: 'admin@metagallery.dev',
+  email: 'admin@theconfidential.gallery',
   app_metadata: {},
   user_metadata: { full_name: 'Admin' },
   aud: 'authenticated',
@@ -37,7 +37,7 @@ interface AuthContextValue {
   session: Session | null
   profile: Profile | null
   loading: boolean
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>
+  signIn: (username: string, password: string) => Promise<{ error: string | null }>
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: string | null; needsConfirmation: boolean }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Omit<Profile, 'id'>>) => Promise<{ error: string | null }>
@@ -86,14 +86,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe()
   }, [fetchProfile])
 
-  const signIn = useCallback(async (email: string, password: string) => {
+  const signIn = useCallback(async (username: string, password: string) => {
     // Dev hardcoded bypass
-    if (email === DEV_USERNAME && password === DEV_PASSWORD) {
+    if (username === DEV_USERNAME && password === DEV_PASSWORD) {
       setUser(DEV_USER)
       setProfile(DEV_PROFILE)
       setSession({ user: DEV_USER } as unknown as Session)
       return { error: null }
     }
+    // Look up email by username (full_name) via secure RPC
+    const { data: email, error: lookupError } = await supabase.rpc('get_email_by_username', { p_username: username })
+    if (lookupError || !email) return { error: 'Username not found.' }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error: error?.message ?? null }
   }, [])

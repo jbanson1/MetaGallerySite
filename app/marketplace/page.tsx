@@ -2,7 +2,7 @@ import Link from 'next/link'
 import styles from './marketplace.module.css'
 
 export const metadata = {
-  title: 'Marketplace — Meta Gallery',
+  title: 'Marketplace — Confidential Gallery',
   description: 'Discover and collect unique artworks, limited prints, and exclusive merchandise from galleries and artists worldwide.',
 }
 
@@ -15,7 +15,7 @@ export default function MarketplacePage() {
           <span>Marketplace</span>
         </div>
         <h1>Collect <em className={styles.serifItalic}>extraordinary</em> art</h1>
-        <p>Discover unique originals, limited edition prints, and exclusive merchandise from galleries and artists using Meta Gallery.</p>
+        <p>Discover unique originals, limited edition prints, and exclusive merchandise from galleries and artists using Confidential Gallery.</p>
       </header>
 
       {/* Marketplace Filters */}
@@ -42,7 +42,7 @@ export default function MarketplacePage() {
         <div className={styles.featuredContent}>
           <span className={styles.featuredTag}>Featured Collection</span>
           <h2>Emerging Voices 2025</h2>
-          <p>A curated collection from 12 breakthrough artists. Each piece includes exclusive AR content viewable through Meta Gallery.</p>
+          <p>A curated collection from 12 breakthrough artists. Each piece includes exclusive AR content viewable through Confidential Gallery.</p>
           <Link href="#" className={styles.btnPrimary}>
             <span>Explore Collection</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -319,7 +319,7 @@ export default function MarketplacePage() {
             <div className={styles.sectionTag}>
               <span>For Artists & Galleries</span>
             </div>
-            <h2>Sell with <em className={styles.serifItalic}>Meta Gallery</em></h2>
+            <h2>Sell with <em className={styles.serifItalic}>Confidential Gallery</em></h2>
             <p className={styles.sellDescription}>
               Join our marketplace and reach collectors worldwide. List original works, limited prints, or AR-enhanced collectibles. We handle payments, shipping coordination, and provide AR tools to make your work stand out.
             </p>

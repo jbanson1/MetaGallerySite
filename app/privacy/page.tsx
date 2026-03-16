@@ -2,8 +2,8 @@ import Link from 'next/link'
 import styles from './privacy.module.css'
 
 export const metadata = {
-  title: 'Privacy Policy — Meta Gallery',
-  description: 'Learn how Meta Gallery collects, uses, and protects your personal information.',
+  title: 'Privacy Policy — Confidential Gallery',
+  description: 'Learn how Confidential Gallery collects, uses, and protects your personal information.',
 }
 
 export default function PrivacyPage() {
@@ -44,10 +44,10 @@ export default function PrivacyPage() {
             <article id="introduction" className={styles.section}>
               <h2>Introduction</h2>
               <p>
-                Meta Gallery ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, mobile application, and AR services (collectively, the "Platform").
+                Confidential Gallery ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, mobile application, and AR services (collectively, the "Platform").
               </p>
               <p>
-                By using Meta Gallery, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our Platform.
+                By using Confidential Gallery, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our Platform.
               </p>
             </article>
 
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
                 <li><strong>Withdraw Consent:</strong> Withdraw consent at any time where processing is based on consent.</li>
               </ul>
               <p>
-                To exercise any of these rights, please contact us at <a href="mailto:privacy@metagallery.art">privacy@metagallery.art</a>. We will respond to your request within 30 days.
+                To exercise any of these rights, please contact us at <a href="mailto:hello@theconfidential.gallery">hello@theconfidential.gallery</a>. We will respond to your request within 30 days.
               </p>
             </article>
 
@@ -180,11 +180,11 @@ export default function PrivacyPage() {
               <h2>Contact Us</h2>
               <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
               <div className={styles.contactCard}>
-                <p><strong>Meta Gallery Ltd</strong></p>
+                <p><strong>Confidential Gallery Ltd</strong></p>
                 <p>123 Art Street</p>
                 <p>London, EC1A 1BB</p>
                 <p>United Kingdom</p>
-                <p>Email: <a href="mailto:privacy@metagallery.art">privacy@metagallery.art</a></p>
+                <p>Email: <a href="mailto:hello@theconfidential.gallery">hello@theconfidential.gallery</a></p>
               </div>
             </article>
 
@@ -207,7 +207,7 @@ export default function PrivacyPage() {
               </svg>
               <div>
                 <span className={styles.relatedTitle}>Terms of Service</span>
-                <span className={styles.relatedDesc}>Rules and guidelines for using Meta Gallery</span>
+                <span className={styles.relatedDesc}>Rules and guidelines for using Confidential Gallery</span>
               </div>
             </Link>
             <Link href="/cookies" className={styles.relatedLink}>

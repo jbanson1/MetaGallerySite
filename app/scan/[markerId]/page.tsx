@@ -281,7 +281,7 @@ export default function ScanDetailPage() {
                   </span>
                 </div>
                 <a
-                  href={`mailto:hello@metagallery.art?subject=Enquiry: ${encodeURIComponent(artwork.title)}&body=I'm interested in purchasing "${artwork.title}" by ${artwork.artist_name} (Ref: ${markerId}).`}
+                  href={`mailto:hello@theconfidential.gallery?subject=Enquiry: ${encodeURIComponent(artwork.title)}&body=I'm interested in purchasing "${artwork.title}" by ${artwork.artist_name} (Ref: ${markerId}).`}
                   className={styles.enquireBtn}
                 >
                   Enquire
@@ -336,7 +336,7 @@ export default function ScanDetailPage() {
       {/* Footer */}
       <footer className={styles.scanFooter}>
         <Link href="/scan" className={styles.footerBrand}>
-          <span className={styles.footerLogo}>MG</span>
+          <span className={styles.footerLogo}>CG</span>
           <span>Scan another</span>
         </Link>
         <span className={styles.footerTagline}>AR Art Guides</span>

@@ -52,7 +52,7 @@ function NewsletterForm() {
         placeholder="Enter your email" 
         required 
       />
-      <input type="hidden" name="_subject" value="New Meta Gallery Events Subscriber" />
+      <input type="hidden" name="_subject" value="New Confidential Gallery Events Subscriber" />
       <button type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Subscribing...' : 'Subscribe'}
       </button>
@@ -132,7 +132,7 @@ export default function EventsPage() {
                 </div>
               </div>
               <h3>AR for Artists: Creating Digital Overlays</h3>
-              <p>Learn how to enhance your physical artwork with digital layers. This hands-on workshop covers AR basics, storytelling techniques, and using Meta Gallery&apos;s creator tools.</p>
+              <p>Learn how to enhance your physical artwork with digital layers. This hands-on workshop covers AR basics, storytelling techniques, and using Confidential Gallery&apos;s creator tools.</p>
               <div className={styles.eventMeta}>
                 <div className={styles.eventLocation}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -256,7 +256,7 @@ export default function EventsPage() {
                 </div>
               </div>
               <h3>Gallery Owner Masterclass</h3>
-              <p>A deep-dive session for gallery owners and curators on implementing Meta Gallery. Covers setup, best practices, visitor engagement strategies, and measuring success.</p>
+              <p>A deep-dive session for gallery owners and curators on implementing Confidential Gallery. Covers setup, best practices, visitor engagement strategies, and measuring success.</p>
               <div className={styles.eventMeta}>
                 <div className={styles.eventLocation}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -313,7 +313,7 @@ export default function EventsPage() {
       <section className={styles.newsletter}>
         <div className={styles.newsletterContainer}>
           <h2>Stay in the <em className={styles.serifItalic}>loop</em></h2>
-          <p>Get notified about upcoming events, charity initiatives, and the latest from Meta Gallery.</p>
+          <p>Get notified about upcoming events, charity initiatives, and the latest from Confidential Gallery.</p>
           <NewsletterForm />
           <p className={styles.formNote}>Join 2,400+ art lovers. No spam, unsubscribe anytime.</p>
         </div>
