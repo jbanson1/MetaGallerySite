@@ -91,16 +91,16 @@ export default function SignupPage() {
 
         <div className={styles.modeTabs}>
           <button
-            className={`${styles.modeTab} ${mode === 'signup' ? styles.modeTabActive : ''}`}
-            onClick={() => { setMode('signup'); setError('') }}
-          >
-            Create account
-          </button>
-          <button
             className={`${styles.modeTab} ${mode === 'login' ? styles.modeTabActive : ''}`}
             onClick={() => { setMode('login'); setError('') }}
           >
             Sign in
+          </button>
+          <button
+            className={`${styles.modeTab} ${mode === 'signup' ? styles.modeTabActive : ''}`}
+            onClick={() => { setMode('signup'); setError('') }}
+          >
+            Create account
           </button>
         </div>
 
