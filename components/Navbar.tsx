@@ -155,12 +155,12 @@ export default function Navbar() {
           <div className="mobile-theme-toggle"><ThemeToggleButton showLabel /></div>
 
           {isLoggedIn ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="nav-auth-buttons">
               <Link href="/account" className="nav-cta" onClick={closeMenu}>My Account</Link>
               <button className="nav-cta" style={{ background: 'transparent', cursor: 'pointer' }} onClick={handleLogout}>Sign out</button>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <div className="nav-auth-buttons">
               <button className="nav-cta" onClick={openLoginModal}>Sign in</button>
               <Link href="/signup" className="nav-cta" style={{ textAlign: 'center' }} onClick={closeMenu}>Create account</Link>
             </div>
