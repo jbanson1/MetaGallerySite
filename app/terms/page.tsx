@@ -2,8 +2,8 @@ import Link from 'next/link'
 import styles from './terms.module.css'
 
 export const metadata = {
-  title: 'Terms of Service — Confidential Gallery',
-  description: 'Terms and conditions for using Confidential Gallery platform and services.',
+  title: 'Terms of Service — The Confidential Gallery',
+  description: 'Terms and conditions for using The Confidential Gallery platform and services.',
 }
 
 export default function TermsPage() {
@@ -51,7 +51,7 @@ export default function TermsPage() {
             <article id="acceptance" className={styles.section}>
               <h2>1. Acceptance of Terms</h2>
               <p>
-                Welcome to Confidential Gallery. These Terms of Service ("Terms") govern your access to and use of the Confidential Gallery website, mobile applications, AR services, and any related services (collectively, the "Platform") operated by Confidential Gallery Ltd ("we," "our," or "us").
+                Welcome to The Confidential Gallery. These Terms of Service ("Terms") govern your access to and use of the The Confidential Gallery website, mobile applications, AR services, and any related services (collectively, the "Platform") operated by The Confidential Gallery Ltd ("we," "our," or "us").
               </p>
               <p>
                 By accessing or using our Platform, you agree to be bound by these Terms and our Privacy Policy. If you do not agree to these Terms, you may not access or use the Platform.
@@ -95,7 +95,7 @@ export default function TermsPage() {
             <article id="platform-use" className={styles.section}>
               <h2>4. Use of the Platform</h2>
               <p>
-                Confidential Gallery provides an augmented reality platform that enables galleries, museums, and artists to enhance visitor experiences with digital overlays, audio guides, and interactive content.
+                The Confidential Gallery provides an augmented reality platform that enables galleries, museums, and artists to enhance visitor experiences with digital overlays, audio guides, and interactive content.
               </p>
               <h3>Permitted Uses</h3>
               <p>You may use the Platform to:</p>
@@ -125,7 +125,7 @@ export default function TermsPage() {
               </p>
               <h3>Content Ownership</h3>
               <p>
-                You retain ownership of all artwork images, descriptions, audio guides, and other content you upload to the Platform. By uploading content, you grant Confidential Gallery a non-exclusive, worldwide, royalty-free licence to display, distribute, and promote your content in connection with the Platform.
+                You retain ownership of all artwork images, descriptions, audio guides, and other content you upload to the Platform. By uploading content, you grant The Confidential Gallery a non-exclusive, worldwide, royalty-free licence to display, distribute, and promote your content in connection with the Platform.
               </p>
               <h3>Accuracy of Information</h3>
               <p>
@@ -154,38 +154,38 @@ export default function TermsPage() {
             <article id="marketplace" className={styles.section}>
               <h2>7. Marketplace Terms</h2>
               <p>
-                The Confidential Gallery Marketplace allows artists and galleries to sell original works, prints, and merchandise.
+                The The Confidential Gallery Marketplace allows artists and galleries to sell original works, prints, and merchandise.
               </p>
               <h3>For Sellers</h3>
               <ul>
                 <li>You must accurately describe all items, including condition, dimensions, and materials</li>
                 <li>You are responsible for packaging, shipping, and delivery</li>
                 <li>You must honour all confirmed orders unless there are exceptional circumstances</li>
-                <li>Confidential Gallery charges a 10% commission on completed sales</li>
+                <li>The Confidential Gallery charges a 10% commission on completed sales</li>
                 <li>Payouts are processed within 7 business days of delivery confirmation</li>
               </ul>
               <h3>For Buyers</h3>
               <ul>
-                <li>All sales are between you and the seller; Confidential Gallery facilitates the transaction</li>
+                <li>All sales are between you and the seller; The Confidential Gallery facilitates the transaction</li>
                 <li>You agree to pay the listed price plus any applicable shipping and taxes</li>
                 <li>Refunds and returns are subject to the seller's stated policy</li>
-                <li>Disputes should first be raised with the seller before contacting Confidential Gallery</li>
+                <li>Disputes should first be raised with the seller before contacting The Confidential Gallery</li>
               </ul>
               <h3>Buyer Protection</h3>
               <p>
-                Confidential Gallery offers buyer protection for qualifying purchases. If an item is significantly not as described or fails to arrive, you may be eligible for a full refund. Claims must be filed within 14 days of expected delivery.
+                The Confidential Gallery offers buyer protection for qualifying purchases. If an item is significantly not as described or fails to arrive, you may be eligible for a full refund. Claims must be filed within 14 days of expected delivery.
               </p>
             </article>
 
             <article id="intellectual-property" className={styles.section}>
               <h2>8. Intellectual Property</h2>
-              <h3>Confidential Gallery IP</h3>
+              <h3>The Confidential Gallery IP</h3>
               <p>
-                The Platform, including its design, features, code, and branding, is owned by Confidential Gallery Ltd and protected by intellectual property laws. You may not copy, modify, or create derivative works without our written permission.
+                The Platform, including its design, features, code, and branding, is owned by The Confidential Gallery Ltd and protected by intellectual property laws. You may not copy, modify, or create derivative works without our written permission.
               </p>
               <h3>Trademarks</h3>
               <p>
-                "Confidential Gallery," our logo, and other marks are trademarks of Confidential Gallery Ltd. You may not use these marks without our prior written consent.
+                "The Confidential Gallery," our logo, and other marks are trademarks of The Confidential Gallery Ltd. You may not use these marks without our prior written consent.
               </p>
               <h3>Feedback</h3>
               <p>
@@ -239,7 +239,7 @@ export default function TermsPage() {
               </p>
               <h3>Commission</h3>
               <p>
-                Confidential Gallery charges a 10% commission on all Marketplace sales. This fee is deducted from the sale price before payout to the seller.
+                The Confidential Gallery charges a 10% commission on all Marketplace sales. This fee is deducted from the sale price before payout to the seller.
               </p>
               <h3>Payment Processing</h3>
               <p>
@@ -310,7 +310,7 @@ export default function TermsPage() {
             <article id="indemnification" className={styles.section}>
               <h2>15. Indemnification</h2>
               <p>
-                You agree to indemnify, defend, and hold harmless Confidential Gallery and its officers, directors, employees, agents, and affiliates from any claims, damages, losses, liabilities, costs, and expenses (including legal fees) arising from:
+                You agree to indemnify, defend, and hold harmless The Confidential Gallery and its officers, directors, employees, agents, and affiliates from any claims, damages, losses, liabilities, costs, and expenses (including legal fees) arising from:
               </p>
               <ul>
                 <li>Your use of the Platform</li>
@@ -351,7 +351,7 @@ export default function TermsPage() {
               <h2>18. Contact Information</h2>
               <p>If you have any questions about these Terms, please contact us:</p>
               <div className={styles.contactCard}>
-                <p><strong>Confidential Gallery Ltd</strong></p>
+                <p><strong>The Confidential Gallery Ltd</strong></p>
                 <p>123 Art Street</p>
                 <p>London, EC1A 1BB</p>
                 <p>United Kingdom</p>
