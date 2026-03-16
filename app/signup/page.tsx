@@ -15,6 +15,7 @@ export default function SignupPage() {
   const [step, setStep] = useState<Step>('form')
   const [mode, setMode] = useState<'signup' | 'login'>('signup')
   const [fullName, setFullName] = useState('')
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -24,6 +25,14 @@ export default function SignupPage() {
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+    if (!username.trim()) {
+      setError('Please choose a username.')
+      return
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      setError('Username can only contain letters, numbers, and underscores.')
+      return
+    }
     if (password !== confirmPassword) {
       setError('Passwords do not match.')
       return
@@ -33,7 +42,7 @@ export default function SignupPage() {
       return
     }
     setLoading(true)
-    const { error, needsConfirmation } = await signUp(email, password, fullName)
+    const { error, needsConfirmation } = await signUp(email, password, fullName, username)
     setLoading(false)
     if (error) {
       setError(error)
@@ -115,6 +124,15 @@ export default function SignupPage() {
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Your name"
                   autoComplete="name" autoFocus
+                />
+              </div>
+              <div className={styles.field}>
+                <label htmlFor="username">Username</label>
+                <input
+                  id="username" type="text" value={username} required
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="e.g. artlover_42"
+                  autoComplete="username"
                 />
               </div>
               <div className={styles.field}>
