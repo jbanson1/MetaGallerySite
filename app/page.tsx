@@ -70,7 +70,7 @@ function WaitlistForm({ styles }: { styles: any }) {
           <option value="other">Other</option>
         </select>
       </div>
-      <input type="hidden" name="_subject" value="New Meta Gallery Waitlist Signup" />
+      <input type="hidden" name="_subject" value="New Confidential Gallery Waitlist Signup" />
       <button type="submit" className={styles.btnPrimary} disabled={isSubmitting}>
         <span>{isSubmitting ? 'Joining...' : 'Join the Waitlist'}</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -100,7 +100,7 @@ export default function Home() {
               <span className={styles.line}><span>your gallery</span></span>
             </h1>
             <p className={styles.heroDescription}>
-              Meta Gallery brings artwork to life with AR overlays, audio guides, and instant access to rich context. No app download required.
+              Confidential Gallery brings artwork to life with AR overlays, audio guides, and instant access to rich context. No app download required.
             </p>
             <div className={styles.heroButtons}>
               <Link href="#how-it-works" className={styles.btnPrimary}>
@@ -210,7 +210,7 @@ export default function Home() {
       <section className={styles.features} id="features">
         <div className={styles.sectionHeader}>
           <div className={styles.sectionTag}>
-            <span>Why Meta Gallery</span>
+            <span>Why Confidential Gallery</span>
           </div>
           <h2>Everything you need to create <em className={styles.serifItalic}>unforgettable</em> gallery visits</h2>
           <p>A complete platform for galleries, museums, and artists to enhance the visitor experience with AR technology.</p>
@@ -332,7 +332,7 @@ export default function Home() {
             </div>
             <h2>Technology with <em className={styles.serifItalic}>purpose</em></h2>
             <p className={styles.givingDescription}>
-              We believe art has the power to change lives. That&apos;s why 10% of all Meta Gallery proceeds go directly to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
+              We believe art has the power to change lives. That&apos;s why 10% of all Confidential Gallery proceeds go directly to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
             </p>
             <div className={styles.givingFeatures}>
               <div className={styles.givingFeature}>
@@ -362,7 +362,7 @@ export default function Home() {
                 </svg>
                 <div>
                   <h4>Community Access</h4>
-                  <p>Free Meta Gallery access for non-profit galleries and community spaces</p>
+                  <p>Free Confidential Gallery access for non-profit galleries and community spaces</p>
                 </div>
               </div>
             </div>
@@ -380,7 +380,7 @@ export default function Home() {
       <section className={styles.cta} id="waitlist">
         <div className={styles.ctaContent}>
           <h2>Ready to transform your <em className={styles.serifItalic}>gallery?</em></h2>
-          <p>Join forward-thinking galleries and museums already using Meta Gallery to create deeper connections between visitors and art.</p>
+          <p>Join forward-thinking galleries and museums already using Confidential Gallery to create deeper connections between visitors and art.</p>
           
           <WaitlistForm styles={styles} />
           

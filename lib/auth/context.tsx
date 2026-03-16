@@ -17,7 +17,7 @@ const DEV_USERNAME = 'Admin'
 const DEV_PASSWORD = 'CG2026!'
 const DEV_USER = {
   id: 'dev-admin-000',
-  email: 'admin@metagallery.dev',
+  email: 'admin@theconfidential.gallery',
   app_metadata: {},
   user_metadata: { full_name: 'Admin' },
   aud: 'authenticated',

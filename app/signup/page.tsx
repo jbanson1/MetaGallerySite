@@ -87,7 +87,7 @@ export default function SignupPage() {
   return (
     <div className={styles.page}>
       <div className={styles.card}>
-        <Link href="/" className={styles.logo}>Meta Gallery</Link>
+        <Link href="/" className={styles.logo}>Confidential Gallery</Link>
 
         <div className={styles.modeTabs}>
           <button
@@ -106,7 +106,7 @@ export default function SignupPage() {
 
         {mode === 'signup' ? (
           <>
-            <p className={styles.subtitle}>Join Meta Gallery to track your scans and explore art.</p>
+            <p className={styles.subtitle}>Join Confidential Gallery to track your scans and explore art.</p>
             <form onSubmit={handleSignup} className={styles.form}>
               <div className={styles.field}>
                 <label htmlFor="fullName">Full name</label>
