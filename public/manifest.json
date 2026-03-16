@@ -1,6 +1,6 @@
 {
-  "name": "Confidential Gallery",
-  "short_name": "Confidential Gallery",
+  "name": "The Confidential Gallery",
+  "short_name": "The Confidential Gallery",
   "description": "AR art guide — scan QR codes to explore artworks, hear audio guides, and discover stories behind the art.",
   "start_url": "/scan",
   "scope": "/",
