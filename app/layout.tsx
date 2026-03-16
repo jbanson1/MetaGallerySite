@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import SiteShell from '@/components/SiteShell'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
+import { AuthProvider } from '@/lib/auth/context'
 
 export const metadata: Metadata = {
   title: 'Meta Gallery — AR Art Guide',
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
       <body>
-        <SiteShell>{children}</SiteShell>
+        <AuthProvider>
+          <SiteShell>{children}</SiteShell>
+        </AuthProvider>
         <ServiceWorkerRegistration />
       </body>
     </html>

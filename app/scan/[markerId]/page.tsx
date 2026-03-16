@@ -1,11 +1,21 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { useArtwork } from '@/lib/hooks/useArtwork'
 import { useOffline } from '@/lib/hooks/useOffline'
+import { supabase } from '@/lib/supabase'
 import styles from './scan.module.css'
+
+interface ProcessMedia {
+  id: string
+  media_type: 'image' | 'video'
+  url: string
+  thumbnail_url: string | null
+  caption: string | null
+  sort_order: number
+}
 
 export default function ScanDetailPage() {
   const { markerId } = useParams<{ markerId: string }>()
@@ -16,7 +26,21 @@ export default function ScanDetailPage() {
   const [audioProgress, setAudioProgress] = useState(0)
   const [audioDuration, setAudioDuration] = useState(0)
   const [activeTab, setActiveTab] = useState<'about' | 'details'>('about')
+  const [processMedia, setProcessMedia] = useState<ProcessMedia[]>([])
+  const [lightboxItem, setLightboxItem] = useState<ProcessMedia | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    if (!artwork?.id) return
+    supabase
+      .from('artwork_process_media')
+      .select('id, media_type, url, thumbnail_url, caption, sort_order')
+      .eq('artwork_id', artwork.id)
+      .order('sort_order', { ascending: true })
+      .then(({ data }) => {
+        if (data) setProcessMedia(data as ProcessMedia[])
+      })
+  }, [artwork?.id])
 
   // Audio controls
   function togglePlay() {
@@ -268,6 +292,47 @@ export default function ScanDetailPage() {
         )}
       </div>
 
+      {/* Making Of */}
+      {processMedia.length > 0 && (
+        <div className={styles.makingOf}>
+          <h2 className={styles.makingOfTitle}>The Making Of</h2>
+          <div className={styles.processGrid}>
+            {processMedia.map((item) => (
+              <button
+                key={item.id}
+                className={styles.processItem}
+                onClick={() => setLightboxItem(item)}
+                aria-label={item.caption ?? 'View process media'}
+              >
+                {item.media_type === 'video' ? (
+                  <>
+                    <img
+                      src={item.thumbnail_url ?? item.url}
+                      alt={item.caption ?? ''}
+                      className={styles.processThumb}
+                    />
+                    <div className={styles.videoPlayOverlay}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                      </svg>
+                    </div>
+                  </>
+                ) : (
+                  <img
+                    src={item.url}
+                    alt={item.caption ?? ''}
+                    className={styles.processThumb}
+                  />
+                )}
+                {item.caption && (
+                  <span className={styles.processCaption}>{item.caption}</span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <footer className={styles.scanFooter}>
         <Link href="/scan" className={styles.footerBrand}>
@@ -276,6 +341,37 @@ export default function ScanDetailPage() {
         </Link>
         <span className={styles.footerTagline}>AR Art Guides</span>
       </footer>
+
+      {/* Lightbox */}
+      {lightboxItem && (
+        <div className={styles.lightboxOverlay} onClick={() => setLightboxItem(null)}>
+          <button className={styles.lightboxClose} onClick={() => setLightboxItem(null)} aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+          <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
+            {lightboxItem.media_type === 'video' ? (
+              <video
+                src={lightboxItem.url}
+                controls
+                autoPlay
+                className={styles.lightboxMedia}
+                poster={lightboxItem.thumbnail_url ?? undefined}
+              />
+            ) : (
+              <img
+                src={lightboxItem.url}
+                alt={lightboxItem.caption ?? ''}
+                className={styles.lightboxMedia}
+              />
+            )}
+            {lightboxItem.caption && (
+              <p className={styles.lightboxCaption}>{lightboxItem.caption}</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

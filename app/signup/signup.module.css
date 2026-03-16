@@ -1,0 +1,185 @@
+/* ─── Signup / Login Page ───────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--ink);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.logo:hover { color: var(--gold); }
+
+/* ─── Mode tabs ─── */
+
+.modeTabs {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+}
+
+.modeTab {
+  flex: 1;
+  padding: 0.75rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.modeTab:hover { color: var(--cream); }
+.modeTabActive { color: var(--cream); border-bottom-color: var(--gold); }
+
+/* ─── Subtitle ─── */
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--smoke);
+  text-align: center;
+  margin-top: -0.5rem;
+}
+
+/* ─── Form ─── */
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--smoke);
+}
+
+.field input {
+  background: rgba(248, 246, 241, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  color: var(--cream);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.field input:focus { border-color: var(--gold); }
+.field input::placeholder { color: var(--smoke); opacity: 0.6; }
+
+/* ─── Error ─── */
+
+.error {
+  font-size: 0.825rem;
+  color: #e05c5c;
+  padding: 0.5rem 0.75rem;
+  background: rgba(224, 92, 92, 0.08);
+  border: 1px solid rgba(224, 92, 92, 0.2);
+  border-radius: 6px;
+}
+
+/* ─── Submit button ─── */
+
+.submitBtn {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 0.25rem;
+}
+.submitBtn:hover:not(:disabled) { opacity: 0.88; }
+.submitBtn:active:not(:disabled) { transform: scale(0.99); }
+.submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── Legal text ─── */
+
+.legal {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  text-align: center;
+  line-height: 1.5;
+}
+.legal a { color: var(--smoke); text-decoration: underline; }
+.legal a:hover { color: var(--cream); }
+
+/* ─── Confirmation screen ─── */
+
+.confirmIcon {
+  color: var(--gold);
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--cream);
+  text-align: center;
+}
+
+.confirmHint {
+  font-size: 0.825rem;
+  color: var(--smoke);
+  text-align: center;
+}
+
+.inlineBtn {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.backHome {
+  font-size: 0.85rem;
+  color: var(--smoke);
+  text-decoration: none;
+  transition: color 0.2s;
+  margin-top: 0.5rem;
+}
+.backHome:hover { color: var(--cream); }
