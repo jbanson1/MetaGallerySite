@@ -12,6 +12,26 @@ export interface Profile {
   bio: string | null
 }
 
+// ─── DEV HARDCODED ACCOUNT ───────────────────────────────────────────────────
+const DEV_USERNAME = 'Admin'
+const DEV_PASSWORD = 'CG2026!'
+const DEV_USER = {
+  id: 'dev-admin-000',
+  email: 'admin@metagallery.dev',
+  app_metadata: {},
+  user_metadata: { full_name: 'Admin' },
+  aud: 'authenticated',
+  created_at: new Date().toISOString(),
+} as unknown as User
+const DEV_PROFILE: Profile = {
+  id: 'dev-admin-000',
+  full_name: 'Admin',
+  avatar_url: null,
+  location: null,
+  bio: null,
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 interface AuthContextValue {
   user: User | null
   session: Session | null
@@ -67,6 +87,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [fetchProfile])
 
   const signIn = useCallback(async (email: string, password: string) => {
+    // Dev hardcoded bypass
+    if (email === DEV_USERNAME && password === DEV_PASSWORD) {
+      setUser(DEV_USER)
+      setProfile(DEV_PROFILE)
+      setSession({ user: DEV_USER } as unknown as Session)
+      return { error: null }
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error: error?.message ?? null }
   }, [])
@@ -87,11 +114,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const signOut = useCallback(async () => {
+    if (user?.id === DEV_USER.id) {
+      setUser(null)
+      setSession(null)
+      setProfile(null)
+      return
+    }
     await supabase.auth.signOut()
-  }, [])
+  }, [user])
 
   const updateProfile = useCallback(async (updates: Partial<Omit<Profile, 'id'>>) => {
     if (!user) return { error: 'Not signed in' }
+    // Dev account: update state only, no DB call
+    if (user.id === DEV_USER.id) {
+      setProfile((prev) => prev ? { ...prev, ...updates } : prev)
+      return { error: null }
+    }
     const { error } = await supabase
       .from('profiles')
       .update({ ...updates, updated_at: new Date().toISOString() })
