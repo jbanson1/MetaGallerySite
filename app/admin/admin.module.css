@@ -1,0 +1,742 @@
+/* ─── Admin Dashboard ─────────────────────────────────────────── */
+
+/* ─── Load / auth screens ─── */
+
+.loadScreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.noGalleryMsg {
+  color: var(--smoke);
+  text-align: center;
+  max-width: 320px;
+}
+
+/* ─── Login screen ─── */
+
+.loginScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--ink);
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 400px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loginLogo {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.loginTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.loginSubtitle {
+  font-size: 0.875rem;
+  color: var(--smoke);
+  text-align: center;
+}
+
+.loginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.loginError {
+  font-size: 0.825rem;
+  color: #e05c5c;
+}
+
+.loginBtn {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.loginBtn:hover:not(:disabled) { opacity: 0.85; }
+.loginBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── Admin layout ─── */
+
+.adminLayout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+/* ─── Sidebar ─── */
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebarLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.logoMark {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.logoLabel {
+  font-size: 0.8rem;
+  color: var(--smoke);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.galleryLabel {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  padding: 0.25rem 0.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 1.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navItem:hover { background: var(--glass); color: var(--cream); }
+.navActive { background: var(--card-bg); color: var(--cream); font-weight: 500; }
+.navActive .navIcon { color: var(--gold); }
+
+.navIcon { font-size: 0.75rem; }
+
+.logoutSideBtn {
+  margin-top: auto;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.logoutSideBtn:hover { color: var(--cream); border-color: var(--cream-muted); }
+
+.logoutBtn {
+  padding: 0.5rem 1.25rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+/* ─── Main content ─── */
+
+.main {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.section {
+  padding: 2rem;
+  max-width: 900px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.pageTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.pageSubtitle {
+  font-size: 0.875rem;
+  color: var(--smoke);
+}
+
+/* ─── Stats ─── */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.statValue {
+  font-family: var(--font-playfair), serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── Recent panel / table ─── */
+
+.recentPanel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.panelTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  color: var(--smoke);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.table td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--cream-muted);
+}
+
+.table tr:last-child td { border-bottom: none; }
+
+.code {
+  font-family: monospace;
+  font-size: 0.8rem;
+  background: var(--glass);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+}
+
+.dimText { color: var(--smoke); }
+
+.emptyMsg {
+  color: var(--smoke);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+/* ─── Artwork grid ─── */
+
+.artworkGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.artworkCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.inactiveCard { opacity: 0.55; }
+
+.artworkCardBody {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.artworkCardInfo {
+  flex: 1;
+}
+
+.artworkCardTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.artworkCardArtist {
+  font-size: 0.875rem;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+}
+
+.artworkCardMedium {
+  font-size: 0.8rem;
+  color: var(--smoke);
+  font-style: italic;
+}
+
+.artworkCardCompact {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--smoke);
+  font-style: italic;
+}
+
+.artworkCardBadges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.badgeActive   { background: rgba(100, 200, 100, 0.12); color: #6ec97a; border: 1px solid rgba(100, 200, 100, 0.2); }
+.badgeInactive { background: rgba(200, 100, 100, 0.1);  color: #c97a7a; border: 1px solid rgba(200, 100, 100, 0.2); }
+.badgeSale     { background: rgba(201, 162, 39, 0.1);   color: var(--gold); border: 1px solid rgba(201, 162, 39, 0.2); }
+
+.artworkCardActions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+}
+
+.actionBtn {
+  padding: 0.35rem 0.875rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.actionBtn:hover { color: var(--cream); border-color: var(--cream-muted); }
+
+.deleteBtn:hover { color: #e05c5c; border-color: #e05c5c; }
+
+.emptyState {
+  padding: 2rem;
+  text-align: center;
+  color: var(--smoke);
+  font-size: 0.875rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* ─── Markers ─── */
+
+.markerList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.markerCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.markerCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.markerIdLarge {
+  font-family: monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+}
+
+.markerLabel {
+  margin-left: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--smoke);
+}
+
+.markerArtwork {
+  font-size: 0.875rem;
+  color: var(--cream-muted);
+}
+
+.markerUrl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+}
+
+.markerUrlText {
+  flex: 1;
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--smoke);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  padding: 0.2rem 0.6rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.copyBtn:hover { opacity: 0.85; }
+
+.markerHint {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  font-style: italic;
+}
+
+/* ─── Forms ─── */
+
+.formCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.formTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.formField label {
+  font-size: 0.8rem;
+  color: var(--smoke);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.formField input,
+.formField textarea,
+.formField select {
+  background: var(--ink);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.875rem;
+  color: var(--cream);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.formField input:focus,
+.formField textarea:focus,
+.formField select:focus {
+  border-color: var(--gold);
+}
+
+.formField textarea {
+  resize: vertical;
+}
+
+.formField select option {
+  background: #1a1a1a;
+}
+
+.charCount {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  margin-left: auto;
+}
+
+.charOver { color: #e05c5c; }
+
+.formCheckboxRow {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--cream-muted);
+  cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.fileInput {
+  font-size: 0.8rem !important;
+  padding: 0.4rem 0.5rem !important;
+}
+
+.formError {
+  font-size: 0.825rem;
+  color: #e05c5c;
+}
+
+.uploadProgress {
+  font-size: 0.825rem;
+  color: var(--gold);
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+/* ─── Buttons ─── */
+
+.primaryBtn {
+  padding: 0.6rem 1.375rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.primaryBtn:hover:not(:disabled) { opacity: 0.85; }
+.primaryBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cancelBtn {
+  padding: 0.6rem 1.375rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.cancelBtn:hover:not(:disabled) { color: var(--cream); }
+.cancelBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── Responsive: collapse sidebar on mobile ─── */
+@media (max-width: 640px) {
+  .adminLayout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    gap: 0.5rem;
+  }
+
+  .navList {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .galleryLabel,
+  .logoutSideBtn {
+    display: none;
+  }
+
+  .sidebarLogo {
+    margin-bottom: 0;
+  }
+
+  .section {
+    padding: 1.25rem;
+  }
+}

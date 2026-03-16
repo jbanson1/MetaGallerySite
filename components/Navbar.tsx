@@ -143,21 +143,41 @@ export default function Navbar() {
           <ThemeToggleButton />
         </div>
         
-        <button 
-          className="menu-toggle" 
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className="menu-bar"></span>
-          <span className="menu-bar"></span>
-          <span className="menu-bar"></span>
-        </button>
+        {/* Right-side group: scan button (mobile, logged-in) stacked above hamburger */}
+        <div className="nav-right-group">
+          {isLoggedIn && (
+            <Link
+              href="/scan"
+              className={`scan-icon-btn ${isActive('/scan') ? 'active' : ''}`}
+              aria-label="Scan QR code"
+              onClick={closeMenu}
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
+              </svg>
+              <span>Scan</span>
+            </Link>
+          )}
+
+          <button
+            className="menu-toggle"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className="menu-bar"></span>
+            <span className="menu-bar"></span>
+            <span className="menu-bar"></span>
+          </button>
+        </div>
 
         <div className={`nav-menu ${menuOpen ? 'open' : ''}`}>
           <ul className="nav-links">
             <li>
-              <Link 
-                href="/artists" 
+              <Link
+                href="/artists"
                 className={isActive('/artists') ? 'active' : ''}
                 onClick={closeMenu}
               >
@@ -165,8 +185,8 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link 
-                href="/marketplace" 
+              <Link
+                href="/marketplace"
                 className={isActive('/marketplace') ? 'active' : ''}
                 onClick={closeMenu}
               >
@@ -174,14 +194,32 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link 
-                href="/events" 
+              <Link
+                href="/events"
                 className={isActive('/events') ? 'active' : ''}
                 onClick={closeMenu}
               >
                 Events
               </Link>
             </li>
+            {/* Desktop Scan link — only shown when logged in */}
+            {isLoggedIn && (
+              <li className="desktop-scan-link">
+                <Link
+                  href="/scan"
+                  className={`scan-desktop-btn ${isActive('/scan') ? 'active' : ''}`}
+                  onClick={closeMenu}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
+                  </svg>
+                  Scan
+                </Link>
+              </li>
+            )}
           </ul>
           
           {/* Mobile theme toggle - inside menu with label */}
