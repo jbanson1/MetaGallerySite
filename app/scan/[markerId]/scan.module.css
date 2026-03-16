@@ -1,0 +1,445 @@
+/* ─── Scan Page ─────────────────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ─── State Screens (loading / error / not found) ─── */
+
+.stateScreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 2rem;
+  text-align: center;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.stateIcon {
+  color: var(--smoke);
+}
+
+.stateHeading {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.stateText {
+  color: var(--smoke);
+  font-size: 0.925rem;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.markerCode {
+  font-family: monospace;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.stateLink {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.stateLink:hover { opacity: 0.85; }
+
+/* ─── Gallery Header ─── */
+
+.galleryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.galleryInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.galleryLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.galleryName {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--cream-muted);
+}
+
+.markerBadge {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--smoke);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* ─── Artwork Image ─── */
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.artworkImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--smoke);
+}
+
+/* ─── Content ─── */
+
+.content {
+  flex: 1;
+  padding: 1.5rem 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ─── Title block ─── */
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.artworkTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.artworkMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.artistName {
+  font-size: 1rem;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.metaDot {
+  color: var(--smoke);
+}
+
+.artworkYear {
+  font-size: 0.9rem;
+  color: var(--smoke);
+}
+
+.medium {
+  font-size: 0.8rem;
+  color: var(--smoke);
+  margin-top: 0.15rem;
+  font-style: italic;
+}
+
+/* ─── Audio Player ─── */
+
+.audioPlayer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+}
+
+.playBtn {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.playBtn:hover { opacity: 0.85; }
+.playBtn:active { transform: scale(0.95); }
+.playBtn.playing { background: var(--cream); }
+
+.audioTrack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.audioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  color: var(--smoke);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progressBar {
+  flex: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+}
+
+.progressBar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: none;
+  cursor: pointer;
+}
+
+.audioTime {
+  font-size: 0.7rem;
+  color: var(--smoke);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ─── Tabs ─── */
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+
+.tab {
+  padding: 0.625rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--smoke);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tab:hover { color: var(--cream); }
+
+.activeTab {
+  color: var(--cream);
+  border-bottom-color: var(--gold);
+}
+
+/* ─── Tab content ─── */
+
+.tabContent {
+  padding-top: 0.25rem;
+}
+
+.description {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--cream-muted);
+}
+
+.descriptionEmpty {
+  font-size: 0.875rem;
+  color: var(--smoke);
+  font-style: italic;
+}
+
+/* ─── Details tab ─── */
+
+.detailList {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+}
+
+.detailList dt {
+  color: var(--smoke);
+  font-weight: 500;
+}
+
+.detailList dd {
+  color: var(--cream-muted);
+}
+
+.markerRef {
+  font-family: monospace;
+  font-size: 0.8rem;
+}
+
+/* ─── For sale block ─── */
+
+.forSale {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.saleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.saleLabel {
+  font-size: 0.75rem;
+  color: var(--smoke);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.salePrice {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: var(--font-playfair), serif;
+  color: var(--gold);
+}
+
+.enquireBtn {
+  padding: 0.5rem 1.25rem;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.enquireBtn:hover { opacity: 0.85; }
+
+/* ─── Footer ─── */
+
+.scanFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--smoke);
+  font-size: 0.8rem;
+  transition: color 0.2s;
+}
+
+.footerBrand:hover { color: var(--cream); }
+
+.footerLogo {
+  font-family: var(--font-playfair), serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.footerTagline {
+  font-size: 0.75rem;
+  color: var(--smoke);
+}
