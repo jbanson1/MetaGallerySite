@@ -4,24 +4,22 @@ import { useState } from 'react'
 import Link from 'next/link'
 import styles from './home.module.css'
 
-function WaitlistForm({ styles }: { styles: any }) {
+function WaitlistForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+
     const form = e.currentTarget
     const formData = new FormData(form)
-    
+
     try {
       await fetch('https://formspree.io/f/xoqbqnpd', {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       })
       setIsSubmitted(true)
       form.reset()
@@ -39,7 +37,7 @@ function WaitlistForm({ styles }: { styles: any }) {
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
           <polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
-        <h3>You&apos;re on the list!</h3>
+        <h3>You&apos;re part of the movement!</h3>
         <p>Thanks for joining. We&apos;ll be in touch soon with early access details.</p>
       </div>
     )
@@ -48,18 +46,8 @@ function WaitlistForm({ styles }: { styles: any }) {
   return (
     <form className={styles.waitlistForm} onSubmit={handleSubmit}>
       <div className={styles.waitlistFields}>
-        <input 
-          type="text" 
-          name="name"
-          placeholder="Your name" 
-          required 
-        />
-        <input 
-          type="email" 
-          name="email"
-          placeholder="Email address" 
-          required 
-        />
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Email address" required />
         <select name="type" required>
           <option value="">I am a...</option>
           <option value="gallery_owner">Gallery Owner</option>
@@ -72,7 +60,7 @@ function WaitlistForm({ styles }: { styles: any }) {
       </div>
       <input type="hidden" name="_subject" value="New Confidential Gallery Waitlist Signup" />
       <button type="submit" className={styles.btnPrimary} disabled={isSubmitting}>
-        <span>{isSubmitting ? 'Joining...' : 'Join the Waitlist'}</span>
+        <span>{isSubmitting ? 'Joining...' : 'Join the Movement'}</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
@@ -88,286 +76,153 @@ export default function Home() {
       <section className={styles.hero}>
         <div className={`${styles.floatingElement} ${styles.float1}`}></div>
         <div className={`${styles.floatingElement} ${styles.float2}`}></div>
-        
-        <div className={styles.heroGrid}>
-          <div className={styles.heroContent}>
-            <div className={styles.heroTag}>
-              <span>Augmented Reality for Art</span>
-            </div>
-            <h1 className={styles.heroTitle}>
-              <span className={styles.line}><span>Transform how</span></span>
-              <span className={styles.line}><span>visitors <em>experience</em></span></span>
-              <span className={styles.line}><span>your gallery</span></span>
-            </h1>
-            <p className={styles.heroDescription}>
-              Confidential Gallery brings artwork to life with AR overlays, audio guides, and instant access to rich context. No app download required.
-            </p>
-            <div className={styles.heroButtons}>
-              <Link href="#how-it-works" className={styles.btnPrimary}>
-                <span>See How It Works</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </Link>
-              <Link href="#how-it-works" className={styles.btnSecondary}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-                Watch Demo
-              </Link>
-            </div>
+
+        <div className={styles.heroContent}>
+          <div className={styles.heroTag}>
+            <span>A New Kind of Gallery</span>
           </div>
-
-          <div className={styles.heroVisual}>
-            {/* Smart Glasses */}
-            <div className={styles.heroGlasses}>
-              <svg viewBox="0 0 400 160" className={styles.glassesSvg}>
-                <defs>
-                  <linearGradient id="lensGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style={{stopColor:'#1a1a2e', stopOpacity:0.9}} />
-                    <stop offset="50%" style={{stopColor:'#16213e', stopOpacity:0.85}} />
-                    <stop offset="100%" style={{stopColor:'#0f0f1a', stopOpacity:0.95}} />
-                  </linearGradient>
-                  <linearGradient id="frameGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style={{stopColor:'#2a2a2a'}} />
-                    <stop offset="50%" style={{stopColor:'#1a1a1a'}} />
-                    <stop offset="100%" style={{stopColor:'#0a0a0a'}} />
-                  </linearGradient>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                    <feMerge>
-                      <feMergeNode in="coloredBlur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-                
-                {/* Frame */}
-                <path d="M 20 80 Q 20 40 60 40 L 140 40 Q 180 40 185 60 L 215 60 Q 220 40 260 40 L 340 40 Q 380 40 380 80 Q 380 120 340 120 L 260 120 Q 220 120 215 100 L 185 100 Q 180 120 140 120 L 60 120 Q 20 120 20 80 Z" 
-                      fill="url(#frameGradient)" 
-                      stroke="#333" 
-                      strokeWidth="1"/>
-                
-                {/* Left lens */}
-                <rect x="35" y="50" width="130" height="60" rx="12" fill="url(#lensGradient)" className={styles.lens}/>
-                
-                {/* Right lens */}
-                <rect x="235" y="50" width="130" height="60" rx="12" fill="url(#lensGradient)" className={styles.lens}/>
-                
-                {/* AR Display on right lens */}
-                <g className={styles.arOverlay} filter="url(#glow)">
-                  <rect x="245" y="58" width="110" height="44" rx="4" fill="rgba(201, 162, 39, 0.15)" stroke="var(--gold)" strokeWidth="0.5"/>
-                  <text x="255" y="74" fill="var(--gold)" fontFamily="var(--font-playfair)" fontSize="10" fontWeight="600">Starry Night</text>
-                  <text x="255" y="88" fill="rgba(248, 246, 241, 0.7)" fontFamily="var(--font-outfit)" fontSize="7">Van Gogh · 1889</text>
-                  
-                  {/* Audio indicator */}
-                  <circle cx="340" cy="70" r="6" fill="none" stroke="var(--gold)" strokeWidth="0.5"/>
-                  <path d="M337 68 L337 72 M339 66 L339 74 M341 68 L341 72" stroke="var(--gold)" strokeWidth="0.8" className={styles.audioBars}/>
-                </g>
-                
-                {/* Temple arms hints */}
-                <path d="M 20 70 Q 5 70 0 65" stroke="#222" strokeWidth="8" fill="none" strokeLinecap="round"/>
-                <path d="M 380 70 Q 395 70 400 65" stroke="#222" strokeWidth="8" fill="none" strokeLinecap="round"/>
-                
-                {/* Nose bridge detail */}
-                <ellipse cx="200" cy="85" rx="8" ry="4" fill="#1a1a1a"/>
-                
-                {/* Subtle LED indicator */}
-                <circle cx="370" cy="55" r="2" fill="var(--gold)" className={styles.ledIndicator}/>
+          <h1 className={styles.heroTitle}>
+            <span className={styles.line}><span>Empowering Artists.</span></span>
+            <span className={styles.line}><span>Connecting <em>Collectors.</em></span></span>
+            <span className={styles.line}><span>Changing Lives.</span></span>
+          </h1>
+          <p className={styles.heroDescription}>
+            We&apos;re building a global marketplace where emerging artists thrive, collectors discover extraordinary work, and every purchase makes a difference.
+          </p>
+          <div className={styles.heroButtons}>
+            <Link href="/artists" className={styles.btnPrimary}>
+              <span>Explore Artists</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
-              
-              <div className={styles.glassesLabel}>
-                <span className={styles.labelTag}>Coming Soon</span>
-                <span className={styles.labelText}>Smart Glasses Ready</span>
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className={styles.heroPhone}>
-              <div className={styles.phoneScreen}>
-                <div className={styles.phoneNotch}></div>
-                <div className={styles.phoneContent}>
-                  <div className={styles.phoneArtwork}>
-                    <div className={styles.scanIndicator}></div>
-                  </div>
-                  <div className={styles.phoneInfoCard}>
-                    <h4>Starry Night</h4>
-                    <p>Vincent van Gogh · 1889</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className={styles.phoneLabel}>
-                <span className={styles.labelTag}>Available Now</span>
-                <span className={styles.labelText}>Mobile Web AR</span>
-              </div>
-            </div>
+            </Link>
+            <Link href="#mission" className={styles.btnSecondary}>
+              Our Mission
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className={styles.features} id="features">
+      {/* Mission Section */}
+      <section className={styles.mission} id="mission">
         <div className={styles.sectionHeader}>
           <div className={styles.sectionTag}>
-            <span>Why Confidential Gallery</span>
+            <span>Our Mission</span>
           </div>
-          <h2>Everything you need to create <em className={styles.serifItalic}>unforgettable</em> gallery visits</h2>
-          <p>A complete platform for galleries, museums, and artists to enhance the visitor experience with AR technology.</p>
+          <h2>Art with <em className={styles.serifItalic}>purpose</em> at the centre</h2>
         </div>
 
-        <div className={styles.featuresGrid}>
-          <div className={styles.featureCard}>
-            <div className={styles.featureNumber}>01</div>
-            <h3>Instant Recognition</h3>
-            <p>Visitors simply point their phone at any artwork. QR codes or image recognition triggers an immediate overlay with rich context and stories.</p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureNumber}>02</div>
-            <h3>Audio Storytelling</h3>
-            <p>Upload narrated guides that bring each piece to life. Visitors can listen hands-free while they absorb the art — museum quality, zero infrastructure.</p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureNumber}>03</div>
-            <h3>Smart Glasses Ready</h3>
-            <p>Built from day one for the AR glasses future. When visitors walk through your gallery wearing Meta Ray-Bans or similar devices, artwork info appears right in their field of view.</p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureNumber}>04</div>
-            <h3>No App Required</h3>
-            <p>Works instantly in any mobile browser. Visitors scan and go — no downloads, no friction, no barriers to engagement.</p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureNumber}>05</div>
-            <h3>Analytics Dashboard</h3>
-            <p>See which artworks get the most attention, track visitor engagement patterns, and understand your audience with real-time analytics.</p>
-          </div>
-
-          <div className={styles.featureCard}>
-            <div className={styles.featureNumber}>06</div>
-            <h3>Multi-Language Support</h3>
-            <p>Reach international visitors with automatic translations. Upload content once and serve it in multiple languages effortlessly.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className={styles.howItWorks} id="how-it-works">
-        <div className={styles.sectionHeader}>
-          <div className={styles.sectionTag}>
-            <span>Simple Setup</span>
-          </div>
-          <h2>Live in <em className={styles.serifItalic}>minutes</em>, not months</h2>
-          <p>No developers, no complex integrations. Just upload your art and you&apos;re ready to go.</p>
-        </div>
-
-        <div className={styles.stepsContainer}>
-          <div className={styles.stepsVisual}>
-            <img src="https://images.unsplash.com/photo-1577720643272-265f09367456?w=600&q=80" alt="Gallery view" className={styles.stepImage} />
-            <img src="https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80" alt="Artwork detail" className={styles.stepImage} />
-            <img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69d98?w=600&q=80" alt="Visitor experience" className={styles.stepImage} />
-          </div>
-
-          <div className={styles.stepsContent}>
-            <div className={styles.step}>
-              <div className={styles.stepNumber}>1</div>
-              <div>
-                <h3>Create your gallery</h3>
-                <p>Sign up and add your gallery profile with name, logo, and location. Takes about 30 seconds.</p>
-              </div>
-            </div>
-
-            <div className={styles.step}>
-              <div className={styles.stepNumber}>2</div>
-              <div>
-                <h3>Add your artworks</h3>
-                <p>For each piece, upload an image, add title/artist/year, write a description, and optionally attach an audio guide.</p>
-              </div>
-            </div>
-
-            <div className={styles.step}>
-              <div className={styles.stepNumber}>3</div>
-              <div>
-                <h3>Print & place QR codes</h3>
-                <p>We generate unique QR codes for each artwork. Print the sheet and place labels beside your pieces.</p>
-              </div>
-            </div>
-
-            <div className={styles.step}>
-              <div className={styles.stepNumber}>4</div>
-              <div>
-                <h3>Go live</h3>
-                <p>Hit publish and you&apos;re done. Visitors can start scanning immediately — no app install needed.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Giving Back */}
-      <section className={styles.givingBack} id="giving-back">
-        <div className={styles.givingContainer}>
-          <div className={styles.givingVisual}>
-            <div className={styles.charityIcon}>
-              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="38" stroke="var(--gold)" strokeWidth="1" opacity="0.3"/>
-                <circle cx="40" cy="40" r="28" stroke="var(--gold)" strokeWidth="1" opacity="0.5"/>
-                <path d="M40 20C40 20 25 32 25 42C25 52 32 58 40 58C48 58 55 52 55 42C55 32 40 20 40 20Z" fill="none" stroke="var(--gold)" strokeWidth="2"/>
-                <path d="M40 30V50M32 40H48" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round"/>
+        <div className={styles.pillarsGrid}>
+          <div className={styles.pillar}>
+            <div className={styles.pillarIcon}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
               </svg>
             </div>
-            <div className={styles.charityStat}>
-              <span className={styles.statNumber}>10%</span>
-              <span className={styles.statLabel}>of proceeds donated</span>
-            </div>
+            <h3>Championing Emerging Artists</h3>
+            <ul className={styles.pillarList}>
+              <li>We give up-and-coming artists a global stage</li>
+              <li>No gatekeepers, no galleries taking 50%</li>
+              <li>Direct connection between artist and collector</li>
+            </ul>
           </div>
-          
-          <div className={styles.givingContent}>
+
+          <div className={styles.pillar}>
+            <div className={styles.pillarIcon}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <h3>Connecting Collectors Worldwide</h3>
+            <ul className={styles.pillarList}>
+              <li>Discover extraordinary work from around the world</li>
+              <li>Every piece has a story, every artist has a voice</li>
+              <li>Build meaningful collections with purpose</li>
+            </ul>
+          </div>
+
+          <div className={styles.pillar}>
+            <div className={styles.pillarIcon}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <h3>Giving Back Through Art</h3>
+            <ul className={styles.pillarList}>
+              <li>10% of all proceeds go to arts education charities</li>
+              <li>We believe art should be accessible to everyone</li>
+              <li>Your purchase directly funds the next generation of artists</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className={styles.technology} id="technology">
+        <div className={styles.technologyInner}>
+          <div className={styles.sectionHeader}>
             <div className={styles.sectionTag}>
-              <span>Art for Good</span>
+              <span>Technology</span>
             </div>
-            <h2>Technology with <em className={styles.serifItalic}>purpose</em></h2>
-            <p className={styles.givingDescription}>
-              We believe art has the power to change lives. That&apos;s why 10% of all Confidential Gallery proceeds go directly to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
-            </p>
-            <div className={styles.givingFeatures}>
-              <div className={styles.givingFeature}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            <h2>Experience art like <em className={styles.serifItalic}>never before</em></h2>
+            <p>We use cutting-edge technology to deepen the connection between you and the work you love.</p>
+          </div>
+
+          <div className={styles.techGrid}>
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <path d="M8 21h8M12 17v4"/>
                 </svg>
-                <div>
-                  <h4>Arts Education</h4>
-                  <p>Funding school programs, workshops, and museum visits for young people</p>
-                </div>
               </div>
-              <div className={styles.givingFeature}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 6v6l4 2"/>
-                </svg>
-                <div>
-                  <h4>Charity Events</h4>
-                  <p>Regular fundraising exhibitions and AR experiences for causes that matter</p>
-                </div>
-              </div>
-              <div className={styles.givingFeature}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <div>
-                  <h4>Community Access</h4>
-                  <p>Free Confidential Gallery access for non-profit galleries and community spaces</p>
-                </div>
-              </div>
+              <h4>AR Viewing</h4>
+              <p>See artwork in your space before you buy — hold up your phone and watch it come to life on your wall.</p>
             </div>
-            <Link href="/events" className={styles.givingCta}>
-              <span>View Upcoming Charity Events</span>
+
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                  <rect x="3" y="3" width="7" height="7" rx="1"/>
+                  <rect x="14" y="3" width="7" height="7" rx="1"/>
+                  <rect x="3" y="14" width="7" height="7" rx="1"/>
+                  <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
+                </svg>
+              </div>
+              <h4>Scan & Discover</h4>
+              <p>Point your phone at any piece in a gallery for instant artist info, background stories, and pricing.</p>
+            </div>
+
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                  <path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+                  <path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/>
+                </svg>
+              </div>
+              <h4>Smart Glasses Ready</h4>
+              <p>Future-proof for Meta glasses and Apple Vision — artwork info appears right in your field of view.</p>
+            </div>
+
+            <div className={styles.techCard}>
+              <div className={styles.techIcon}>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+                  <path d="M9 18V5l12-2v13"/>
+                  <circle cx="6" cy="18" r="3"/>
+                  <circle cx="18" cy="16" r="3"/>
+                </svg>
+              </div>
+              <h4>Audio Stories</h4>
+              <p>Hear the artist tell their story. Each piece comes with an intimate audio guide straight from the creator.</p>
+            </div>
+          </div>
+
+          <div className={styles.technologyCta}>
+            <Link href="/features" className={styles.btnPrimary}>
+              <span>See How It Works</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
@@ -376,20 +231,164 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA / Waiting List */}
-      <section className={styles.cta} id="waitlist">
-        <div className={styles.ctaContent}>
-          <h2>Ready to transform your <em className={styles.serifItalic}>gallery?</em></h2>
-          <p>Start your journey with Confidential Gallery and create deeper connections between visitors and art.</p>
-          
-          <WaitlistForm styles={styles} />
-          
+      {/* Impact Section */}
+      <section className={styles.impact} id="impact">
+        <div className={styles.impactInner}>
+          <div className={styles.sectionTag}>
+            <span>Our Impact</span>
+          </div>
+          <div className={styles.statsGrid}>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>500+</span>
+              <span className={styles.statLabel}>Artists Supported</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>£50,000+</span>
+              <span className={styles.statLabel}>Donated to Charity</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>30+</span>
+              <span className={styles.statLabel}>Countries Reached</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>2,000+</span>
+              <span className={styles.statLabel}>Artworks Sold</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Artists Section */}
+      <section className={styles.featuredArtists}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionTag}>
+            <span>Featured Artists</span>
+          </div>
+          <h2>Discover <em className={styles.serifItalic}>emerging talent</em></h2>
+        </div>
+
+        <div className={styles.artistsGrid}>
+          <div className={styles.artistCard}>
+            <div className={styles.artistImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80')"}}></div>
+            <div className={styles.artistInfo}>
+              <h4>Marcus Chen</h4>
+              <p>Oil Painting · London</p>
+            </div>
+          </div>
+          <div className={styles.artistCard}>
+            <div className={styles.artistImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=600&q=80')"}}></div>
+            <div className={styles.artistInfo}>
+              <h4>Sofia Andersson</h4>
+              <p>Photography · Stockholm</p>
+            </div>
+          </div>
+          <div className={styles.artistCard}>
+            <div className={styles.artistImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=600&q=80')"}}></div>
+            <div className={styles.artistInfo}>
+              <h4>Amara Okonkwo</h4>
+              <p>Mixed Media · Lagos</p>
+            </div>
+          </div>
+          <div className={styles.artistCard}>
+            <div className={styles.artistImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1549490349-8643362247b5?w=600&q=80')"}}></div>
+            <div className={styles.artistInfo}>
+              <h4>Kai Tanaka</h4>
+              <p>Digital Art · Tokyo</p>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.centeredCta}>
+          <Link href="/artists" className={styles.btnPrimary}>
+            <span>View All Artists</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </Link>
+        </div>
+      </section>
+
+      {/* Charity Section */}
+      <section className={styles.charity} id="charity">
+        <div className={styles.charityInner}>
+          <div className={styles.charityContent}>
+            <div className={styles.sectionTag}>
+              <span>Art That Gives Back</span>
+            </div>
+            <h2>Every sale <em className={styles.serifItalic}>changes a life</em></h2>
+            <p className={styles.charityDescription}>
+              We donate 10% of every sale to arts education charities. No small print, no exceptions. When you buy from Confidential Gallery, you&apos;re funding the next generation of artists who might otherwise never get the chance to create.
+            </p>
+            <div className={styles.charityPartners}>
+              <span className={styles.partnerLabel}>Charity partners</span>
+              <div className={styles.partnerLogos}>
+                <div className={styles.partnerPlaceholder}>Arts Council England</div>
+                <div className={styles.partnerPlaceholder}>Creative Lives</div>
+                <div className={styles.partnerPlaceholder}>Tate Foundation</div>
+              </div>
+            </div>
+            <Link href="/events" className={styles.givingCta}>
+              <span>Learn About Our Events</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
+          </div>
+          <div className={styles.charityVisual}>
+            <div className={styles.charityStatBig}>
+              <span className={styles.bigNumber}>10%</span>
+              <span className={styles.bigLabel}>of every sale donated</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dual CTA Section */}
+      <section className={styles.dualCta}>
+        <div className={styles.dualCtaGrid}>
+          <div className={styles.ctaPanel}>
+            <div className={styles.ctaPanelTag}>For Artists</div>
+            <h3>Ready to share your work with the world?</h3>
+            <p>Join our marketplace, keep more of what you earn, and connect directly with collectors who value your vision.</p>
+            <Link href="/features#waitlist" className={styles.btnPrimary}>
+              <span>Apply to Join</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
+          </div>
+          <div className={styles.ctaDivider}></div>
+          <div className={styles.ctaPanel}>
+            <div className={styles.ctaPanelTag}>For Collectors</div>
+            <h3>Start your collection today</h3>
+            <p>Discover original works from emerging artists around the world. Every piece tells a story — and every purchase makes a difference.</p>
+            <Link href="/marketplace" className={styles.btnPrimary}>
+              <span>Browse Marketplace</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Waitlist / Join the Movement */}
+      <section className={styles.waitlistSection} id="waitlist">
+        <div className={styles.waitlistContent}>
+          <div className={styles.sectionTag}>
+            <span>Join the Movement</span>
+          </div>
+          <h2>Be part of something <em className={styles.serifItalic}>bigger</em></h2>
+          <p>Get early access, meet fellow collectors and artists, and help shape the future of the art world.</p>
+
+          <WaitlistForm />
+
           <p className={styles.waitlistNote}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
-            Early access for the first 100 galleries. No credit card required.
+            No credit card required. Be among the first to experience the platform.
           </p>
         </div>
       </section>
