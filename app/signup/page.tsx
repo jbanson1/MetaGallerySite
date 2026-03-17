@@ -115,62 +115,14 @@ export default function SignupPage() {
 
         {mode === 'signup' ? (
           <>
-            <p className={styles.subtitle}>Join Confidential Gallery to track your scans and explore art.</p>
-            <form onSubmit={handleSignup} className={styles.form}>
-              <div className={styles.field}>
-                <label htmlFor="fullName">Full name</label>
-                <input
-                  id="fullName" type="text" value={fullName} required
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Your name"
-                  autoComplete="name" autoFocus
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="username">Username</label>
-                <input
-                  id="username" type="text" value={username} required
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. artlover_42"
-                  autoComplete="username"
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email" type="email" value={email} required
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password" type="password" value={password} required
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Min. 8 characters"
-                  autoComplete="new-password"
-                />
-              </div>
-              <div className={styles.field}>
-                <label htmlFor="confirmPassword">Confirm password</label>
-                <input
-                  id="confirmPassword" type="password" value={confirmPassword} required
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Repeat password"
-                  autoComplete="new-password"
-                />
-              </div>
-              {error && <p className={styles.error}>{error}</p>}
-              <button type="submit" className={styles.submitBtn} disabled={loading}>
-                {loading ? 'Creating account…' : 'Create account'}
-              </button>
-              <p className={styles.legal}>
-                By creating an account you agree to our{' '}
-                <Link href="/terms">Terms</Link> and <Link href="/privacy">Privacy Policy</Link>.
-              </p>
-            </form>
+            <p className={styles.subtitle}>Confidential Gallery is currently invite-only. Join the waitlist to be among the first to get access.</p>
+            <Link href="/#waitlist" className={styles.submitBtn} style={{display: 'block', textAlign: 'center', marginTop: '1.5rem', textDecoration: 'none'}}>
+              Join the Waitlist
+            </Link>
+            <p className={styles.legal} style={{marginTop: '1rem'}}>
+              Already have an account?{' '}
+              <button className={styles.inlineBtn} onClick={() => { setMode('login'); setError('') }}>Sign in</button>
+            </p>
           </>
         ) : (
           <>
