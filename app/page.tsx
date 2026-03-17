@@ -380,7 +380,7 @@ export default function Home() {
       <section className={styles.cta} id="waitlist">
         <div className={styles.ctaContent}>
           <h2>Ready to transform your <em className={styles.serifItalic}>gallery?</em></h2>
-          <p>Join forward-thinking galleries and museums already using Confidential Gallery to create deeper connections between visitors and art.</p>
+          <p>Start your journey with Confidential Gallery and create deeper connections between visitors and art.</p>
           
           <WaitlistForm styles={styles} />
           
