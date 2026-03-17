@@ -11,13 +11,18 @@ import styles from './scanner.module.css'
 
 const SCANNER_ELEMENT_ID = 'cg-qr-reader'
 
+type ScanMode = 'qr' | 'painting'
+type IdentifyStatus = 'idle' | 'capturing' | 'identifying' | 'found' | 'not-found' | 'error'
+
 export default function ScanPage() {
   const router = useRouter()
   const [hasStarted, setHasStarted] = useState(false)
   const [scanResult, setScanResult] = useState<'success' | 'invalid' | null>(null)
-  const [resultMarkerId, setResultMarkerId] = useState('')
   const [history, setHistory] = useState<ScanHistoryItem[]>([])
   const [showHistory, setShowHistory] = useState(false)
+  const [mode, setMode] = useState<ScanMode>('qr')
+  const [identifyStatus, setIdentifyStatus] = useState<IdentifyStatus>('idle')
+  const [identifyResult, setIdentifyResult] = useState<{ title: string | null; artist: string | null } | null>(null)
   const resultTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -26,15 +31,12 @@ export default function ScanPage() {
 
   const handleScan = useCallback(
     (decodedText: string) => {
-      // Prevent multiple firings while redirecting
-      if (scanResult) return
+      if (scanResult || mode !== 'qr') return
 
       const markerId = extractMarkerId(decodedText)
       if (markerId) {
         pause()
         setScanResult('success')
-        setResultMarkerId(markerId)
-        // Brief visual feedback, then navigate
         resultTimeoutRef.current = setTimeout(() => {
           router.push(`/scan/${markerId}`)
         }, 600)
@@ -43,7 +45,7 @@ export default function ScanPage() {
         resultTimeoutRef.current = setTimeout(() => setScanResult(null), 2000)
       }
     },
-    [scanResult, router] // eslint-disable-line react-hooks/exhaustive-deps
+    [scanResult, mode, router] // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   const { status, errorMessage, start, stop, pause, resume } = useScanner({
@@ -54,6 +56,7 @@ export default function ScanPage() {
   async function handleStart() {
     setHasStarted(true)
     setScanResult(null)
+    setIdentifyStatus('idle')
     await start()
   }
 
@@ -62,15 +65,70 @@ export default function ScanPage() {
     await stop()
     setHasStarted(false)
     setScanResult(null)
+    setIdentifyStatus('idle')
   }
 
-  // Clean up on unmount
   useEffect(() => {
     return () => {
       if (resultTimeoutRef.current) clearTimeout(resultTimeoutRef.current)
       stop()
     }
   }, [stop])
+
+  // Switch modes: reset identify state, resume QR scanning if switching back
+  function handleModeSwitch(next: ScanMode) {
+    setMode(next)
+    setIdentifyStatus('idle')
+    setIdentifyResult(null)
+    if (next === 'qr') {
+      resume()
+    } else {
+      // Pause auto QR detection when in painting mode to avoid false triggers
+      pause()
+    }
+  }
+
+  async function handleIdentify() {
+    const videoEl = document.querySelector<HTMLVideoElement>(`#${SCANNER_ELEMENT_ID} video`)
+    if (!videoEl) return
+
+    setIdentifyStatus('capturing')
+    setIdentifyResult(null)
+
+    // Capture the current video frame to a canvas
+    const canvas = document.createElement('canvas')
+    canvas.width = videoEl.videoWidth || 640
+    canvas.height = videoEl.videoHeight || 480
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height)
+    const base64 = canvas.toDataURL('image/jpeg', 0.85)
+
+    setIdentifyStatus('identifying')
+
+    try {
+      const res = await fetch('/api/identify-artwork', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64 }),
+      })
+      const data = await res.json()
+
+      if (data.found && data.markerId) {
+        setIdentifyStatus('found')
+        resultTimeoutRef.current = setTimeout(() => {
+          router.push(`/scan/${data.markerId}`)
+        }, 800)
+      } else if (!data.found && data.title) {
+        setIdentifyStatus('not-found')
+        setIdentifyResult({ title: data.title, artist: data.artist })
+      } else {
+        setIdentifyStatus('error')
+      }
+    } catch {
+      setIdentifyStatus('error')
+    }
+  }
 
   const isScanning = status === 'scanning' || status === 'paused'
   const isLoading = status === 'requesting'
@@ -93,7 +151,7 @@ export default function ScanPage() {
               </svg>
             </Link>
             <span className={styles.topBarTitle}>
-              {isScanning ? 'Scanning…' : 'Confidential Gallery Scanner'}
+              {isScanning && mode === 'qr' ? 'Scanning…' : isScanning && mode === 'painting' ? 'Identify Painting' : 'Confidential Gallery Scanner'}
             </span>
             <button
               className={styles.historyToggleBtn}
@@ -107,14 +165,24 @@ export default function ScanPage() {
             </button>
           </div>
 
-          {/* Scan frame — only shown while scanning */}
-          {isScanning && (
+          {/* Scan frame — shown in QR mode while scanning */}
+          {isScanning && mode === 'qr' && (
             <div className={`${styles.frame} ${scanResult === 'success' ? styles.frameSuccess : ''} ${scanResult === 'invalid' ? styles.frameInvalid : ''}`}>
               <span className={`${styles.corner} ${styles.tl}`} />
               <span className={`${styles.corner} ${styles.tr}`} />
               <span className={`${styles.corner} ${styles.bl}`} />
               <span className={`${styles.corner} ${styles.br}`} />
               {!scanResult && <span className={styles.scanLine} />}
+            </div>
+          )}
+
+          {/* Painting frame — shown in painting mode while scanning */}
+          {isScanning && mode === 'painting' && (
+            <div className={styles.paintingFrame}>
+              <span className={`${styles.corner} ${styles.tl} ${identifyStatus === 'found' ? styles.cornerSuccess : ''}`} />
+              <span className={`${styles.corner} ${styles.tr} ${identifyStatus === 'found' ? styles.cornerSuccess : ''}`} />
+              <span className={`${styles.corner} ${styles.bl} ${identifyStatus === 'found' ? styles.cornerSuccess : ''}`} />
+              <span className={`${styles.corner} ${styles.br} ${identifyStatus === 'found' ? styles.cornerSuccess : ''}`} />
             </div>
           )}
 
@@ -132,7 +200,7 @@ export default function ScanPage() {
                   </svg>
                 </div>
                 <p className={styles.promptText}>
-                  Point your camera at a Confidential Gallery QR code
+                  Point your camera at a QR code or painting
                 </p>
                 <button className={styles.startBtn} onClick={handleStart}>
                   Open Camera
@@ -151,8 +219,35 @@ export default function ScanPage() {
               </div>
             )}
 
-            {/* Active scanning — hint */}
-            {isScanning && !scanResult && (
+            {/* Mode toggle — visible while scanning */}
+            {isScanning && (
+              <div className={styles.modeTabs}>
+                <button
+                  className={`${styles.modeTab} ${mode === 'qr' ? styles.modeTabActive : ''}`}
+                  onClick={() => handleModeSwitch('qr')}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
+                  </svg>
+                  QR Code
+                </button>
+                <button
+                  className={`${styles.modeTab} ${mode === 'painting' ? styles.modeTabActive : ''}`}
+                  onClick={() => handleModeSwitch('painting')}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                  </svg>
+                  Painting
+                </button>
+              </div>
+            )}
+
+            {/* QR mode hints / feedback */}
+            {isScanning && mode === 'qr' && !scanResult && (
               <div className={styles.scanHint}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3 3h18v2H3zm0 16h18v2H3z"/>
@@ -161,8 +256,7 @@ export default function ScanPage() {
               </div>
             )}
 
-            {/* Success feedback */}
-            {scanResult === 'success' && (
+            {isScanning && mode === 'qr' && scanResult === 'success' && (
               <div className={`${styles.statusMsg} ${styles.statusSuccess}`}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <polyline points="20 6 9 17 4 12"/>
@@ -171,14 +265,68 @@ export default function ScanPage() {
               </div>
             )}
 
-            {/* Invalid QR */}
-            {scanResult === 'invalid' && (
+            {isScanning && mode === 'qr' && scanResult === 'invalid' && (
               <div className={`${styles.statusMsg} ${styles.statusInvalid}`}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
                 Not a Confidential Gallery QR code
               </div>
+            )}
+
+            {/* Painting mode UI */}
+            {isScanning && mode === 'painting' && (
+              <>
+                {identifyStatus === 'idle' && (
+                  <>
+                    <p className={styles.paintingHint}>Point at a painting, then tap to identify</p>
+                    <button className={styles.captureBtn} onClick={handleIdentify} aria-label="Identify painting">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M20 7h-3.5l-1.5-2h-6L7.5 7H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+                      </svg>
+                    </button>
+                  </>
+                )}
+
+                {(identifyStatus === 'capturing' || identifyStatus === 'identifying') && (
+                  <div className={styles.statusMsg}>
+                    <span className={styles.spinnerSmall} />
+                    {identifyStatus === 'capturing' ? 'Capturing…' : 'Identifying…'}
+                  </div>
+                )}
+
+                {identifyStatus === 'found' && (
+                  <div className={`${styles.statusMsg} ${styles.statusSuccess}`}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    Painting recognised — loading…
+                  </div>
+                )}
+
+                {identifyStatus === 'not-found' && identifyResult && (
+                  <div className={styles.identifyResult}>
+                    <p className={styles.identifyTitle}>{identifyResult.title}</p>
+                    {identifyResult.artist && (
+                      <p className={styles.identifyArtist}>{identifyResult.artist}</p>
+                    )}
+                    <p className={styles.identifyNote}>Not in this gallery's collection</p>
+                    <button className={styles.retryBtn} onClick={() => setIdentifyStatus('idle')}>
+                      Try again
+                    </button>
+                  </div>
+                )}
+
+                {identifyStatus === 'error' && (
+                  <div className={styles.identifyResult}>
+                    <p className={styles.identifyNote}>No painting detected — try again</p>
+                    <button className={styles.retryBtn} onClick={() => setIdentifyStatus('idle')}>
+                      Try again
+                    </button>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Error */}

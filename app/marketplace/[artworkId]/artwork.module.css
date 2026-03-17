@@ -1,0 +1,451 @@
+/* ─── State screens ─── */
+
+.stateScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 60vh;
+  padding: 2rem;
+  text-align: center;
+  color: rgba(248, 246, 241, 0.55);
+}
+
+.stateScreen h1 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--off-white, #f8f6f1);
+}
+
+.stateLink {
+  color: var(--gold, #c9a227);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.stateLink:hover { text-decoration: underline; }
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid rgba(201, 162, 39, 0.2);
+  border-top-color: var(--gold, #c9a227);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Page wrapper ─── */
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 5rem;
+}
+
+/* ─── Breadcrumb ─── */
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: rgba(248, 246, 241, 0.4);
+  margin-bottom: 2.5rem;
+}
+
+.breadcrumbLink {
+  color: var(--gold, #c9a227);
+  text-decoration: none;
+}
+
+.breadcrumbLink:hover { text-decoration: underline; }
+
+.breadcrumbCurrent {
+  color: rgba(248, 246, 241, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 240px;
+}
+
+/* ─── Main two-column layout ─── */
+
+.artworkLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  margin-bottom: 5rem;
+}
+
+/* ─── Image column ─── */
+
+.imageColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: 5rem;
+}
+
+.artworkImage {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: rgba(248, 246, 241, 0.04);
+  border: 1px solid rgba(248, 246, 241, 0.08);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(248, 246, 241, 0.15);
+}
+
+.galleryTag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: rgba(248, 246, 241, 0.4);
+}
+
+.galleryLogo {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.6;
+}
+
+/* ─── Details column ─── */
+
+.detailsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  font-family: var(--font-playfair, serif);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--off-white, #f8f6f1);
+  margin: 0;
+}
+
+.artist {
+  font-size: 1.05rem;
+  color: var(--gold, #c9a227);
+  font-weight: 500;
+  margin: 0;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: rgba(248, 246, 241, 0.45);
+  margin: 0;
+}
+
+.description {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(248, 246, 241, 0.7);
+  margin: 0.5rem 0 0;
+  white-space: pre-line;
+}
+
+/* ─── Purchase box ─── */
+
+.purchaseBox {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(201, 162, 39, 0.06);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.priceLabel {
+  font-size: 0.8rem;
+  color: rgba(248, 246, 241, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.price {
+  font-family: var(--font-playfair, serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--off-white, #f8f6f1);
+}
+
+.enquireBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--gold, #c9a227);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.enquireBtn:hover { opacity: 0.88; }
+
+.enquireNote {
+  font-size: 0.75rem;
+  color: rgba(248, 246, 241, 0.35);
+  text-align: center;
+  margin: 0;
+}
+
+/* ─── Making Of section ─── */
+
+.makingOf {
+  padding-top: 3rem;
+  border-top: 1px solid rgba(248, 246, 241, 0.08);
+}
+
+.makingOfHeader {
+  margin-bottom: 2rem;
+}
+
+.makingOfTitle {
+  font-family: var(--font-playfair, serif);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: var(--off-white, #f8f6f1);
+  margin: 0 0 0.4rem;
+}
+
+.makingOfSubtitle {
+  font-size: 0.9rem;
+  color: rgba(248, 246, 241, 0.45);
+  margin: 0;
+}
+
+/* ─── Featured media (large view) ─── */
+
+.featuredMedia {
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.featuredMedia:hover .expandHint { opacity: 1; }
+.featuredMedia:hover .featuredImage { opacity: 0.85; }
+
+.featuredVideoWrap {
+  position: relative;
+}
+
+.featuredImage {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+}
+
+.featuredPlayBtn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.featuredPlayBtn > * {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featuredCaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+  font-size: 0.82rem;
+  color: rgba(248, 246, 241, 0.8);
+  margin: 0;
+}
+
+.expandHint {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.3rem 0.6rem;
+  border-radius: 100px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  backdrop-filter: blur(6px);
+}
+
+/* ─── Thumbnails strip ─── */
+
+.thumbStrip {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0.25rem;
+}
+
+.thumbStrip::-webkit-scrollbar { display: none; }
+
+.thumb {
+  flex: 0 0 80px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s;
+}
+
+.thumbActive {
+  border-color: var(--gold, #c9a227);
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbVideoIcon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+/* ─── Lightbox ─── */
+
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.lightboxClose:hover { background: rgba(255, 255, 255, 0.15); }
+
+.lightboxContent {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lightboxMedia {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.lightboxCaption {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin: 0;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem 1rem 4rem;
+  }
+
+  .artworkLayout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .imageColumn {
+    position: static;
+  }
+
+  .makingOf {
+    padding-top: 2rem;
+  }
+
+  .featuredImage {
+    max-height: 300px;
+  }
+}
