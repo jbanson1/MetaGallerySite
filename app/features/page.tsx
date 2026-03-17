@@ -4,10 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import styles from './features.module.css'
 
-export const metadata = {
-  title: 'Features — Confidential Gallery',
-  description: 'Explore how Confidential Gallery uses AR, audio guides, and smart technology to transform gallery and museum visits.',
-}
 
 function WaitlistForm({ styles }: { styles: any }) {
   const [isSubmitted, setIsSubmitted] = useState(false)
