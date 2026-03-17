@@ -47,6 +47,7 @@ export default function Navbar() {
   const isActive = (path: string) => {
     if (path === '/marketplace') return pathname === '/marketplace' || pathname.startsWith('/marketplace/')
     if (path === '/artists') return pathname === '/artists' || pathname.startsWith('/artists/')
+    if (path === '/features') return pathname === '/features' || pathname.startsWith('/features/')
     return pathname === path
   }
 
@@ -136,6 +137,7 @@ export default function Navbar() {
 
         <div className={`nav-menu ${menuOpen ? 'open' : ''}`}>
           <ul className="nav-links">
+            <li><Link href="/features" className={isActive('/features') ? 'active' : ''} onClick={closeMenu}>Features</Link></li>
             <li><Link href="/artists" className={isActive('/artists') ? 'active' : ''} onClick={closeMenu}>Artists</Link></li>
             <li><Link href="/marketplace" className={isActive('/marketplace') ? 'active' : ''} onClick={closeMenu}>Marketplace</Link></li>
             <li><Link href="/events" className={isActive('/events') ? 'active' : ''} onClick={closeMenu}>Events</Link></li>
