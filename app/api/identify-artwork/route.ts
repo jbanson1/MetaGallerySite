@@ -2,15 +2,22 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { createClient } from '@supabase/supabase-js'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
-
 export async function POST(req: NextRequest) {
   try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    const anthropicKey = process.env.ANTHROPIC_API_KEY
+
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ error: 'Supabase not configured' }, { status: 503 })
+    }
+    if (!anthropicKey) {
+      return NextResponse.json({ error: 'Anthropic API key not configured' }, { status: 503 })
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    const anthropic = new Anthropic({ apiKey: anthropicKey })
+
     const { image } = await req.json()
     if (!image || typeof image !== 'string') {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 })
