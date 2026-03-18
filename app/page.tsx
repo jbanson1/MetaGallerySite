@@ -231,32 +231,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section className={styles.impact} id="impact">
-        <div className={styles.impactInner}>
-          <div className={styles.sectionTag}>
-            <span>Our Impact</span>
-          </div>
-          <div className={styles.statsGrid}>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>500+</span>
-              <span className={styles.statLabel}>Artists Supported</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>£50,000+</span>
-              <span className={styles.statLabel}>Donated to Charity</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>30+</span>
-              <span className={styles.statLabel}>Countries Reached</span>
-            </div>
-            <div className={styles.stat}>
-              <span className={styles.statNumber}>2,000+</span>
-              <span className={styles.statLabel}>Artworks Sold</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Featured Artists Section */}
       <section className={styles.featuredArtists}>
