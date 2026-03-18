@@ -151,7 +151,7 @@ export default function Home() {
             </div>
             <h3>Giving Back Through Art</h3>
             <ul className={styles.pillarList}>
-              <li>10% of all proceeds go to arts education charities</li>
+              <li>10% commission with a portion going to arts education charities</li>
               <li>We believe art should be accessible to everyone</li>
               <li>Your purchase directly funds the next generation of artists</li>
             </ul>
@@ -317,10 +317,10 @@ export default function Home() {
             </div>
             <h2>Every sale <em className={styles.serifItalic}>changes a life</em></h2>
             <p className={styles.charityDescription}>
-              We donate 10% of every sale to arts education charities. No small print, no exceptions. When you buy from Confidential Gallery, you&apos;re funding the next generation of artists who might otherwise never get the chance to create.
+              We charge a 10% commission on every sale, with a portion going directly to arts education charities. When you buy from Confidential Gallery, you&apos;re helping fund the next generation of artists who might otherwise never get the chance to create.
             </p>
             <div className={styles.charityPartners}>
-              <span className={styles.partnerLabel}>Charity partners</span>
+              <span className={styles.partnerLabel}>We&apos;re proud to support arts education through donations to organisations including:</span>
               <div className={styles.partnerLogos}>
                 <div className={styles.partnerPlaceholder}>Arts Council England</div>
                 <div className={styles.partnerPlaceholder}>Creative Lives</div>
@@ -337,7 +337,7 @@ export default function Home() {
           <div className={styles.charityVisual}>
             <div className={styles.charityStatBig}>
               <span className={styles.bigNumber}>10%</span>
-              <span className={styles.bigLabel}>of every sale donated</span>
+              <span className={styles.bigLabel}>commission, with a portion donated to charity</span>
             </div>
           </div>
         </div>
