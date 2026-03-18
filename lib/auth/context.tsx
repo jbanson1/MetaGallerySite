@@ -11,12 +11,13 @@ export interface Profile {
   avatar_url: string | null
   location: string | null
   bio: string | null
+  account_type: 'artist' | 'curator'
 }
 
-// ─── DEV HARDCODED ACCOUNT ───────────────────────────────────────────────────
-const DEV_USERNAME = 'Admin'
+// ─── DEV HARDCODED ACCOUNTS ──────────────────────────────────────────────────
 const DEV_PASSWORD = 'CG2026!'
-const DEV_USER = {
+
+const DEV_ADMIN_USER = {
   id: 'dev-admin-000',
   email: 'admin@theconfidential.gallery',
   app_metadata: {},
@@ -24,13 +25,56 @@ const DEV_USER = {
   aud: 'authenticated',
   created_at: new Date().toISOString(),
 } as unknown as User
-const DEV_PROFILE: Profile = {
+const DEV_ADMIN_PROFILE: Profile = {
   id: 'dev-admin-000',
   full_name: 'Admin',
   username: 'Admin',
   avatar_url: null,
   location: null,
   bio: null,
+  account_type: 'curator',
+}
+
+const DEV_CURATOR_USER = {
+  id: 'dev-curator-001',
+  email: 'curator@theconfidential.gallery',
+  app_metadata: {},
+  user_metadata: { full_name: 'Dev Curator' },
+  aud: 'authenticated',
+  created_at: new Date().toISOString(),
+} as unknown as User
+const DEV_CURATOR_PROFILE: Profile = {
+  id: 'dev-curator-001',
+  full_name: 'Dev Curator',
+  username: 'DevCurator',
+  avatar_url: null,
+  location: 'London, UK',
+  bio: 'Development curator account for testing the platform.',
+  account_type: 'curator',
+}
+
+const DEV_ARTIST_USER = {
+  id: 'dev-artist-001',
+  email: 'artist@theconfidential.gallery',
+  app_metadata: {},
+  user_metadata: { full_name: 'Dev Artist' },
+  aud: 'authenticated',
+  created_at: new Date().toISOString(),
+} as unknown as User
+const DEV_ARTIST_PROFILE: Profile = {
+  id: 'dev-artist-001',
+  full_name: 'Dev Artist',
+  username: 'DevArtist',
+  avatar_url: null,
+  location: 'Paris, France',
+  bio: 'Development artist account for testing the platform.',
+  account_type: 'artist',
+}
+
+const DEV_ACCOUNTS: Record<string, { user: User; profile: Profile }> = {
+  Admin:      { user: DEV_ADMIN_USER,   profile: DEV_ADMIN_PROFILE },
+  DevCurator: { user: DEV_CURATOR_USER, profile: DEV_CURATOR_PROFILE },
+  DevArtist:  { user: DEV_ARTIST_USER,  profile: DEV_ARTIST_PROFILE },
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -40,7 +84,7 @@ interface AuthContextValue {
   profile: Profile | null
   loading: boolean
   signIn: (username: string, password: string) => Promise<{ error: string | null }>
-  signUp: (email: string, password: string, fullName: string, username: string) => Promise<{ error: string | null; needsConfirmation: boolean }>
+  signUp: (email: string, password: string, fullName: string, username: string, accountType?: 'artist' | 'curator') => Promise<{ error: string | null; needsConfirmation: boolean }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Omit<Profile, 'id'>>) => Promise<{ error: string | null }>
 }
@@ -63,7 +107,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setUser(session?.user ?? null)
@@ -71,7 +114,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false)
     })
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session)
@@ -90,36 +132,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = useCallback(async (username: string, password: string) => {
     // Dev hardcoded bypass
-    if (username === DEV_USERNAME && password === DEV_PASSWORD) {
-      setUser(DEV_USER)
-      setProfile(DEV_PROFILE)
-      setSession({ user: DEV_USER } as unknown as Session)
+    if (password === DEV_PASSWORD && DEV_ACCOUNTS[username]) {
+      const { user: devUser, profile: devProfile } = DEV_ACCOUNTS[username]
+      setUser(devUser)
+      setProfile(devProfile)
+      setSession({ user: devUser } as unknown as Session)
       return { error: null }
     }
-    // Look up email by username (full_name) via secure RPC
     const { data: email, error: lookupError } = await supabase.rpc('get_email_by_username', { p_username: username })
     if (lookupError || !email) return { error: 'Username not found.' }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error: error?.message ?? null }
   }, [])
 
-  const signUp = useCallback(async (email: string, password: string, fullName: string, username: string) => {
+  const signUp = useCallback(async (
+    email: string,
+    password: string,
+    fullName: string,
+    username: string,
+    accountType: 'artist' | 'curator' = 'curator'
+  ) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { full_name: fullName, username },
+        data: { full_name: fullName, username, account_type: accountType },
         emailRedirectTo: `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
       },
     })
     if (error) return { error: error.message, needsConfirmation: false }
-    // If user is returned but not confirmed, email confirmation is required
     const needsConfirmation = !!data.user && !data.session
     return { error: null, needsConfirmation }
   }, [])
 
   const signOut = useCallback(async () => {
-    if (user?.id === DEV_USER.id) {
+    const isDevAccount = user && Object.values(DEV_ACCOUNTS).some(a => a.user.id === user.id)
+    if (isDevAccount) {
       setUser(null)
       setSession(null)
       setProfile(null)
@@ -130,8 +178,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateProfile = useCallback(async (updates: Partial<Omit<Profile, 'id'>>) => {
     if (!user) return { error: 'Not signed in' }
-    // Dev account: update state only, no DB call
-    if (user.id === DEV_USER.id) {
+    const isDevAccount = Object.values(DEV_ACCOUNTS).some(a => a.user.id === user.id)
+    if (isDevAccount) {
       setProfile((prev) => prev ? { ...prev, ...updates } : prev)
       return { error: null }
     }
