@@ -754,6 +754,48 @@
   color: white;
 }
 
+/* Account type badges */
+.badgeArtist {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  background: rgba(201,162,39,0.15);
+  color: var(--gold);
+}
+
+.badgeCurator {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  background: rgba(100,160,240,0.12);
+  color: #64a0f0;
+}
+
+.accountBio {
+  font-size: 0.9rem;
+  color: var(--smoke, rgba(248,246,241,0.6));
+  margin-top: 0.25rem;
+  line-height: 1.5;
+  max-width: 500px;
+}
+
+.accountTypeTag {
+  font-size: 0.85rem;
+  color: var(--smoke, rgba(248,246,241,0.6));
+  margin-bottom: 1rem;
+}
+
+.purchasesSection {}
+.favoritesSection {}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
