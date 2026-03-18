@@ -1,0 +1,378 @@
+/* ============================================================
+   AR PREVIEW — View Artwork In Your Space
+   ============================================================ */
+
+/* ── Choose Mode Screen ───────────────────────────────────── */
+.choosePage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--ink, #0e0e0e);
+  position: relative;
+}
+
+.backBtn {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--smoke, rgba(248,246,241,0.6));
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-family: var(--font-outfit), sans-serif;
+  transition: color 0.2s;
+}
+.backBtn:hover { color: var(--cream, #f8f6f1); }
+
+.chooseCard {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 2.5rem 2rem;
+}
+
+.chooseHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.chooseThumb {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border: 2px solid rgba(201,162,39,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--smoke, rgba(248,246,241,0.4));
+}
+.chooseThumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.chooseTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.2rem;
+  color: var(--cream, #f8f6f1);
+  margin: 0 0 0.25rem;
+}
+.chooseArtist {
+  font-size: 0.875rem;
+  color: var(--smoke, rgba(248,246,241,0.6));
+  margin: 0;
+}
+
+.chooseSub {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--cream, #f8f6f1);
+  margin: 0 0 1.5rem;
+}
+
+.cameraError {
+  background: rgba(224,92,92,0.1);
+  border: 1px solid rgba(224,92,92,0.3);
+  color: #e05c5c;
+  font-size: 0.85rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+.chooseOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+.chooseOption {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.09);
+  color: var(--cream, #f8f6f1);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: var(--font-outfit), sans-serif;
+}
+.chooseOption:hover {
+  border-color: rgba(201,162,39,0.5);
+  background: rgba(201,162,39,0.06);
+}
+
+.optionIcon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,162,39,0.1);
+  color: var(--gold, #c9a227);
+  flex-shrink: 0;
+}
+
+.optionLabel {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cream, #f8f6f1);
+  margin-bottom: 0.2rem;
+}
+.optionDesc {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--smoke, rgba(248,246,241,0.5));
+  line-height: 1.4;
+}
+.optionArrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--smoke, rgba(248,246,241,0.3));
+  transition: transform 0.2s;
+}
+.chooseOption:hover .optionArrow { transform: translateX(4px); color: var(--gold, #c9a227); }
+
+.chooseTip {
+  font-size: 0.78rem;
+  color: var(--smoke, rgba(248,246,241,0.4));
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}
+
+/* ── AR Viewer ────────────────────────────────────────────── */
+.viewer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #111;
+  user-select: none;
+  touch-action: none;
+}
+
+.videoFeed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Draggable Artwork Overlay ────────────────────────────── */
+.artworkOverlay {
+  position: absolute;
+  cursor: grab;
+  box-sizing: border-box;
+  touch-action: none;
+  /* Slight drop shadow to help it look affixed to the wall */
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+  transition: filter 0.1s;
+}
+.artworkOverlay:active { cursor: grabbing; }
+
+.artworkImg {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  pointer-events: none;
+}
+
+/* ── Guide Overlay ────────────────────────────────────────── */
+.guide {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.guideBox {
+  background: rgba(14,14,14,0.9);
+  border: 1px solid rgba(201,162,39,0.4);
+  padding: 2rem 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 320px;
+  color: var(--cream, #f8f6f1);
+}
+.guideBox svg { color: var(--gold, #c9a227); }
+.guideBox p {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(248,246,241,0.8);
+}
+
+.guideDismiss {
+  padding: 0.5rem 1.5rem;
+  background: var(--gold, #c9a227);
+  border: none;
+  color: #0e0e0e;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.guideDismiss:hover { opacity: 0.85; }
+
+/* ── Controls Bar ─────────────────────────────────────────── */
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+  z-index: 10;
+}
+
+.ctrlBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(248,246,241,0.85);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.ctrlBtn:hover { background: rgba(201,162,39,0.25); border-color: rgba(201,162,39,0.5); color: var(--gold, #c9a227); }
+
+.ctrlCenter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Frame selector */
+.frameSelector {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.frameBtn {
+  padding: 0.3rem 0.7rem;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(248,246,241,0.7);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.frameBtn:hover { border-color: rgba(201,162,39,0.5); color: var(--cream, #f8f6f1); }
+.frameBtnActive { background: rgba(201,162,39,0.2); border-color: var(--gold, #c9a227); color: var(--gold, #c9a227); }
+
+/* Size controls */
+.sizeControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sizeBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--cream, #f8f6f1);
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.sizeBtn:hover { background: rgba(201,162,39,0.2); border-color: var(--gold, #c9a227); }
+
+.sizeLabel {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.75rem;
+  color: rgba(248,246,241,0.5);
+  min-width: 42px;
+  text-align: center;
+}
+
+/* ── Info Pill ────────────────────────────────────────────── */
+.infoPill {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  z-index: 10;
+  pointer-events: none;
+  max-width: 80vw;
+}
+
+.infoPillTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 0.85rem;
+  color: var(--cream, #f8f6f1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.infoPillArtist {
+  font-size: 0.72rem;
+  color: var(--gold, #c9a227);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .choosePage { padding: 1rem 0.75rem; }
+  .backBtn { top: 1rem; left: 1rem; }
+  .chooseCard { padding: 1.75rem 1.25rem; }
+  .frameBtn { font-size: 0.65rem; padding: 0.25rem 0.5rem; }
+}

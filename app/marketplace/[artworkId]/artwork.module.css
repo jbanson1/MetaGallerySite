@@ -164,6 +164,29 @@
   white-space: pre-line;
 }
 
+/* ─── AR Preview button ─── */
+.arBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--off-white, #f8f6f1);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.875rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  width: 100%;
+  justify-content: center;
+}
+.arBtn:hover {
+  border-color: rgba(201,162,39,0.6);
+  color: var(--gold, #c9a227);
+}
+
 /* ─── Purchase box ─── */
 
 .purchaseBox {
