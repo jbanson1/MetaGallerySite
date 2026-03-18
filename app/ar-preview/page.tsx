@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from './ar-preview.module.css'
@@ -22,7 +22,7 @@ interface ArtworkOverlay {
   height: number
 }
 
-export default function ARPreviewPage() {
+function ARPreviewContent() {
   const params = useSearchParams()
   const imageUrl = params.get('image') ?? ''
   const title    = params.get('title') ?? 'Artwork'
@@ -365,5 +365,13 @@ export default function ARPreviewPage() {
         {artist && <span className={styles.infoPillArtist}>{artist}</span>}
       </div>
     </div>
+  )
+}
+
+export default function ARPreviewPage() {
+  return (
+    <Suspense>
+      <ARPreviewContent />
+    </Suspense>
   )
 }
