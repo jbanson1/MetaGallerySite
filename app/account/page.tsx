@@ -9,10 +9,11 @@ import type { ScanHistoryItem } from '@/lib/utils/storage'
 import PreviewsPanel from '@/components/account/PreviewsPanel'
 import CuratorListPanel from '@/components/account/CuratorListPanel'
 import MessagesPanel from '@/components/account/MessagesPanel'
+import AnalyticsPanel from '@/components/account/AnalyticsPanel'
 import styles from './account.module.css'
 
 // ── Tab definitions ────────────────────────────────────────────────────────
-type ArtistTab = 'portfolio' | 'previews' | 'curators' | 'messages' | 'settings'
+type ArtistTab = 'portfolio' | 'previews' | 'curators' | 'messages' | 'analytics' | 'settings'
 type CuratorTab = 'collection' | 'scans' | 'messages' | 'settings'
 
 export default function AccountPage() {
@@ -202,6 +203,14 @@ export default function AccountPage() {
               </svg>
               Messages
             </button>
+            <button className={`${styles.tabBtn} ${artistTab === 'analytics' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('analytics')}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+              Analytics
+            </button>
             <button className={`${styles.tabBtn} ${artistTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('settings')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="3"/>
@@ -230,6 +239,7 @@ export default function AccountPage() {
             {artistTab === 'previews' && <PreviewsPanel profile={profile} />}
             {artistTab === 'curators' && <CuratorListPanel profile={profile} />}
             {artistTab === 'messages' && <MessagesPanel profile={profile} />}
+            {artistTab === 'analytics' && <AnalyticsPanel profile={profile} />}
             {artistTab === 'settings' && settingsPanel}
           </section>
         </>
