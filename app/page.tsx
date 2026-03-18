@@ -317,15 +317,7 @@ export default function Home() {
             </div>
             <h2>Every sale <em className={styles.serifItalic}>changes a life</em></h2>
             <p className={styles.charityDescription}>
-              A portion of every sale goes to supporting arts education charities. We&apos;re proud to support organisations including:
-            </p>
-            <ul className={styles.charityList}>
-              <li>Arts Council England</li>
-              <li>Creative Lives</li>
-              <li>Tate Foundation</li>
-            </ul>
-            <p className={styles.charityDisclaimer}>
-              Once launched, we&apos;ll share exactly where your money goes.
+              A portion of our 10% commission goes towards charities helping young artists discover their craft.
             </p>
             <Link href="/events" className={styles.givingCta}>
               <span>Learn About Our Events</span>
