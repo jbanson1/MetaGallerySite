@@ -151,7 +151,7 @@ export default function Home() {
             </div>
             <h3>Giving Back Through Art</h3>
             <ul className={styles.pillarList}>
-              <li>10% of all proceeds go to arts education charities</li>
+              <li>10% commission with a portion going to arts education charities</li>
               <li>We believe art should be accessible to everyone</li>
               <li>Your purchase directly funds the next generation of artists</li>
             </ul>
@@ -317,16 +317,8 @@ export default function Home() {
             </div>
             <h2>Every sale <em className={styles.serifItalic}>changes a life</em></h2>
             <p className={styles.charityDescription}>
-              We donate 10% of every sale to arts education charities. No small print, no exceptions. When you buy from Confidential Gallery, you&apos;re funding the next generation of artists who might otherwise never get the chance to create.
+              A portion of our 10% commission goes towards charities helping young artists discover their craft.
             </p>
-            <div className={styles.charityPartners}>
-              <span className={styles.partnerLabel}>Charity partners</span>
-              <div className={styles.partnerLogos}>
-                <div className={styles.partnerPlaceholder}>Arts Council England</div>
-                <div className={styles.partnerPlaceholder}>Creative Lives</div>
-                <div className={styles.partnerPlaceholder}>Tate Foundation</div>
-              </div>
-            </div>
             <Link href="/events" className={styles.givingCta}>
               <span>Learn About Our Events</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -337,7 +329,7 @@ export default function Home() {
           <div className={styles.charityVisual}>
             <div className={styles.charityStatBig}>
               <span className={styles.bigNumber}>10%</span>
-              <span className={styles.bigLabel}>of every sale donated</span>
+              <span className={styles.bigLabel}>of every purchase supports arts education charities</span>
             </div>
           </div>
         </div>

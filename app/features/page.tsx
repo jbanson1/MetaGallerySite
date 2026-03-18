@@ -323,7 +323,7 @@ export default function Features() {
             </div>
             <div className={styles.charityStat}>
               <span className={styles.statNumber}>10%</span>
-              <span className={styles.statLabel}>of proceeds donated</span>
+              <span className={styles.statLabel}>commission, with a portion donated to charity</span>
             </div>
           </div>
 
@@ -333,7 +333,7 @@ export default function Features() {
             </div>
             <h2>Technology with <em className={styles.serifItalic}>purpose</em></h2>
             <p className={styles.givingDescription}>
-              We believe art has the power to change lives. That&apos;s why 10% of all Confidential Gallery proceeds go directly to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
+              We believe art has the power to change lives. That&apos;s why a portion of our 10% commission goes to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
             </p>
             <div className={styles.givingFeatures}>
               <div className={styles.givingFeature}>
