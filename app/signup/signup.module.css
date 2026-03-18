@@ -120,12 +120,12 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  color: var(--smoke);
+  color: var(--cream-muted);
   display: flex;
   align-items: center;
   transition: color 0.2s;
 }
-.passwordToggle:hover { color: var(--cream); }
+.passwordToggle:hover { color: var(--gold); }
 
 /* ─── Error ─── */
 
