@@ -24,9 +24,10 @@ interface ArtworkOverlay {
 
 function ARPreviewContent() {
   const params = useSearchParams()
-  const imageUrl = params.get('image') ?? ''
-  const title    = params.get('title') ?? 'Artwork'
-  const artist   = params.get('artist') ?? ''
+  const imageUrl  = params.get('image') ?? ''
+  const title     = params.get('title') ?? 'Artwork'
+  const artist    = params.get('artist') ?? ''
+  const autostart = params.get('autostart') // 'camera' skips the choose screen
 
   const [mode, setMode] = useState<Mode>('choose')
   const [frame, setFrame] = useState<FrameStyle>('thin')
@@ -87,6 +88,12 @@ function ARPreviewContent() {
   }, [])
 
   useEffect(() => () => stopCamera(), [stopCamera])
+
+  // Auto-start camera when launched from Wall Preview
+  useEffect(() => {
+    if (autostart === 'camera') startCamera()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // ── Room photo ────────────────────────────────────────────────────────────
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
