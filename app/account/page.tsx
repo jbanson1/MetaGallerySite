@@ -392,8 +392,37 @@ export default function AccountPage() {
                   </div>
                 </div>
 
-                {/* Artwork grid from scan history */}
+                {/* Demo artwork — always visible for testing */}
                 <div className={styles.sectionHeaderRow} style={{ marginTop: '2.5rem' }}>
+                  <h3 style={{ fontFamily: 'var(--font-outfit)', fontWeight: 300, fontSize: '1.1rem', color: 'var(--cream)' }}>
+                    Try It Now
+                  </h3>
+                  <span style={{ fontSize: '0.8rem', padding: '0.2rem 0.6rem', border: '1px solid rgba(201,162,39,0.3)', color: 'var(--gold)' }}>Demo</span>
+                </div>
+                <div className={styles.wallGrid} style={{ marginBottom: '2.5rem' }}>
+                  <div className={styles.wallCard}>
+                    <div
+                      className={styles.wallCardImg}
+                      style={{ backgroundImage: `url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80')` }}
+                    />
+                    <div className={styles.wallCardBody}>
+                      <h4 className={styles.wallCardTitle}>Ephemeral Light No. 7</h4>
+                      <p className={styles.wallCardArtist}>Marcus Chen</p>
+                      <Link
+                        href={`/ar-preview?image=${encodeURIComponent('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=1200&q=90')}&title=${encodeURIComponent('Ephemeral Light No. 7')}&artist=${encodeURIComponent('Marcus Chen')}&autostart=camera`}
+                        className={styles.wallCardBtn}
+                      >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 9V5h4M19 9V5h-4M5 15v4h4M19 15v4h-4"/>
+                        </svg>
+                        Try on My Wall
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Artwork grid from scan history */}
+                <div className={styles.sectionHeaderRow}>
                   <h3 style={{ fontFamily: 'var(--font-outfit)', fontWeight: 300, fontSize: '1.1rem', color: 'var(--cream)' }}>
                     From Your Scan History
                   </h3>
@@ -401,7 +430,6 @@ export default function AccountPage() {
                     Scan new artwork →
                   </Link>
                 </div>
-
                 {scanHistory.filter(i => i.imageUrl).length === 0 ? (
                   <div className={styles.wallEmpty}>
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.35 }}>
