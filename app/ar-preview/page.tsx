@@ -89,12 +89,6 @@ function ARPreviewContent() {
 
   useEffect(() => () => stopCamera(), [stopCamera])
 
-  // Auto-start camera when launched from Wall Preview
-  useEffect(() => {
-    if (autostart === 'camera') startCamera()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   // ── Room photo ────────────────────────────────────────────────────────────
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -204,6 +198,84 @@ function ARPreviewContent() {
 
   // ── Choose mode screen ────────────────────────────────────────────────────
   if (mode === 'choose') {
+    // Streamlined single-tap screen when launched from Wall Preview / artwork page
+    if (autostart === 'camera') {
+      return (
+        <div className={styles.choosePage}>
+          <Link href="javascript:history.back()" className={styles.backBtn}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back
+          </Link>
+
+          <div className={styles.chooseCard}>
+            <div className={styles.chooseHeader}>
+              <div className={styles.chooseThumb}>
+                {imageUrl
+                  ? <img src={imageUrl} alt={title} />
+                  : <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>}
+              </div>
+              <div>
+                <h1 className={styles.chooseTitle}>{title}</h1>
+                {artist && <p className={styles.chooseArtist}>{artist}</p>}
+              </div>
+            </div>
+
+            {cameraError ? (
+              <>
+                <p className={styles.cameraError}>{cameraError}</p>
+                <div className={styles.chooseOptions}>
+                  <button className={styles.chooseOption} onClick={startCamera}>
+                    <div className={styles.optionIcon}>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <span className={styles.optionLabel}>Try Camera Again</span>
+                      <span className={styles.optionDesc}>Make sure camera permission is allowed in your browser</span>
+                    </div>
+                  </button>
+                  <button className={styles.chooseOption} onClick={() => fileInputRef.current?.click()}>
+                    <div className={styles.optionIcon}>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <span className={styles.optionLabel}>Upload Room Photo Instead</span>
+                      <span className={styles.optionDesc}>Place the artwork on a photo of your space</span>
+                    </div>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className={styles.chooseSub}>Tap below to start your camera and see this piece on your wall.</h2>
+                <button className={styles.startCameraBtn} onClick={startCamera}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                  Start Camera
+                </button>
+                <button className={styles.photoFallbackLink} onClick={() => fileInputRef.current?.click()}>
+                  Or upload a room photo instead
+                </button>
+              </>
+            )}
+
+            <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+          </div>
+        </div>
+      )
+    }
+
+    // Default two-option screen (reached from other entry points)
     return (
       <div className={styles.choosePage}>
         <Link href="javascript:history.back()" className={styles.backBtn}>
