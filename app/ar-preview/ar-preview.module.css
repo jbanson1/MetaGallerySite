@@ -146,6 +146,43 @@
 }
 .chooseOption:hover .optionArrow { transform: translateX(4px); color: var(--gold, #c9a227); }
 
+/* ── Streamlined single-tap start (autostart=camera) ──────── */
+.startCameraBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1.25rem;
+  background: var(--gold, #c9a227);
+  border: none;
+  color: #0e0e0e;
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-bottom: 1rem;
+}
+.startCameraBtn:hover { opacity: 0.88; }
+.startCameraBtn:active { opacity: 0.75; }
+
+.photoFallbackLink {
+  display: block;
+  width: 100%;
+  padding: 0.6rem;
+  background: transparent;
+  border: none;
+  color: var(--smoke, rgba(248,246,241,0.5));
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.82rem;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.photoFallbackLink:hover { color: var(--cream, #f8f6f1); }
+
 .chooseTip {
   font-size: 0.78rem;
   color: var(--smoke, rgba(248,246,241,0.4));
