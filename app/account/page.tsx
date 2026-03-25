@@ -14,7 +14,7 @@ import styles from './account.module.css'
 
 // ── Tab definitions ────────────────────────────────────────────────────────
 type ArtistTab = 'portfolio' | 'previews' | 'curators' | 'messages' | 'analytics' | 'settings'
-type CuratorTab = 'collection' | 'scans' | 'messages' | 'settings'
+type CuratorTab = 'collection' | 'scans' | 'wall' | 'messages' | 'settings'
 
 export default function AccountPage() {
   const router = useRouter()
@@ -264,6 +264,14 @@ export default function AccountPage() {
               </svg>
               Scan History
             </button>
+            <button className={`${styles.tabBtn} ${curatorTab === 'wall' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('wall')}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+                <rect x="6" y="7" width="5" height="4" rx="1"/>
+              </svg>
+              Wall Preview
+            </button>
             <button className={`${styles.tabBtn} ${curatorTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('messages')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -327,11 +335,120 @@ export default function AccountPage() {
                         </div>
                         <div className={styles.purchaseActions}>
                           <Link href={`/scan/${item.markerId}`} className={styles.actionBtn}>View</Link>
+                          {item.imageUrl && (
+                            <Link
+                              href={`/ar-preview?image=${encodeURIComponent(item.imageUrl)}&title=${encodeURIComponent(item.artworkTitle)}&artist=${encodeURIComponent(item.artistName)}`}
+                              className={`${styles.actionBtn} ${styles.actionBtnAr}`}
+                            >
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                <path d="M8 21h8M12 17v4"/>
+                              </svg>
+                              Try on Wall
+                            </Link>
+                          )}
                         </div>
                       </div>
                     ))}
                   </div>
                 )}
+              </div>
+            )}
+
+            {curatorTab === 'wall' && (
+              <div>
+                {/* Hero */}
+                <div className={styles.wallHero}>
+                  <div className={styles.wallHeroIcon}>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="3" width="20" height="14" rx="2"/>
+                      <path d="M8 21h8M12 17v4"/>
+                      <rect x="6" y="7" width="5" height="4" rx="1"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 className={styles.wallHeroTitle}>Wall Preview</h2>
+                    <p className={styles.wallHeroDesc}>
+                      Point your phone at a wall and see how any artwork would look in your space — live, using your camera.
+                    </p>
+                  </div>
+                </div>
+
+                {/* How it works */}
+                <div className={styles.wallSteps}>
+                  <div className={styles.wallStep}>
+                    <span className={styles.wallStepNum}>1</span>
+                    <p>Pick an artwork below</p>
+                  </div>
+                  <div className={styles.wallStepDivider} />
+                  <div className={styles.wallStep}>
+                    <span className={styles.wallStepNum}>2</span>
+                    <p>Allow camera access</p>
+                  </div>
+                  <div className={styles.wallStepDivider} />
+                  <div className={styles.wallStep}>
+                    <span className={styles.wallStepNum}>3</span>
+                    <p>Point at your wall &amp; drag to position</p>
+                  </div>
+                </div>
+
+                {/* Artwork grid from scan history */}
+                <div className={styles.sectionHeaderRow} style={{ marginTop: '2.5rem' }}>
+                  <h3 style={{ fontFamily: 'var(--font-outfit)', fontWeight: 300, fontSize: '1.1rem', color: 'var(--cream)' }}>
+                    From Your Scan History
+                  </h3>
+                  <Link href="/scan" style={{ color: 'var(--gold)', textDecoration: 'none', fontSize: '0.85rem' }}>
+                    Scan new artwork →
+                  </Link>
+                </div>
+
+                {scanHistory.filter(i => i.imageUrl).length === 0 ? (
+                  <div className={styles.wallEmpty}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.35 }}>
+                      <rect x="2" y="3" width="20" height="14" rx="2"/>
+                      <path d="M8 21h8M12 17v4"/>
+                    </svg>
+                    <p>Scan an artwork in a gallery to preview it on your wall.</p>
+                    <Link href="/scan" style={{ color: 'var(--gold)', textDecoration: 'none', fontSize: '0.9rem' }}>
+                      Open scanner →
+                    </Link>
+                  </div>
+                ) : (
+                  <div className={styles.wallGrid}>
+                    {scanHistory.filter(i => i.imageUrl).map((item) => (
+                      <div key={`wall-${item.markerId}-${item.scannedAt}`} className={styles.wallCard}>
+                        <div
+                          className={styles.wallCardImg}
+                          style={{ backgroundImage: `url('${item.imageUrl}')` }}
+                        />
+                        <div className={styles.wallCardBody}>
+                          <h4 className={styles.wallCardTitle}>{item.artworkTitle}</h4>
+                          <p className={styles.wallCardArtist}>{item.artistName}</p>
+                          <Link
+                            href={`/ar-preview?image=${encodeURIComponent(item.imageUrl!)}&title=${encodeURIComponent(item.artworkTitle)}&artist=${encodeURIComponent(item.artistName)}`}
+                            className={styles.wallCardBtn}
+                          >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M5 9V5h4M19 9V5h-4M5 15v4h4M19 15v4h-4"/>
+                            </svg>
+                            Try on My Wall
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Browse marketplace CTA */}
+                <div className={styles.wallMarketplaceCta}>
+                  <p>Discover more artworks to preview in your space</p>
+                  <Link href="/marketplace" className={styles.wallMarketplaceBtn}>
+                    Browse Marketplace
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </Link>
+                </div>
               </div>
             )}
 

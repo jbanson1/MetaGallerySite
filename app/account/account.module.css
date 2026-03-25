@@ -796,6 +796,269 @@
 .purchasesSection {}
 .favoritesSection {}
 
+/* ── AR action button on scan history cards ──────────────── */
+.actionBtnAr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  border-color: rgba(201,162,39,0.5);
+  color: var(--gold);
+}
+.actionBtnAr:hover {
+  background: rgba(201,162,39,0.12);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── Wall Preview Tab ─────────────────────────────────────── */
+.wallHero {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.75rem 2rem;
+  background: linear-gradient(135deg, rgba(201,162,39,0.07) 0%, rgba(201,162,39,0.02) 100%);
+  border: 1px solid rgba(201,162,39,0.2);
+  margin-bottom: 2rem;
+}
+
+.wallHeroIcon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,162,39,0.12);
+  border: 1px solid rgba(201,162,39,0.25);
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.wallHeroTitle {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin: 0 0 0.4rem;
+}
+
+.wallHeroDesc {
+  font-size: 0.9rem;
+  color: var(--smoke, rgba(248,246,241,0.6));
+  line-height: 1.55;
+  margin: 0;
+  max-width: 520px;
+}
+
+.wallSteps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 1.25rem 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+}
+
+.wallStep {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.wallStep p {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.wallStepNum {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201,162,39,0.15);
+  border: 1px solid rgba(201,162,39,0.35);
+  color: var(--gold);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.wallStepDivider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 0 1.25rem;
+}
+
+.wallGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.wallCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.wallCard:hover {
+  border-color: rgba(201,162,39,0.4);
+  transform: translateY(-3px);
+}
+
+.wallCardImg {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(255,255,255,0.03);
+}
+
+.wallCardBody {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.wallCardTitle {
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wallCardArtist {
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin: 0 0 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wallCardBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  background: rgba(201,162,39,0.1);
+  border: 1px solid rgba(201,162,39,0.4);
+  color: var(--gold);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.wallCardBtn:hover {
+  background: rgba(201,162,39,0.2);
+  border-color: var(--gold);
+}
+
+.wallEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--smoke, rgba(248,246,241,0.6));
+}
+
+.wallEmpty p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.wallMarketplaceCta {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.wallMarketplaceCta p {
+  font-size: 0.95rem;
+  color: var(--cream-muted);
+  margin: 0;
+}
+
+.wallMarketplaceBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: var(--ink);
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.wallMarketplaceBtn:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+@media (max-width: 768px) {
+  .wallHero {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .wallSteps {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .wallStepDivider {
+    width: 100%;
+    height: 1px;
+    margin: 0;
+  }
+
+  .wallGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .wallMarketplaceCta {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .wallMarketplaceBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
