@@ -337,7 +337,7 @@ export default function AccountPage() {
                           <Link href={`/scan/${item.markerId}`} className={styles.actionBtn}>View</Link>
                           {item.imageUrl && (
                             <Link
-                              href={`/ar-preview?image=${encodeURIComponent(item.imageUrl)}&title=${encodeURIComponent(item.artworkTitle)}&artist=${encodeURIComponent(item.artistName)}`}
+                              href={`/ar-preview?image=${encodeURIComponent(item.imageUrl)}&title=${encodeURIComponent(item.artworkTitle)}&artist=${encodeURIComponent(item.artistName)}&autostart=camera`}
                               className={`${styles.actionBtn} ${styles.actionBtnAr}`}
                             >
                               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
@@ -425,7 +425,7 @@ export default function AccountPage() {
                           <h4 className={styles.wallCardTitle}>{item.artworkTitle}</h4>
                           <p className={styles.wallCardArtist}>{item.artistName}</p>
                           <Link
-                            href={`/ar-preview?image=${encodeURIComponent(item.imageUrl!)}&title=${encodeURIComponent(item.artworkTitle)}&artist=${encodeURIComponent(item.artistName)}`}
+                            href={`/ar-preview?image=${encodeURIComponent(item.imageUrl!)}&title=${encodeURIComponent(item.artworkTitle)}&artist=${encodeURIComponent(item.artistName)}&autostart=camera`}
                             className={styles.wallCardBtn}
                           >
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
