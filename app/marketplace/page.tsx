@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import styles from './marketplace.module.css'
@@ -25,9 +26,30 @@ interface MarketplaceArtwork {
   artwork_assets: ArtworkAsset[]
 }
 
+const FAV_KEY = 'cg_favourites'
+
 export default function MarketplacePage() {
+  const router = useRouter()
   const [artworks, setArtworks] = useState<MarketplaceArtwork[]>([])
   const [loading, setLoading] = useState(true)
+  const [favourites, setFavourites] = useState<Set<string>>(new Set())
+
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(FAV_KEY) ?? '[]') as string[]
+      setFavourites(new Set(stored))
+    } catch { /* ignore */ }
+  }, [])
+
+  function toggleFavourite(e: React.MouseEvent, id: string) {
+    e.stopPropagation()
+    setFavourites(prev => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(next)))
+      return next
+    })
+  }
 
   useEffect(() => {
     supabase
@@ -223,34 +245,43 @@ export default function MarketplacePage() {
           <div className={styles.productsGrid}>
             {artworks.map((artwork) => {
               const image = getPrimaryImage(artwork.artwork_assets)
+              const isFav = favourites.has(artwork.id)
               return (
-                <article key={artwork.id} className={styles.productCard}>
-                  <Link href={`/marketplace/${artwork.id}`} className={styles.productImageLink}>
-                    <div
-                      className={styles.productImage}
-                      style={image ? { backgroundImage: `url('${image}')` } : undefined}
+                <article
+                  key={artwork.id}
+                  className={styles.productCard}
+                  onClick={() => router.push(`/marketplace/${artwork.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div
+                    className={styles.productImage}
+                    style={image ? { backgroundImage: `url('${image}')` } : undefined}
+                  >
+                    {!image && (
+                      <div className={styles.productImagePlaceholder}>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                          <rect x="3" y="3" width="18" height="18" rx="2"/>
+                          <circle cx="8.5" cy="8.5" r="1.5"/>
+                          <path d="M21 15l-5-5L5 21"/>
+                        </svg>
+                      </div>
+                    )}
+                    <span className={`${styles.productBadge} ${styles.productBadgeOriginal}`}>Original</span>
+                    <button
+                      className={`${styles.productFavorite} ${isFav ? styles.productFavoriteActive : ''}`}
+                      aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
+                      onClick={(e) => toggleFavourite(e, artwork.id)}
                     >
-                      {!image && (
-                        <div className={styles.productImagePlaceholder}>
-                          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                            <rect x="3" y="3" width="18" height="18" rx="2"/>
-                            <circle cx="8.5" cy="8.5" r="1.5"/>
-                            <path d="M21 15l-5-5L5 21"/>
-                          </svg>
-                        </div>
-                      )}
-                      <span className={`${styles.productBadge} ${styles.productBadgeOriginal}`}>Original</span>
-                    </div>
-                  </Link>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill={isFav ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                      </svg>
+                    </button>
+                  </div>
                   <div className={styles.productContent}>
                     <div className={styles.productArtist}>
                       <span>{artwork.artist_name}</span>
                     </div>
-                    <h3>
-                      <Link href={`/marketplace/${artwork.id}`} className={styles.artworkTitleLink}>
-                        {artwork.title}
-                      </Link>
-                    </h3>
+                    <h3 className={styles.artworkTitleLink}>{artwork.title}</h3>
                     <p className={styles.productDetails}>
                       {[artwork.medium, artwork.dimensions, artwork.year].filter(Boolean).join(' · ')}
                     </p>
@@ -260,7 +291,7 @@ export default function MarketplacePage() {
                           <span className={styles.price}>{formatPrice(artwork.price, artwork.currency)}</span>
                         )}
                       </div>
-                      <Link href={`/marketplace/${artwork.id}`} className={styles.productCta}>View</Link>
+                      <span className={styles.productCta}>View</span>
                     </div>
                   </div>
                 </article>
