@@ -257,6 +257,14 @@
   color: var(--ink);
 }
 
+.productFavoriteActive {
+  background: var(--gold);
+}
+
+.productFavoriteActive svg {
+  color: var(--ink);
+}
+
 .productArBadge {
   position: absolute;
   bottom: 1rem;

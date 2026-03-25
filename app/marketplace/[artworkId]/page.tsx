@@ -184,7 +184,7 @@ export default function MarketplaceArtworkPage() {
           {/* View in Your Space — AR preview */}
           {primaryImage && (
             <Link
-              href={`/ar-preview?image=${encodeURIComponent(primaryImage)}&title=${encodeURIComponent(artwork.title)}&artist=${encodeURIComponent(artwork.artist_name)}`}
+              href={`/ar-preview?image=${encodeURIComponent(primaryImage)}&title=${encodeURIComponent(artwork.title)}&artist=${encodeURIComponent(artwork.artist_name)}&autostart=camera`}
               className={styles.arBtn}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
