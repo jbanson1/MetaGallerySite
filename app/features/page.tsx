@@ -253,6 +253,14 @@ export default function Features() {
             <h3>Multi-Language Support</h3>
             <p>Reach international visitors with automatic translations. Upload content once and serve it in multiple languages effortlessly.</p>
           </div>
+
+          <div className={styles.featureCard} style={{borderColor:'rgba(201,162,39,0.25)', position:'relative', overflow:'hidden'}}>
+            <div style={{position:'absolute',top:'1rem',right:'1rem',background:'rgba(201,162,39,0.15)',border:'1px solid rgba(201,162,39,0.4)',color:'var(--gold)',fontSize:'0.65rem',fontWeight:700,letterSpacing:'0.08em',padding:'0.2rem 0.6rem',textTransform:'uppercase'}}>Coming Soon</div>
+            <div className={styles.featureNumber} style={{opacity:0.5}}>07</div>
+            <h3>AI Art Identification</h3>
+            <p>Point your phone, AR glasses, or smart device at any artwork — in a gallery, museum, or private collection — and instantly surface the listing. AI identifies the piece, pulls the artist profile, price, provenance, and purchase link from The Confidential Gallery in seconds.</p>
+            <p style={{marginTop:'0.75rem',fontSize:'0.82rem',color:'rgba(248,246,241,0.45)',lineHeight:1.5}}>Works across mobile, Meta glasses, Apple Vision, and any AR-capable device. No QR code required.</p>
+          </div>
         </div>
       </section>
 
@@ -322,8 +330,8 @@ export default function Features() {
               </svg>
             </div>
             <div className={styles.charityStat}>
-              <span className={styles.statNumber}>10%</span>
-              <span className={styles.statLabel}>commission, with a portion donated to charity</span>
+              <span className={styles.statNumber}>75%</span>
+              <span className={styles.statLabel}>kept by artists on every sale</span>
             </div>
           </div>
 
@@ -333,7 +341,7 @@ export default function Features() {
             </div>
             <h2>Technology with <em className={styles.serifItalic}>purpose</em></h2>
             <p className={styles.givingDescription}>
-              We believe art has the power to change lives. That&apos;s why a portion of our 10% commission goes to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
+              We believe art has the power to change lives. Artists keep 75% of every sale — one of the highest rates in digital art. A portion of the remainder goes to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
             </p>
             <div className={styles.givingFeatures}>
               <div className={styles.givingFeature}>

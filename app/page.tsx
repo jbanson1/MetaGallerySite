@@ -151,9 +151,10 @@ export default function Home() {
             </div>
             <h3>Giving Back Through Art</h3>
             <ul className={styles.pillarList}>
-              <li>10% commission with a portion going to arts education charities</li>
+              <li>Artists keep 75% — one of the highest rates in digital art</li>
+              <li>A portion of every sale goes to arts education charities</li>
               <li>We believe art should be accessible to everyone</li>
-              <li>Your purchase directly funds the next generation of artists</li>
+              <li>Every purchase directly funds the next generation of artists</li>
             </ul>
           </div>
         </div>
@@ -191,8 +192,8 @@ export default function Home() {
                   <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
                 </svg>
               </div>
-              <h4>Scan & Discover</h4>
-              <p>Point your phone at any piece in a gallery for instant artist info, background stories, and pricing.</p>
+              <h4>AI Art Identification</h4>
+              <p>Point your phone or AR glasses at any artwork and instantly pull up the listing — artist, price, story, and availability. <em style={{color:'var(--gold)', fontSize:'0.8em'}}>Coming soon</em></p>
             </div>
 
             <div className={styles.techCard}>
@@ -204,7 +205,7 @@ export default function Home() {
                 </svg>
               </div>
               <h4>Smart Glasses Ready</h4>
-              <p>Future-proof for Meta glasses and Apple Vision — artwork info appears right in your field of view.</p>
+              <p>Built for the AR glasses future — Meta, Apple Vision, and beyond. Walk into any gallery and the art speaks to you. <em style={{color:'var(--gold)', fontSize:'0.8em'}}>Coming soon</em></p>
             </div>
 
             <div className={styles.techCard}>
@@ -291,7 +292,7 @@ export default function Home() {
             </div>
             <h2>Every sale <em className={styles.serifItalic}>changes a life</em></h2>
             <p className={styles.charityDescription}>
-              A portion of our 10% commission goes towards charities helping young artists discover their craft.
+              Artists keep 75% of every sale. A portion of the remainder goes towards charities helping young artists discover their craft.
             </p>
             <Link href="/events" className={styles.givingCta}>
               <span>Learn About Our Events</span>
@@ -302,8 +303,8 @@ export default function Home() {
           </div>
           <div className={styles.charityVisual}>
             <div className={styles.charityStatBig}>
-              <span className={styles.bigNumber}>10%</span>
-              <span className={styles.bigLabel}>of every purchase supports arts education charities</span>
+              <span className={styles.bigNumber}>75%</span>
+              <span className={styles.bigLabel}>kept by artists on every sale</span>
             </div>
           </div>
         </div>
@@ -315,7 +316,7 @@ export default function Home() {
           <div className={styles.ctaPanel}>
             <div className={styles.ctaPanelTag}>For Artists</div>
             <h3>Ready to share your work with the world?</h3>
-            <p>Join our marketplace, keep more of what you earn, and connect directly with collectors who value your vision.</p>
+            <p>Join our marketplace, keep 75% of every sale, and connect directly with collectors who value your vision.</p>
             <Link href="/features#waitlist" className={styles.btnPrimary}>
               <span>Apply to Join</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
