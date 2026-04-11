@@ -67,14 +67,10 @@ function ARPreviewContent() {
         video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } },
       })
       streamRef.current = stream
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream
-        videoRef.current.play()
-      }
-      setMode('camera')
+      setMode('camera') // video element renders after this; stream is attached in the effect below
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err)
-      if (msg.includes('Permission') || msg.includes('NotAllowed')) {
+      if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('NotFound')) {
         setCameraError('Camera permission denied. Please allow camera access in your browser settings, or use the room photo option instead.')
       } else {
         setCameraError('Could not access camera. Try the room photo option instead.')
@@ -86,6 +82,14 @@ function ARPreviewContent() {
     streamRef.current?.getTracks().forEach(t => t.stop())
     streamRef.current = null
   }, [])
+
+  // Attach the stream once the <video> element is in the DOM (after mode → 'camera')
+  useEffect(() => {
+    if (mode === 'camera' && videoRef.current && streamRef.current) {
+      videoRef.current.srcObject = streamRef.current
+      videoRef.current.play().catch(() => {})
+    }
+  }, [mode])
 
   useEffect(() => () => stopCamera(), [stopCamera])
 

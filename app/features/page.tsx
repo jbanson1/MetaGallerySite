@@ -253,6 +253,14 @@ export default function Features() {
             <h3>Multi-Language Support</h3>
             <p>Reach international visitors with automatic translations. Upload content once and serve it in multiple languages effortlessly.</p>
           </div>
+
+          <div className={styles.featureCard} style={{borderColor:'rgba(201,162,39,0.25)', position:'relative', overflow:'hidden'}}>
+            <div style={{position:'absolute',top:'1rem',right:'1rem',background:'rgba(201,162,39,0.15)',border:'1px solid rgba(201,162,39,0.4)',color:'var(--gold)',fontSize:'0.65rem',fontWeight:700,letterSpacing:'0.08em',padding:'0.2rem 0.6rem',textTransform:'uppercase'}}>Coming Soon</div>
+            <div className={styles.featureNumber} style={{opacity:0.5}}>07</div>
+            <h3>AI Art Identification</h3>
+            <p>Point your phone, AR glasses, or smart device at any artwork — in a gallery, museum, or private collection — and instantly surface the listing. AI identifies the piece, pulls the artist profile, price, provenance, and purchase link from The Confidential Gallery in seconds.</p>
+            <p style={{marginTop:'0.75rem',fontSize:'0.82rem',color:'rgba(248,246,241,0.45)',lineHeight:1.5}}>Works across mobile, Meta glasses, Apple Vision, and any AR-capable device. No QR code required.</p>
+          </div>
         </div>
       </section>
 
@@ -305,74 +313,6 @@ export default function Features() {
                 <p>Hit publish and you&apos;re done. Visitors can start scanning immediately — no app install needed.</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Giving Back */}
-      <section className={styles.givingBack} id="giving-back">
-        <div className={styles.givingContainer}>
-          <div className={styles.givingVisual}>
-            <div className={styles.charityIcon}>
-              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="38" stroke="var(--gold)" strokeWidth="1" opacity="0.3"/>
-                <circle cx="40" cy="40" r="28" stroke="var(--gold)" strokeWidth="1" opacity="0.5"/>
-                <path d="M40 20C40 20 25 32 25 42C25 52 32 58 40 58C48 58 55 52 55 42C55 32 40 20 40 20Z" fill="none" stroke="var(--gold)" strokeWidth="2"/>
-                <path d="M40 30V50M32 40H48" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </div>
-            <div className={styles.charityStat}>
-              <span className={styles.statNumber}>10%</span>
-              <span className={styles.statLabel}>commission, with a portion donated to charity</span>
-            </div>
-          </div>
-
-          <div className={styles.givingContent}>
-            <div className={styles.sectionTag}>
-              <span>Art for Good</span>
-            </div>
-            <h2>Technology with <em className={styles.serifItalic}>purpose</em></h2>
-            <p className={styles.givingDescription}>
-              We believe art has the power to change lives. That&apos;s why a portion of our 10% commission goes to arts education charities, supporting underfunded programs and bringing creative opportunities to communities that need them most.
-            </p>
-            <div className={styles.givingFeatures}>
-              <div className={styles.givingFeature}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                </svg>
-                <div>
-                  <h4>Arts Education</h4>
-                  <p>Funding school programs, workshops, and museum visits for young people</p>
-                </div>
-              </div>
-              <div className={styles.givingFeature}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 6v6l4 2"/>
-                </svg>
-                <div>
-                  <h4>Charity Events</h4>
-                  <p>Regular fundraising exhibitions and AR experiences for causes that matter</p>
-                </div>
-              </div>
-              <div className={styles.givingFeature}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <div>
-                  <h4>Community Access</h4>
-                  <p>Free Confidential Gallery access for non-profit galleries and community spaces</p>
-                </div>
-              </div>
-            </div>
-            <Link href="/events" className={styles.givingCta}>
-              <span>View Upcoming Charity Events</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </Link>
           </div>
         </div>
       </section>
