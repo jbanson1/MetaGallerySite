@@ -146,15 +146,14 @@ export default function Home() {
           <div className={styles.pillar}>
             <div className={styles.pillarIcon}>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="1.5">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
             </div>
-            <h3>Giving Back Through Art</h3>
+            <h3>Fair, Transparent Commissions</h3>
             <ul className={styles.pillarList}>
               <li>Artists keep 75% — one of the highest rates in digital art</li>
-              <li>A portion of every sale goes to arts education charities</li>
-              <li>We believe art should be accessible to everyone</li>
-              <li>Every purchase directly funds the next generation of artists</li>
+              <li>No hidden fees, no surprise deductions</li>
+              <li>Simple, honest pricing from day one</li>
             </ul>
           </div>
         </div>
@@ -280,33 +279,6 @@ export default function Home() {
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </Link>
-        </div>
-      </section>
-
-      {/* Charity Section */}
-      <section className={styles.charity} id="charity">
-        <div className={styles.charityInner}>
-          <div className={styles.charityContent}>
-            <div className={styles.sectionTag}>
-              <span>Art That Gives Back</span>
-            </div>
-            <h2>Every sale <em className={styles.serifItalic}>changes a life</em></h2>
-            <p className={styles.charityDescription}>
-              Artists keep 75% of every sale. A portion of the remainder goes towards charities helping young artists discover their craft.
-            </p>
-            <Link href="/events" className={styles.givingCta}>
-              <span>Learn About Our Events</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </Link>
-          </div>
-          <div className={styles.charityVisual}>
-            <div className={styles.charityStatBig}>
-              <span className={styles.bigNumber}>75%</span>
-              <span className={styles.bigLabel}>kept by artists on every sale</span>
-            </div>
-          </div>
         </div>
       </section>
 

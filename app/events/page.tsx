@@ -68,16 +68,16 @@ export default function EventsPage() {
         <div className={styles.pageTag}>
           <span>Upcoming Events</span>
         </div>
-        <h1>Art, Technology & <em className={styles.serifItalic}>Giving Back</em></h1>
-        <p>Join us for exhibitions, workshops, and charity fundraisers where creativity meets purpose. A portion of every event supports arts education.</p>
+        <h1>Art, Technology & <em className={styles.serifItalic}>Community</em></h1>
+        <p>Join us for exhibitions, workshops, and openings that bring artists and collectors together.</p>
       </header>
 
       {/* Event Filters */}
       <div className={styles.eventFilters}>
         <button className={`${styles.filterBtn} ${styles.filterBtnActive}`}>All Events</button>
-        <button className={styles.filterBtn}>Charity Fundraisers</button>
         <button className={styles.filterBtn}>Workshops</button>
         <button className={styles.filterBtn}>Exhibitions</button>
+        <button className={styles.filterBtn}>Openings</button>
       </div>
 
       {/* Events Grid */}
@@ -87,7 +87,7 @@ export default function EventsPage() {
           {/* Featured Event */}
           <article className={`${styles.eventCard} ${styles.eventCardFeatured}`}>
             <div className={styles.eventImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1594608661623-aa0bd3a69d98?w=800&q=80')"}}>
-              <span className={`${styles.eventBadge} ${styles.eventBadgeCharity}`}>Charity Gala</span>
+              <span className={`${styles.eventBadge} ${styles.eventBadgeExhibition}`}>Opening Night</span>
             </div>
             <div className={styles.eventContent}>
               <div className={styles.eventDate}>
@@ -100,8 +100,8 @@ export default function EventsPage() {
                   <div>Saturday Evening</div>
                 </div>
               </div>
-              <h3>Art After Dark: Annual Charity Gala</h3>
-              <p>Our flagship fundraising event returns with an evening of immersive AR art experiences, live performances, and a silent auction. All proceeds benefit the Arts Education Foundation, providing creative programs to underserved schools across the UK.</p>
+              <h3>Art After Dark: Confidential Gallery Launch</h3>
+              <p>Our flagship opening night — an evening of immersive AR art experiences, live performances, and a private preview of works from artists on the platform. Meet the artists and browse the collection up close.</p>
               <div className={styles.eventMeta}>
                 <div className={styles.eventLocation}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -149,7 +149,7 @@ export default function EventsPage() {
           {/* Event 3 */}
           <article className={styles.eventCard}>
             <div className={styles.eventImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80')"}}>
-              <span className={`${styles.eventBadge} ${styles.eventBadgeCharity}`}>Fundraiser</span>
+              <span className={`${styles.eventBadge} ${styles.eventBadgeExhibition}`}>Exhibition</span>
             </div>
             <div className={styles.eventContent}>
               <div className={styles.eventDate}>
@@ -163,7 +163,7 @@ export default function EventsPage() {
                 </div>
               </div>
               <h3>Young Artists Showcase</h3>
-              <p>Celebrating emerging talent from local schools. Students present their first AR-enhanced exhibitions, with all donations supporting art supplies and technology access.</p>
+              <p>Celebrating emerging talent making their mark. Up-and-coming artists present new works with AR layers — scan any piece to hear directly from the artist about their process and inspiration.</p>
               <div className={styles.eventMeta}>
                 <div className={styles.eventLocation}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -172,7 +172,7 @@ export default function EventsPage() {
                   </svg>
                   Hackney Arts Centre
                 </div>
-                <Link href="#" className={styles.eventCta}>Donate</Link>
+                <Link href="#" className={styles.eventCta}>Get Tickets</Link>
               </div>
             </div>
           </article>
@@ -211,7 +211,7 @@ export default function EventsPage() {
           {/* Event 5 */}
           <article className={styles.eventCard}>
             <div className={styles.eventImage} style={{backgroundImage: "url('https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80')"}}>
-              <span className={`${styles.eventBadge} ${styles.eventBadgeCharity}`}>Charity</span>
+              <span className={`${styles.eventBadge} ${styles.eventBadgeWorkshop}`}>Open Day</span>
             </div>
             <div className={styles.eventContent}>
               <div className={styles.eventDate}>
@@ -221,11 +221,11 @@ export default function EventsPage() {
                 </div>
                 <div className={styles.eventDateInfo}>
                   <div className={styles.time}>11:00 AM – 4:00 PM</div>
-                  <div>Sunday Family Day</div>
+                  <div>Sunday</div>
                 </div>
               </div>
-              <h3>Art & Tech Family Fun Day</h3>
-              <p>A free community event with AR treasure hunts, face painting, live art demonstrations, and interactive installations. Donations welcome for the Children&apos;s Art Trust.</p>
+              <h3>Art & Tech Open Day</h3>
+              <p>A free public event with AR treasure hunts, live art demonstrations, and interactive installations. A chance to experience the platform and meet artists in a relaxed, open setting.</p>
               <div className={styles.eventMeta}>
                 <div className={styles.eventLocation}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -273,49 +273,13 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section className={styles.impactSection}>
-        <div className={styles.impactContainer}>
-          <div className={styles.impactHeader}>
-            <h2>Our <em className={styles.serifItalic}>Impact</em> So Far</h2>
-            <p>Every event, every scan, every subscription helps us support arts education and make creativity accessible to all.</p>
-          </div>
-
-          <div className={styles.impactStats}>
-            <div className={styles.impactStat}>
-              <div className={styles.number}>£47K</div>
-              <div className={styles.label}>Donated to Charity</div>
-            </div>
-            <div className={styles.impactStat}>
-              <div className={styles.number}>12</div>
-              <div className={styles.label}>Schools Supported</div>
-            </div>
-            <div className={styles.impactStat}>
-              <div className={styles.number}>2,400</div>
-              <div className={styles.label}>Students Reached</div>
-            </div>
-            <div className={styles.impactStat}>
-              <div className={styles.number}>8</div>
-              <div className={styles.label}>Charity Events Held</div>
-            </div>
-          </div>
-
-          <div className={styles.impactPartners}>
-            <span>Proud to support</span>
-            <div className={styles.partnerLogo}>Arts Education Foundation</div>
-            <div className={styles.partnerLogo}>Children&apos;s Art Trust</div>
-            <div className={styles.partnerLogo}>Creative Futures UK</div>
-          </div>
-        </div>
-      </section>
-
       {/* Newsletter */}
       <section className={styles.newsletter}>
         <div className={styles.newsletterContainer}>
           <h2>Stay in the <em className={styles.serifItalic}>loop</em></h2>
-          <p>Get notified about upcoming events, charity initiatives, and the latest from Confidential Gallery.</p>
+          <p>Get notified about upcoming events, new artists, and the latest from Confidential Gallery.</p>
           <NewsletterForm />
-          <p className={styles.formNote}>Join 2,400+ art lovers. No spam, unsubscribe anytime.</p>
+          <p className={styles.formNote}>Join art lovers worldwide. No spam, unsubscribe anytime.</p>
         </div>
       </section>
     </>
