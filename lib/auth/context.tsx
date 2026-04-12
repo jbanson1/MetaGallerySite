@@ -11,7 +11,7 @@ export interface Profile {
   avatar_url: string | null
   location: string | null
   bio: string | null
-  account_type: 'artist' | 'curator'
+  account_type: 'artist' | 'buyer' | 'curator'
 }
 
 // ─── DEV HARDCODED ACCOUNTS ──────────────────────────────────────────────────
@@ -35,21 +35,21 @@ const DEV_ADMIN_PROFILE: Profile = {
   account_type: 'curator',
 }
 
-const DEV_CURATOR_USER = {
+const DEV_BUYER_USER = {
   id: 'dev-curator-001',
-  email: 'curator@theconfidential.gallery',
+  email: 'buyer@theconfidential.gallery',
   app_metadata: {},
-  user_metadata: { full_name: 'Dev Curator' },
+  user_metadata: { full_name: 'Dev Buyer' },
   aud: 'authenticated',
   created_at: new Date().toISOString(),
 } as unknown as User
-const DEV_CURATOR_PROFILE: Profile = {
+const DEV_BUYER_PROFILE: Profile = {
   id: 'dev-curator-001',
-  full_name: 'Dev Curator',
-  username: 'DevCurator',
+  full_name: 'Dev Buyer',
+  username: 'DevBuyer',
   avatar_url: null,
   location: 'London, UK',
-  bio: 'Development curator account for testing the platform.',
+  bio: 'Development buyer account for testing the platform.',
   account_type: 'curator',
 }
 
@@ -73,7 +73,7 @@ const DEV_ARTIST_PROFILE: Profile = {
 
 const DEV_ACCOUNTS: Record<string, { user: User; profile: Profile }> = {
   Admin:      { user: DEV_ADMIN_USER,   profile: DEV_ADMIN_PROFILE },
-  DevCurator: { user: DEV_CURATOR_USER, profile: DEV_CURATOR_PROFILE },
+  DevBuyer:   { user: DEV_BUYER_USER,   profile: DEV_BUYER_PROFILE },
   DevArtist:  { user: DEV_ARTIST_USER,  profile: DEV_ARTIST_PROFILE },
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ interface AuthContextValue {
   profile: Profile | null
   loading: boolean
   signIn: (username: string, password: string) => Promise<{ error: string | null }>
-  signUp: (email: string, password: string, fullName: string, username: string, accountType?: 'artist' | 'curator') => Promise<{ error: string | null; needsConfirmation: boolean }>
+  signUp: (email: string, password: string, fullName: string, username: string, accountType?: 'artist' | 'buyer') => Promise<{ error: string | null; needsConfirmation: boolean }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Omit<Profile, 'id'>>) => Promise<{ error: string | null }>
 }
@@ -150,7 +150,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
     fullName: string,
     username: string,
-    accountType: 'artist' | 'curator' = 'curator'
+    accountType: 'artist' | 'buyer' = 'buyer'
   ) => {
     const { data, error } = await supabase.auth.signUp({
       email,

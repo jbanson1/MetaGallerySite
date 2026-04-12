@@ -23,7 +23,7 @@ const STATUS_LABELS: Record<Preview['status'], string> = {
 }
 const VISIBILITY_LABELS: Record<Preview['visibility'], string> = {
   private: 'Private',
-  curator_list: 'My Curators',
+  curator_list: 'My Buyers',
   public: 'Public',
 }
 
@@ -107,7 +107,7 @@ export default function PreviewsPanel({ profile }: Props) {
       <div className={styles.panelHeader}>
         <div>
           <h2>Work Previews</h2>
-          <p className={styles.panelSubtitle}>Share works-in-progress with your trusted curators.</p>
+          <p className={styles.panelSubtitle}>Share works-in-progress with your trusted buyers.</p>
         </div>
         <button className={styles.btnPrimary} onClick={() => setShowForm(v => !v)}>
           {showForm ? 'Cancel' : '+ Add Preview'}

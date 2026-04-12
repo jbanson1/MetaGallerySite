@@ -7,21 +7,21 @@ import { useAuth } from '@/lib/auth/context'
 import { getScanHistory } from '@/lib/utils/storage'
 import type { ScanHistoryItem } from '@/lib/utils/storage'
 import PreviewsPanel from '@/components/account/PreviewsPanel'
-import CuratorListPanel from '@/components/account/CuratorListPanel'
+import BuyerListPanel from '@/components/account/BuyerListPanel'
 import MessagesPanel from '@/components/account/MessagesPanel'
 import AnalyticsPanel from '@/components/account/AnalyticsPanel'
 import styles from './account.module.css'
 
 // ── Tab definitions ────────────────────────────────────────────────────────
-type ArtistTab = 'portfolio' | 'previews' | 'curators' | 'messages' | 'analytics' | 'settings'
-type CuratorTab = 'collection' | 'scans' | 'wall' | 'messages' | 'settings'
+type ArtistTab = 'portfolio' | 'previews' | 'buyers' | 'messages' | 'analytics' | 'settings'
+type BuyerTab = 'collection' | 'scans' | 'wall' | 'messages' | 'settings'
 
 export default function AccountPage() {
   const router = useRouter()
   const { user, profile, loading, signOut, updateProfile } = useAuth()
 
   const [artistTab, setArtistTab] = useState<ArtistTab>('portfolio')
-  const [curatorTab, setCuratorTab] = useState<CuratorTab>('collection')
+  const [buyerTab, setBuyerTab] = useState<BuyerTab>('collection')
   const [scanHistory, setScanHistory] = useState<ScanHistoryItem[]>([])
   const [settingsName, setSettingsName] = useState('')
   const [settingsLocation, setSettingsLocation] = useState('')
@@ -80,7 +80,7 @@ export default function AccountPage() {
       <div className={styles.settingsGroup}>
         <h3>Profile Information</h3>
         <p className={styles.accountTypeTag}>
-          Account type: <strong>{isArtist ? 'Artist' : 'Curator'}</strong>
+          Account type: <strong>{isArtist ? 'Artist' : 'Buyer'}</strong>
         </p>
         <form className={styles.settingsForm} onSubmit={handleSaveSettings}>
           <div className={styles.formRow}>
@@ -100,7 +100,7 @@ export default function AccountPage() {
             <textarea
               value={settingsBio}
               onChange={e => setSettingsBio(e.target.value)}
-              placeholder={isArtist ? 'Tell curators about your practice…' : 'Tell artists about your curatorial interests…'}
+              placeholder={isArtist ? 'Tell buyers about your practice…' : 'Tell artists about what you collect…'}
               rows={4}
               style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'var(--cream)', fontFamily: 'var(--font-outfit)', fontSize: '0.9rem', padding: '0.6rem 0.875rem', outline: 'none', resize: 'vertical', width: '100%', boxSizing: 'border-box' }}
             />
@@ -135,8 +135,8 @@ export default function AccountPage() {
           <div className={styles.accountInfo}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
               <h1>{displayName}</h1>
-              <span className={isArtist ? styles.badgeArtist : styles.badgeCurator}>
-                {isArtist ? 'Artist' : 'Curator'}
+              <span className={isArtist ? styles.badgeArtist : styles.badgeBuyer}>
+                {isArtist ? 'Artist' : 'Buyer'}
               </span>
             </div>
             <p className={styles.accountMeta}>
@@ -189,13 +189,13 @@ export default function AccountPage() {
               </svg>
               Work Previews
             </button>
-            <button className={`${styles.tabBtn} ${artistTab === 'curators' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('curators')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'buyers' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('buyers')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
-              My Curators
+              My Buyers
             </button>
             <button className={`${styles.tabBtn} ${artistTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('messages')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -237,7 +237,7 @@ export default function AccountPage() {
               </div>
             )}
             {artistTab === 'previews' && <PreviewsPanel profile={profile} />}
-            {artistTab === 'curators' && <CuratorListPanel profile={profile} />}
+            {artistTab === 'buyers' && <BuyerListPanel profile={profile} />}
             {artistTab === 'messages' && <MessagesPanel profile={profile} />}
             {artistTab === 'analytics' && <AnalyticsPanel profile={profile} />}
             {artistTab === 'settings' && settingsPanel}
@@ -245,11 +245,11 @@ export default function AccountPage() {
         </>
       )}
 
-      {/* ── Curator Dashboard ──────────────────────────────────────────── */}
+      {/* ── Buyer Dashboard ────────────────────────────────────────────── */}
       {!isArtist && (
         <>
           <div className={styles.accountTabs}>
-            <button className={`${styles.tabBtn} ${curatorTab === 'collection' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('collection')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'collection' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('collection')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
                 <line x1="3" y1="6" x2="21" y2="6"/>
@@ -257,14 +257,14 @@ export default function AccountPage() {
               </svg>
               My Collection
             </button>
-            <button className={`${styles.tabBtn} ${curatorTab === 'scans' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('scans')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'scans' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('scans')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
                 <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
               </svg>
               Scan History
             </button>
-            <button className={`${styles.tabBtn} ${curatorTab === 'wall' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('wall')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'wall' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('wall')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="3" width="20" height="14" rx="2"/>
                 <path d="M8 21h8M12 17v4"/>
@@ -272,13 +272,13 @@ export default function AccountPage() {
               </svg>
               Wall Preview
             </button>
-            <button className={`${styles.tabBtn} ${curatorTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('messages')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('messages')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
               Messages
             </button>
-            <button className={`${styles.tabBtn} ${curatorTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => setCuratorTab('settings')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('settings')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="3"/>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -288,7 +288,7 @@ export default function AccountPage() {
           </div>
 
           <section className={styles.accountContent}>
-            {curatorTab === 'collection' && (
+            {buyerTab === 'collection' && (
               <div className={styles.purchasesSection}>
                 <div className={styles.sectionHeaderRow}>
                   <h2>My Collection</h2>
@@ -306,7 +306,7 @@ export default function AccountPage() {
               </div>
             )}
 
-            {curatorTab === 'scans' && (
+            {buyerTab === 'scans' && (
               <div className={styles.purchasesSection}>
                 <div className={styles.sectionHeaderRow}>
                   <h2>Scan History</h2>
@@ -355,7 +355,7 @@ export default function AccountPage() {
               </div>
             )}
 
-            {curatorTab === 'wall' && (
+            {buyerTab === 'wall' && (
               <div>
                 {/* Hero */}
                 <div className={styles.wallHero}>
@@ -480,8 +480,8 @@ export default function AccountPage() {
               </div>
             )}
 
-            {curatorTab === 'messages' && <MessagesPanel profile={profile} />}
-            {curatorTab === 'settings' && settingsPanel}
+            {buyerTab === 'messages' && <MessagesPanel profile={profile} />}
+            {buyerTab === 'settings' && settingsPanel}
           </section>
         </>
       )}

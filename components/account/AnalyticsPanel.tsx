@@ -33,7 +33,7 @@ function getLast6Months(): MonthlyData[] {
 export default function AnalyticsPanel({ profile }: AnalyticsPanelProps) {
   const [loading, setLoading] = useState(true)
   const [totalPreviews, setTotalPreviews] = useState(0)
-  const [totalCurators, setTotalCurators] = useState(0)
+  const [totalBuyers, setTotalBuyers] = useState(0)
   const [totalMessages, setTotalMessages] = useState(0)
   const [monthlyData] = useState<MonthlyData[]>(getLast6Months())
   const [locationData, setLocationData] = useState<{ location: string; count: number }[]>([])
@@ -42,7 +42,7 @@ export default function AnalyticsPanel({ profile }: AnalyticsPanelProps) {
     async function load() {
       setLoading(true)
       try {
-        const [previewsRes, curatorsRes, messagesRes, locationsRes] = await Promise.all([
+        const [previewsRes, buyersRes, messagesRes, locationsRes] = await Promise.all([
           supabase
             .from('previews')
             .select('id', { count: 'exact', head: true })
@@ -71,10 +71,10 @@ export default function AnalyticsPanel({ profile }: AnalyticsPanelProps) {
         ])
 
         setTotalPreviews(previewsRes.count ?? 0)
-        setTotalCurators(curatorsRes.count ?? 0)
+        setTotalBuyers(buyersRes.count ?? 0)
         setTotalMessages(messagesRes.count ?? 0)
 
-        // Aggregate curator locations
+        // Aggregate buyer locations
         const raw = (locationsRes.data ?? []) as { location: string }[]
         const map: Record<string, number> = {}
         for (const row of raw) {
@@ -137,8 +137,8 @@ export default function AnalyticsPanel({ profile }: AnalyticsPanelProps) {
               <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
           </div>
-          <div className={styles.kpiValue}>{totalCurators}</div>
-          <div className={styles.kpiLabel}>Curator connections</div>
+          <div className={styles.kpiValue}>{totalBuyers}</div>
+          <div className={styles.kpiLabel}>Buyer connections</div>
         </div>
 
         <div className={styles.kpiCard}>
@@ -183,21 +183,21 @@ export default function AnalyticsPanel({ profile }: AnalyticsPanelProps) {
           ))}
         </div>
         {monthlyData.every(m => m.enquiries === 0) && (
-          <p className={styles.analyticsNote}>Enquiry data will appear here as curators reach out to you.</p>
+          <p className={styles.analyticsNote}>Enquiry data will appear here as buyers reach out to you.</p>
         )}
       </div>
 
       {/* ── Audience by location ───────────────────────────── */}
       <div className={styles.analyticsSection}>
         <h3 className={styles.analyticsSectionTitle}>Audience by location</h3>
-        <p className={styles.analyticsSectionSubtitle}>Regions your connected curators are based in</p>
+        <p className={styles.analyticsSectionSubtitle}>Regions your connected buyers are based in</p>
 
         {locationData.length === 0 ? (
-          <p className={styles.analyticsNote}>Location data will appear here once you have curator connections.</p>
+          <p className={styles.analyticsNote}>Location data will appear here once you have buyer connections.</p>
         ) : (
           <div className={styles.locationList}>
             {locationData.map(({ location, count }, i) => {
-              const pct = Math.round((count / totalCurators) * 100)
+              const pct = Math.round((count / totalBuyers) * 100)
               return (
                 <div key={location} className={styles.locationRow}>
                   <span className={styles.locationRank}>#{i + 1}</span>

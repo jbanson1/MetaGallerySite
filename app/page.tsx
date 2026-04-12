@@ -53,7 +53,7 @@ function WaitlistForm() {
           <option value="gallery_owner">Gallery Owner</option>
           <option value="artist">Artist</option>
           <option value="museum">Museum</option>
-          <option value="curator">Curator</option>
+          <option value="buyer">Buyer</option>
           <option value="collector">Collector</option>
           <option value="other">Other</option>
         </select>
