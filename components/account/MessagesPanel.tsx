@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/lib/auth/context'
 import styles from './panels.module.css'
+import { trackEvent } from '@/lib/analytics'
 
 interface Conversation {
   id: string
@@ -160,6 +161,7 @@ export default function MessagesPanel({ profile }: Props) {
       sender_id: profile.id,
       body,
     })
+    trackEvent('message_sent', { conversation_id: activeConv.id })
     setSending(false)
   }
 

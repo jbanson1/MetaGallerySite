@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from './ar-preview.module.css'
+import { trackEvent } from '@/lib/analytics'
 
 type Mode = 'choose' | 'camera' | 'photo'
 type FrameStyle = 'none' | 'thin' | 'gold' | 'mat'
@@ -69,6 +70,7 @@ function ARPreviewContent() {
       })
       streamRef.current = stream
       setMode('camera') // video element renders after this; stream is attached in the effect below
+      trackEvent('ar_session_start', { mode: 'camera' })
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err)
       if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('NotFound')) {
@@ -103,6 +105,7 @@ function ARPreviewContent() {
       setRoomPhoto(ev.target?.result as string)
       setMode('photo')
       setShowGuide(true)
+      trackEvent('ar_session_start', { mode: 'photo' })
     }
     reader.readAsDataURL(file)
     // reset input so same file can be re-selected
