@@ -18,7 +18,7 @@ type BuyerTab = 'collection' | 'scans' | 'wall' | 'messages' | 'settings'
 
 export default function AccountPage() {
   const router = useRouter()
-  const { user, profile, loading, signOut, updateProfile } = useAuth()
+  const { user, profile, loading, signOut, updateProfile, deleteAccount } = useAuth()
 
   const [artistTab, setArtistTab] = useState<ArtistTab>('portfolio')
   const [buyerTab, setBuyerTab] = useState<BuyerTab>('collection')
@@ -28,6 +28,9 @@ export default function AccountPage() {
   const [settingsBio, setSettingsBio] = useState('')
   const [settingsSaving, setSettingsSaving] = useState(false)
   const [settingsMsg, setSettingsMsg] = useState('')
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
+  const [deleteError, setDeleteError] = useState('')
 
   useEffect(() => {
     if (!loading && !user) router.replace('/signup')
@@ -119,7 +122,36 @@ export default function AccountPage() {
         <h3>Danger Zone</h3>
         <div className={styles.dangerActions}>
           <button className={styles.btnDanger} onClick={handleLogout}>Sign out</button>
+          {!showDeleteConfirm && (
+            <button className={styles.btnDanger} onClick={() => { setShowDeleteConfirm(true); setDeleteError('') }}>
+              Delete my account
+            </button>
+          )}
         </div>
+        {showDeleteConfirm && (
+          <div className={styles.deleteConfirm}>
+            <p>This will permanently delete your account and all associated data. This cannot be undone.</p>
+            {deleteError && <p style={{color:'#e05c5c', fontSize:'0.82rem', margin:'0.25rem 0 0'}}>{deleteError}</p>}
+            <div className={styles.deleteConfirmActions}>
+              <button className={styles.btnDanger} disabled={deleteLoading} onClick={async () => {
+                setDeleteLoading(true)
+                setDeleteError('')
+                const { error } = await deleteAccount()
+                if (error) { setDeleteError(error); setDeleteLoading(false); return }
+                router.replace('/')
+              }}>
+                {deleteLoading ? 'Deleting…' : 'Yes, delete my account'}
+              </button>
+              <button className={styles.btnCancel} onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+        <p className={styles.gdprNote}>
+          Under UK GDPR you have the right to erasure. Your data will be removed within 30 days.{' '}
+          <a href="/privacy#your-rights" style={{color:'var(--gold)', textDecoration:'underline'}}>Learn more</a>
+        </p>
       </div>
     </div>
   )

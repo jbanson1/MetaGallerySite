@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import CookieConsent from './CookieConsent'
 
 // Routes that render their own full-screen layout
 const SHELL_EXCLUDED = ['/scan', '/admin']
@@ -16,6 +17,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
       {showShell && <Navbar />}
       {children}
       {showShell && <Footer />}
+      <CookieConsent />
     </>
   )
 }

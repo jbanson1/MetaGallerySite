@@ -754,6 +754,50 @@
   color: white;
 }
 
+.btnDanger:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btnCancel {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--cream-muted, rgba(248,246,241,0.6));
+  font-family: var(--font-outfit), sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btnCancel:hover { border-color: rgba(255,255,255,0.35); color: var(--cream); }
+.btnCancel:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.deleteConfirm {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(231,76,60,0.06);
+  border: 1px solid rgba(231,76,60,0.25);
+}
+
+.deleteConfirm p {
+  font-size: 0.85rem;
+  color: rgba(248,246,241,0.75);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+  font-family: var(--font-outfit), sans-serif;
+}
+
+.deleteConfirmActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.gdprNote {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: rgba(248,246,241,0.35);
+  line-height: 1.5;
+  font-family: var(--font-outfit), sans-serif;
+}
+
 /* Account type badges */
 .badgeArtist {
   display: inline-block;
