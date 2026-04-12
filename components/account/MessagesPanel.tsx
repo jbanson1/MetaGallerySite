@@ -12,7 +12,7 @@ interface Conversation {
     full_name: string | null
     username: string | null
     avatar_url: string | null
-    account_type: 'artist' | 'curator'
+    account_type: 'artist' | 'curator' | 'buyer'
   }
   last_message_at: string | null
   last_message_body?: string
