@@ -12,7 +12,7 @@ interface Conversation {
     full_name: string | null
     username: string | null
     avatar_url: string | null
-    account_type: 'artist' | 'curator'
+    account_type: 'artist' | 'curator' | 'buyer'
   }
   last_message_at: string | null
   last_message_body?: string
@@ -30,7 +30,7 @@ const DEV_CONVERSATIONS: Record<string, Conversation[]> = {
   'dev-artist-001': [
     {
       id: 'dev-conv-1',
-      other_user: { id: 'dev-curator-001', full_name: 'Dev Curator', username: 'DevCurator', avatar_url: null, account_type: 'curator' },
+      other_user: { id: 'dev-curator-001', full_name: 'Dev Buyer', username: 'DevBuyer', avatar_url: null, account_type: 'buyer' },
       last_message_at: new Date().toISOString(),
       last_message_body: 'I love the new piece you shared!',
     },
@@ -47,7 +47,7 @@ const DEV_CONVERSATIONS: Record<string, Conversation[]> = {
 
 const DEV_MESSAGES: Record<string, Message[]> = {
   'dev-conv-1': [
-    { id: 'dm-1', sender_id: 'dev-curator-001', body: 'Hi! I saw your latest preview — stunning work.', created_at: new Date(Date.now() - 3600000).toISOString() },
+    { id: 'dm-1', sender_id: 'dev-curator-001', body: 'Hi! I came across your latest preview — stunning work.', created_at: new Date(Date.now() - 3600000).toISOString() },
     { id: 'dm-2', sender_id: 'dev-artist-001', body: 'Thank you so much! Still a work in progress but I wanted to share it early.', created_at: new Date(Date.now() - 1800000).toISOString() },
     { id: 'dm-3', sender_id: 'dev-curator-001', body: 'I love the new piece you shared!', created_at: new Date().toISOString() },
   ],
@@ -172,7 +172,7 @@ export default function MessagesPanel({ profile }: Props) {
     if (isDev) {
       const mockConv: Conversation = {
         id: `dev-conv-${Date.now()}`,
-        other_user: { id: `dev-mock-${uname}`, full_name: uname, username: uname, avatar_url: null, account_type: 'curator' },
+        other_user: { id: `dev-mock-${uname}`, full_name: uname, username: uname, avatar_url: null, account_type: 'buyer' },
         last_message_at: null,
       }
       setConversations(prev => [mockConv, ...prev])
@@ -278,7 +278,7 @@ export default function MessagesPanel({ profile }: Props) {
                     {conv.last_message_body && (
                       <span className={styles.convPreview}>{conv.last_message_body}</span>
                     )}
-                    <span className={`${styles.badge} ${conv.other_user.account_type === 'artist' ? styles.badgeArtist : styles.badgeCurator}`}>
+                    <span className={`${styles.badge} ${conv.other_user.account_type === 'artist' ? styles.badgeArtist : styles.badgeBuyer}`}>
                       {conv.other_user.account_type}
                     </span>
                   </div>
@@ -308,7 +308,7 @@ export default function MessagesPanel({ profile }: Props) {
               </button>
               <div className={styles.threadHeaderInfo}>
                 <span className={styles.threadName}>{activeConv.other_user.full_name || activeConv.other_user.username}</span>
-                <span className={`${styles.badge} ${activeConv.other_user.account_type === 'artist' ? styles.badgeArtist : styles.badgeCurator}`}>
+                <span className={`${styles.badge} ${activeConv.other_user.account_type === 'artist' ? styles.badgeArtist : styles.badgeBuyer}`}>
                   {activeConv.other_user.account_type}
                 </span>
               </div>

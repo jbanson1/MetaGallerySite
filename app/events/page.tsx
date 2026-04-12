@@ -256,7 +256,7 @@ export default function EventsPage() {
                 </div>
               </div>
               <h3>Gallery Owner Masterclass</h3>
-              <p>A deep-dive session for gallery owners and curators on implementing Confidential Gallery. Covers setup, best practices, visitor engagement strategies, and measuring success.</p>
+              <p>A deep-dive session for gallery owners and buyers on implementing Confidential Gallery. Covers setup, best practices, visitor engagement strategies, and measuring success.</p>
               <div className={styles.eventMeta}>
                 <div className={styles.eventLocation}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

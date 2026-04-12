@@ -11,7 +11,7 @@ export interface Profile {
   avatar_url: string | null
   location: string | null
   bio: string | null
-  account_type: 'artist' | 'curator'
+  account_type: 'artist' | 'buyer' | 'curator'
 }
 
 // ─── DEV HARDCODED ACCOUNTS ──────────────────────────────────────────────────
@@ -35,21 +35,21 @@ const DEV_ADMIN_PROFILE: Profile = {
   account_type: 'curator',
 }
 
-const DEV_CURATOR_USER = {
+const DEV_BUYER_USER = {
   id: 'dev-curator-001',
-  email: 'curator@theconfidential.gallery',
+  email: 'buyer@theconfidential.gallery',
   app_metadata: {},
-  user_metadata: { full_name: 'Dev Curator' },
+  user_metadata: { full_name: 'Dev Buyer' },
   aud: 'authenticated',
   created_at: new Date().toISOString(),
 } as unknown as User
-const DEV_CURATOR_PROFILE: Profile = {
+const DEV_BUYER_PROFILE: Profile = {
   id: 'dev-curator-001',
-  full_name: 'Dev Curator',
-  username: 'DevCurator',
+  full_name: 'Dev Buyer',
+  username: 'DevBuyer',
   avatar_url: null,
   location: 'London, UK',
-  bio: 'Development curator account for testing the platform.',
+  bio: 'Development buyer account for testing the platform.',
   account_type: 'curator',
 }
 
@@ -73,7 +73,7 @@ const DEV_ARTIST_PROFILE: Profile = {
 
 const DEV_ACCOUNTS: Record<string, { user: User; profile: Profile }> = {
   Admin:      { user: DEV_ADMIN_USER,   profile: DEV_ADMIN_PROFILE },
-  DevCurator: { user: DEV_CURATOR_USER, profile: DEV_CURATOR_PROFILE },
+  DevBuyer:   { user: DEV_BUYER_USER,   profile: DEV_BUYER_PROFILE },
   DevArtist:  { user: DEV_ARTIST_USER,  profile: DEV_ARTIST_PROFILE },
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -84,9 +84,10 @@ interface AuthContextValue {
   profile: Profile | null
   loading: boolean
   signIn: (username: string, password: string) => Promise<{ error: string | null }>
-  signUp: (email: string, password: string, fullName: string, username: string, accountType?: 'artist' | 'curator') => Promise<{ error: string | null; needsConfirmation: boolean }>
+  signUp: (email: string, password: string, fullName: string, username: string, accountType?: 'artist' | 'buyer') => Promise<{ error: string | null; needsConfirmation: boolean }>
   signOut: () => Promise<void>
   updateProfile: (updates: Partial<Omit<Profile, 'id'>>) => Promise<{ error: string | null }>
+  deleteAccount: () => Promise<{ error: string | null }>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -150,7 +151,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
     fullName: string,
     username: string,
-    accountType: 'artist' | 'curator' = 'curator'
+    accountType: 'artist' | 'buyer' = 'buyer'
   ) => {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -191,8 +192,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { error: error?.message ?? null }
   }, [user])
 
+  const deleteAccount = useCallback(async () => {
+    if (!user) return { error: 'Not signed in' }
+    const isDevAccount = Object.values(DEV_ACCOUNTS).some(a => a.user.id === user.id)
+    if (isDevAccount) {
+      // Dev accounts: just sign out
+      setUser(null); setSession(null); setProfile(null)
+      return { error: null }
+    }
+    // Delete profile data first (RLS allows users to delete their own row)
+    await supabase.from('profiles').delete().eq('id', user.id)
+    // Clear local consent/storage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cg_cookie_consent')
+      localStorage.removeItem('cg_favourites')
+      localStorage.removeItem('cg_scan_history')
+    }
+    // Sign out (auth deletion requires service role — instruct user to set that up,
+    // or handle via a server action. For now we sign out and the orphaned auth row
+    // can be cleaned up in the Supabase dashboard or via a future API route.)
+    const { error } = await supabase.auth.signOut()
+    return { error: error?.message ?? null }
+  }, [user])
+
   return (
-    <AuthContext.Provider value={{ user, session, profile, loading, signIn, signUp, signOut, updateProfile }}>
+    <AuthContext.Provider value={{ user, session, profile, loading, signIn, signUp, signOut, updateProfile, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   )

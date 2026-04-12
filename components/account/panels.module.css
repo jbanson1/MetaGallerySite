@@ -1,5 +1,5 @@
 /* ============================================================
-   ACCOUNT PANELS — shared styles for Artist / Curator panels
+   ACCOUNT PANELS — shared styles for Artist / Buyer panels
    ============================================================ */
 
 /* ── Layout ───────────────────────────────────────────────── */
@@ -196,7 +196,7 @@
 .badge_complete      { background: rgba(100,160,240,0.12); color: #64a0f0; }
 .badgeVis            { background: rgba(255,255,255,0.06); color: var(--smoke); }
 .badgeArtist         { background: rgba(201,162,39,0.15); color: var(--gold); }
-.badgeCurator        { background: rgba(100,160,240,0.12); color: #64a0f0; }
+.badgeBuyer          { background: rgba(100,160,240,0.12); color: #64a0f0; }
 
 /* ── Previews Grid ────────────────────────────────────────── */
 .previewGrid {
@@ -266,8 +266,8 @@
   border-color: transparent;
 }
 
-/* ── Curator List ─────────────────────────────────────────── */
-.curatorList {
+/* ── Buyer List ───────────────────────────────────────────── */
+.buyerList {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -276,7 +276,7 @@
   gap: 0.75rem;
 }
 
-.curatorItem {
+.buyerItem {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -285,9 +285,9 @@
   border: 1px solid rgba(255,255,255,0.07);
   transition: border-color 0.2s;
 }
-.curatorItem:hover { border-color: rgba(201,162,39,0.2); }
+.buyerItem:hover { border-color: rgba(201,162,39,0.2); }
 
-.curatorAvatar {
+.buyerAvatar {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -303,17 +303,17 @@
   font-size: 0.95rem;
   font-weight: 600;
 }
-.curatorAvatar img { width: 100%; height: 100%; object-fit: cover; }
+.buyerAvatar img { width: 100%; height: 100%; object-fit: cover; }
 
-.curatorMeta {
+.buyerMeta {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
 }
-.curatorName { font-size: 0.95rem; font-weight: 600; color: var(--cream); }
-.curatorUsername { font-size: 0.8rem; color: var(--gold); opacity: 0.8; }
-.curatorLocation { font-size: 0.78rem; color: var(--smoke); }
+.buyerName { font-size: 0.95rem; font-weight: 600; color: var(--cream); }
+.buyerUsername { font-size: 0.8rem; color: var(--gold); opacity: 0.8; }
+.buyerLocation { font-size: 0.78rem; color: var(--smoke); }
 .addedDate { font-size: 0.75rem; color: var(--smoke); white-space: nowrap; }
 
 /* ── Messages Layout ──────────────────────────────────────── */

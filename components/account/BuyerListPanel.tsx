@@ -5,11 +5,11 @@ import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/lib/auth/context'
 import styles from './panels.module.css'
 
-interface CuratorEntry {
+interface BuyerEntry {
   id: string
   curator_id: string
   added_at: string
-  curator: {
+  buyer: {
     full_name: string | null
     username: string | null
     avatar_url: string | null
@@ -19,8 +19,8 @@ interface CuratorEntry {
 
 interface Props { profile: Profile }
 
-export default function CuratorListPanel({ profile }: Props) {
-  const [entries, setEntries] = useState<CuratorEntry[]>([])
+export default function BuyerListPanel({ profile }: Props) {
+  const [entries, setEntries] = useState<BuyerEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [usernameInput, setUsernameInput] = useState('')
   const [adding, setAdding] = useState(false)
@@ -33,11 +33,11 @@ export default function CuratorListPanel({ profile }: Props) {
     if (isDev) { setLoading(false); return }
     supabase
       .from('curator_list_members')
-      .select('id, curator_id, added_at, curator:profiles!curator_id(full_name, username, avatar_url, location)')
+      .select('id, curator_id, added_at, buyer:profiles!curator_id(full_name, username, avatar_url, location)')
       .eq('artist_id', profile.id)
       .order('added_at', { ascending: false })
       .then(({ data }) => {
-        setEntries((data as unknown as CuratorEntry[]) ?? [])
+        setEntries((data as unknown as BuyerEntry[]) ?? [])
         setLoading(false)
       })
   }, [profile.id, isDev])
@@ -50,41 +50,39 @@ export default function CuratorListPanel({ profile }: Props) {
     setMsg('')
 
     if (isDev) {
-      // Simulate adding in dev mode
-      const mock: CuratorEntry = {
+      const mock: BuyerEntry = {
         id: `dev-entry-${Date.now()}`,
         curator_id: `dev-mock-${uname}`,
         added_at: new Date().toISOString(),
-        curator: { full_name: uname, username: uname, avatar_url: null, location: null },
+        buyer: { full_name: uname, username: uname, avatar_url: null, location: null },
       }
       setEntries(prev => [mock, ...prev])
       setUsernameInput('')
-      setMsg(`${uname} added to your curator list.`)
+      setMsg(`${uname} added to your buyer list.`)
       setMsgType('ok')
       setAdding(false)
       return
     }
 
-    // Look up the curator by username
-    const { data: curatorProfile, error: lookupErr } = await supabase
+    const { data: buyerProfile, error: lookupErr } = await supabase
       .from('profiles')
       .select('id, full_name, username, avatar_url, location, account_type')
       .eq('username', uname)
       .single()
 
-    if (lookupErr || !curatorProfile) {
+    if (lookupErr || !buyerProfile) {
       setMsg('No user found with that username.')
       setMsgType('err')
       setAdding(false)
       return
     }
-    if (curatorProfile.account_type !== 'curator') {
-      setMsg('That user is not a curator account.')
+    if (buyerProfile.account_type !== 'curator') {
+      setMsg('That user is not a buyer account.')
       setMsgType('err')
       setAdding(false)
       return
     }
-    if (curatorProfile.id === profile.id) {
+    if (buyerProfile.id === profile.id) {
       setMsg('You cannot add yourself.')
       setMsgType('err')
       setAdding(false)
@@ -93,12 +91,12 @@ export default function CuratorListPanel({ profile }: Props) {
 
     const { data: newEntry, error: insertErr } = await supabase
       .from('curator_list_members')
-      .insert({ artist_id: profile.id, curator_id: curatorProfile.id })
+      .insert({ artist_id: profile.id, curator_id: buyerProfile.id })
       .select('id, curator_id, added_at')
       .single()
 
     if (insertErr) {
-      setMsg(insertErr.message.includes('unique') ? 'That curator is already on your list.' : insertErr.message)
+      setMsg(insertErr.message.includes('unique') ? 'That buyer is already on your list.' : insertErr.message)
       setMsgType('err')
       setAdding(false)
       return
@@ -106,15 +104,15 @@ export default function CuratorListPanel({ profile }: Props) {
 
     setEntries(prev => [{
       ...newEntry,
-      curator: {
-        full_name: curatorProfile.full_name,
-        username: curatorProfile.username,
-        avatar_url: curatorProfile.avatar_url,
-        location: curatorProfile.location,
+      buyer: {
+        full_name: buyerProfile.full_name,
+        username: buyerProfile.username,
+        avatar_url: buyerProfile.avatar_url,
+        location: buyerProfile.location,
       },
-    } as CuratorEntry, ...prev])
+    } as BuyerEntry, ...prev])
     setUsernameInput('')
-    setMsg(`${curatorProfile.full_name || uname} added to your curator list.`)
+    setMsg(`${buyerProfile.full_name || uname} added to your buyer list.`)
     setMsgType('ok')
     setAdding(false)
   }
@@ -130,8 +128,8 @@ export default function CuratorListPanel({ profile }: Props) {
     <div className={styles.panel}>
       <div className={styles.panelHeader}>
         <div>
-          <h2>My Curator List</h2>
-          <p className={styles.panelSubtitle}>Curators on this list can view your private work previews.</p>
+          <h2>My Buyer List</h2>
+          <p className={styles.panelSubtitle}>Buyers on this list can view your private work previews.</p>
         </div>
       </div>
 
@@ -157,24 +155,24 @@ export default function CuratorListPanel({ profile }: Props) {
             <circle cx="9" cy="7" r="4"/>
             <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
           </svg>
-          <p>No curators added yet.</p>
+          <p>No buyers added yet.</p>
         </div>
       ) : (
-        <ul className={styles.curatorList}>
+        <ul className={styles.buyerList}>
           {entries.map(entry => {
-            const name = entry.curator.full_name || entry.curator.username || 'Unknown'
+            const name = entry.buyer.full_name || entry.buyer.username || 'Unknown'
             const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
             return (
-              <li key={entry.id} className={styles.curatorItem}>
-                <div className={styles.curatorAvatar}>
-                  {entry.curator.avatar_url
-                    ? <img src={entry.curator.avatar_url} alt={name} />
+              <li key={entry.id} className={styles.buyerItem}>
+                <div className={styles.buyerAvatar}>
+                  {entry.buyer.avatar_url
+                    ? <img src={entry.buyer.avatar_url} alt={name} />
                     : <span>{initials}</span>}
                 </div>
-                <div className={styles.curatorMeta}>
-                  <span className={styles.curatorName}>{name}</span>
-                  {entry.curator.username && <span className={styles.curatorUsername}>@{entry.curator.username}</span>}
-                  {entry.curator.location && <span className={styles.curatorLocation}>{entry.curator.location}</span>}
+                <div className={styles.buyerMeta}>
+                  <span className={styles.buyerName}>{name}</span>
+                  {entry.buyer.username && <span className={styles.buyerUsername}>@{entry.buyer.username}</span>}
+                  {entry.buyer.location && <span className={styles.buyerLocation}>{entry.buyer.location}</span>}
                 </div>
                 <span className={styles.addedDate}>
                   Added {new Date(entry.added_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}

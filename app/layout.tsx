@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import SiteShell from '@/components/SiteShell'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
@@ -42,6 +43,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteShell>{children}</SiteShell>
         </AuthProvider>
         <ServiceWorkerRegistration />
+        <Script
+          src="//cdn.cookie-script.com/s/786352fd3658d4920c495acd299b808c.js"
+          type="text/javascript"
+          charSet="UTF-8"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )

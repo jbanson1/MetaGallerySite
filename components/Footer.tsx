@@ -3,6 +3,21 @@
 import Link from 'next/link'
 import { useAuth } from '@/lib/auth/context'
 
+function CookieSettingsLink() {
+  function reopenBanner() {
+    // Cookie Script API — re-opens the consent banner
+    if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).CookieScript) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(window as any).CookieScript.instance.show()
+    }
+  }
+  return (
+    <button onClick={reopenBanner} style={{background:'none',border:'none',color:'inherit',cursor:'pointer',padding:0,font:'inherit',textDecoration:'inherit'}}>
+      Cookie Settings
+    </button>
+  )
+}
+
 export default function Footer() {
   const { user } = useAuth()
 
@@ -13,6 +28,8 @@ export default function Footer() {
         <ul className="footer-links">
           <li><Link href="/privacy">Privacy</Link></li>
           <li><Link href="/terms">Terms</Link></li>
+          <li><Link href="/cookies">Cookies</Link></li>
+          <li><CookieSettingsLink /></li>
           <li><Link href="/events">Events</Link></li>
           <li><a href="/#waitlist">Contact</a></li>
           <li>
@@ -22,7 +39,7 @@ export default function Footer() {
             }
           </li>
         </ul>
-        <div className="footer-copy">© 2026 The Confidential Gallery. All rights reserved.</div>
+        <div className="footer-copy">© 2026 The Confidential Gallery. All rights reserved. Registered in England & Wales.</div>
       </div>
     </footer>
   )
