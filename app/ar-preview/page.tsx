@@ -36,6 +36,7 @@ function ARPreviewContent() {
   const [imgNaturalRatio, setImgNaturalRatio] = useState(1.33) // default 4:3
   const [showGuide, setShowGuide] = useState(true)
   const [roomPhoto, setRoomPhoto] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
 
   const videoRef   = useRef<HTMLVideoElement>(null)
   const streamRef  = useRef<MediaStream | null>(null)
@@ -101,8 +102,11 @@ function ARPreviewContent() {
     reader.onload = ev => {
       setRoomPhoto(ev.target?.result as string)
       setMode('photo')
+      setShowGuide(true)
     }
     reader.readAsDataURL(file)
+    // reset input so same file can be re-selected
+    e.target.value = ''
   }
 
   // ── Mouse drag ────────────────────────────────────────────────────────────
@@ -173,22 +177,80 @@ function ARPreviewContent() {
     })
   }
 
-  // ── Screenshot ────────────────────────────────────────────────────────────
-  const handleScreenshot = async () => {
-    if (mode === 'camera' && videoRef.current) {
+  // ── Save / download composite ─────────────────────────────────────────────
+  const handleSave = async () => {
+    if (saving) return
+    setSaving(true)
+
+    try {
       const canvas = document.createElement('canvas')
-      const video = videoRef.current
-      canvas.width = video.videoWidth
-      canvas.height = video.videoHeight
       const ctx = canvas.getContext('2d')!
-      ctx.drawImage(video, 0, 0)
-      // Note: cross-origin artwork image can't be drawn to canvas without CORS headers
-      // So we just save the camera frame as a reminder to the user
+      const container = containerRef.current
+
+      if (mode === 'photo' && roomPhoto && container) {
+        // ── Photo mode: composite wall photo + artwork ──────────────────────
+        const rect = container.getBoundingClientRect()
+        canvas.width  = rect.width  * window.devicePixelRatio
+        canvas.height = rect.height * window.devicePixelRatio
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+
+        // Draw wall photo as background
+        const bg = new Image()
+        bg.src = roomPhoto
+        await new Promise<void>(res => { bg.onload = () => res(); bg.onerror = () => res() })
+        ctx.drawImage(bg, 0, 0, rect.width, rect.height)
+
+        // Draw artwork overlay
+        if (imageUrl) {
+          const art = new Image()
+          art.crossOrigin = 'anonymous'
+          art.src = imageUrl
+          await new Promise<void>(res => { art.onload = () => res(); art.onerror = () => res() })
+
+          // Apply frame visual before drawing
+          if (frame === 'thin') {
+            ctx.fillStyle = '#1a1a1a'
+            ctx.fillRect(overlay.x - 8, overlay.y - 8, overlay.width + 16, overlay.height + 16)
+          } else if (frame === 'mat') {
+            ctx.fillStyle = '#f5f0e8'
+            ctx.fillRect(overlay.x - 32, overlay.y - 32, overlay.width + 64, overlay.height + 64)
+            ctx.strokeStyle = '#bbb'
+            ctx.lineWidth = 3
+            ctx.strokeRect(overlay.x - 32, overlay.y - 32, overlay.width + 64, overlay.height + 64)
+          } else if (frame === 'gold') {
+            const grad = ctx.createLinearGradient(overlay.x, overlay.y, overlay.x + overlay.width, overlay.y + overlay.height)
+            grad.addColorStop(0, '#c9a200'); grad.addColorStop(0.5, '#f0d060'); grad.addColorStop(1, '#9a7a00')
+            ctx.fillStyle = grad
+            ctx.fillRect(overlay.x - 14, overlay.y - 14, overlay.width + 28, overlay.height + 28)
+          }
+
+          ctx.drawImage(art, overlay.x, overlay.y, overlay.width, overlay.height)
+        }
+
+        // Watermark
+        ctx.font = '12px sans-serif'
+        ctx.fillStyle = 'rgba(255,255,255,0.5)'
+        ctx.textAlign = 'right'
+        ctx.fillText('theconfidential.gallery', rect.width - 12, rect.height - 12)
+
+      } else if (mode === 'camera' && videoRef.current) {
+        // ── Camera mode: capture frame only ────────────────────────────────
+        const video = videoRef.current
+        canvas.width  = video.videoWidth
+        canvas.height = video.videoHeight
+        ctx.drawImage(video, 0, 0)
+      } else {
+        setSaving(false)
+        return
+      }
+
       const url = canvas.toDataURL('image/jpeg', 0.92)
       const a = document.createElement('a')
       a.href = url
-      a.download = `ar-preview-${title.replace(/\s+/g, '-')}.jpg`
+      a.download = `wall-preview-${title.replace(/\s+/g, '-')}.jpg`
       a.click()
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -332,8 +394,8 @@ function ARPreviewContent() {
                 </svg>
               </div>
               <div>
-                <span className={styles.optionLabel}>Upload Room Photo</span>
-                <span className={styles.optionDesc}>Place the artwork on a photo of your space</span>
+                <span className={styles.optionLabel}>Upload Wall Photo</span>
+                <span className={styles.optionDesc}>Take a photo of your wall and see how this piece fits — great on desktop</span>
               </div>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.optionArrow}>
                 <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -344,7 +406,7 @@ function ARPreviewContent() {
           <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
 
           <p className={styles.chooseTip}>
-            Tip: For best results with camera mode, ensure good lighting and hold your device steady while facing a wall.
+            Tip: For best results, stand square to your wall and shoot in good light. Download the finished composite when you&apos;re happy.
           </p>
         </div>
       </div>
@@ -393,7 +455,11 @@ function ARPreviewContent() {
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M5 9V5h4M19 9V5h-4M5 15v4h4M19 15v4h-4"/>
             </svg>
-            <p><strong>Drag</strong> to position · <strong>Pinch</strong> or <strong>scroll</strong> to resize</p>
+            {mode === 'photo' ? (
+              <p><strong>Drag</strong> to position · <strong>Scroll</strong> or <strong>pinch</strong> to resize · <strong>Download</strong> your finished mockup</p>
+            ) : (
+              <p><strong>Drag</strong> to position · <strong>Pinch</strong> or <strong>scroll</strong> to resize</p>
+            )}
             <button className={styles.guideDismiss}>Got it</button>
           </div>
         </div>
@@ -431,15 +497,30 @@ function ARPreviewContent() {
           </div>
         </div>
 
-        {/* Screenshot */}
-        {mode === 'camera' && (
-          <button className={styles.ctrlBtn} onClick={handleScreenshot} title="Save screenshot">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-              <circle cx="12" cy="13" r="4"/>
-            </svg>
-          </button>
-        )}
+        {/* Right controls: change photo (upload mode) + save */}
+        <div style={{display:'flex', gap:'0.4rem', flexShrink:0}}>
+          {mode === 'photo' && (
+            <>
+              <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: 'none' }} />
+              <button className={styles.ctrlBtn} onClick={() => fileInputRef.current?.click()} title="Change photo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </button>
+            </>
+          )}
+          {(mode === 'camera' || mode === 'photo') && (
+            <button className={styles.ctrlBtn} onClick={handleSave} title={mode === 'photo' ? 'Download composite' : 'Save screenshot'} style={saving ? {opacity:0.5} : {}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Info pill */}
