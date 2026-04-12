@@ -759,3 +759,6 @@ footer {
     display: block;
   }
 }
+
+/* ── Cookie Script — hide floating badge ─────────────────── */
+#cookiescript_badge { display: none !important; }
