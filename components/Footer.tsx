@@ -5,8 +5,11 @@ import { useAuth } from '@/lib/auth/context'
 
 function CookieSettingsLink() {
   function reopenBanner() {
-    try { localStorage.removeItem('cg_cookie_consent') } catch { /* noop */ }
-    window.location.reload()
+    // Cookie Script API — re-opens the consent banner
+    if (typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).CookieScript) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ;(window as any).CookieScript.instance.show()
+    }
   }
   return (
     <button onClick={reopenBanner} style={{background:'none',border:'none',color:'inherit',cursor:'pointer',padding:0,font:'inherit',textDecoration:'inherit'}}>
