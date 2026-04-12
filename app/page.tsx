@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import styles from './home.module.css'
+import { trackEvent } from '@/lib/analytics'
 
 function WaitlistForm() {
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -23,6 +24,7 @@ function WaitlistForm() {
       })
       setIsSubmitted(true)
       form.reset()
+      trackEvent('waitlist_join', { source: 'homepage' })
     } catch (error) {
       console.error('Form submission error:', error)
     } finally {

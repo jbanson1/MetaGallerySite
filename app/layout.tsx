@@ -4,6 +4,7 @@ import './globals.css'
 import SiteShell from '@/components/SiteShell'
 import ServiceWorkerRegistration from '@/components/ServiceWorkerRegistration'
 import { AuthProvider } from '@/lib/auth/context'
+import { Analytics } from '@vercel/analytics/react'
 
 export const metadata: Metadata = {
   title: 'Confidential Gallery — Every Artwork Has a Secret',
@@ -42,7 +43,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <SiteShell>{children}</SiteShell>
         </AuthProvider>
+        <Analytics />
         <ServiceWorkerRegistration />
+        {/* GA4 — replace G-XXXXXXXXXX with your Measurement ID */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
+                  page_path: window.location.pathname,
+                  anonymize_ip: true,
+                  cookie_flags: 'SameSite=None;Secure'
+                });
+              `}
+            </Script>
+          </>
+        )}
         <Script
           src="//cdn.cookie-script.com/s/786352fd3658d4920c495acd299b808c.js"
           type="text/javascript"

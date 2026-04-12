@@ -11,6 +11,7 @@ import BuyerListPanel from '@/components/account/BuyerListPanel'
 import MessagesPanel from '@/components/account/MessagesPanel'
 import AnalyticsPanel from '@/components/account/AnalyticsPanel'
 import styles from './account.module.css'
+import { trackEvent } from '@/lib/analytics'
 
 // ── Tab definitions ────────────────────────────────────────────────────────
 type ArtistTab = 'portfolio' | 'previews' | 'buyers' | 'messages' | 'analytics' | 'settings'
@@ -22,6 +23,15 @@ export default function AccountPage() {
 
   const [artistTab, setArtistTab] = useState<ArtistTab>('portfolio')
   const [buyerTab, setBuyerTab] = useState<BuyerTab>('collection')
+
+  const switchArtistTab = (tab: ArtistTab) => {
+    setArtistTab(tab)
+    trackEvent('dashboard_tab_view', { tab })
+  }
+  const switchBuyerTab = (tab: BuyerTab) => {
+    setBuyerTab(tab)
+    trackEvent('dashboard_tab_view', { tab })
+  }
   const [scanHistory, setScanHistory] = useState<ScanHistoryItem[]>([])
   const [settingsName, setSettingsName] = useState('')
   const [settingsLocation, setSettingsLocation] = useState('')
@@ -208,20 +218,20 @@ export default function AccountPage() {
       {isArtist && (
         <>
           <div className={styles.accountTabs}>
-            <button className={`${styles.tabBtn} ${artistTab === 'portfolio' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('portfolio')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'portfolio' ? styles.tabBtnActive : ''}`} onClick={() => switchArtistTab('portfolio')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
               </svg>
               Portfolio
             </button>
-            <button className={`${styles.tabBtn} ${artistTab === 'previews' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('previews')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'previews' ? styles.tabBtnActive : ''}`} onClick={() => switchArtistTab('previews')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
               Work Previews
             </button>
-            <button className={`${styles.tabBtn} ${artistTab === 'buyers' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('buyers')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'buyers' ? styles.tabBtnActive : ''}`} onClick={() => switchArtistTab('buyers')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
@@ -229,13 +239,13 @@ export default function AccountPage() {
               </svg>
               My Buyers
             </button>
-            <button className={`${styles.tabBtn} ${artistTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('messages')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => switchArtistTab('messages')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
               Messages
             </button>
-            <button className={`${styles.tabBtn} ${artistTab === 'analytics' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('analytics')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'analytics' ? styles.tabBtnActive : ''}`} onClick={() => switchArtistTab('analytics')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="20" x2="18" y2="10"/>
                 <line x1="12" y1="20" x2="12" y2="4"/>
@@ -243,7 +253,7 @@ export default function AccountPage() {
               </svg>
               Analytics
             </button>
-            <button className={`${styles.tabBtn} ${artistTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => setArtistTab('settings')}>
+            <button className={`${styles.tabBtn} ${artistTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => switchArtistTab('settings')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="3"/>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -281,7 +291,7 @@ export default function AccountPage() {
       {!isArtist && (
         <>
           <div className={styles.accountTabs}>
-            <button className={`${styles.tabBtn} ${buyerTab === 'collection' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('collection')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'collection' ? styles.tabBtnActive : ''}`} onClick={() => switchBuyerTab('collection')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
                 <line x1="3" y1="6" x2="21" y2="6"/>
@@ -289,14 +299,14 @@ export default function AccountPage() {
               </svg>
               My Collection
             </button>
-            <button className={`${styles.tabBtn} ${buyerTab === 'scans' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('scans')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'scans' ? styles.tabBtnActive : ''}`} onClick={() => switchBuyerTab('scans')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
                 <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z"/>
               </svg>
               Scan History
             </button>
-            <button className={`${styles.tabBtn} ${buyerTab === 'wall' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('wall')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'wall' ? styles.tabBtnActive : ''}`} onClick={() => switchBuyerTab('wall')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="3" width="20" height="14" rx="2"/>
                 <path d="M8 21h8M12 17v4"/>
@@ -304,13 +314,13 @@ export default function AccountPage() {
               </svg>
               Wall Preview
             </button>
-            <button className={`${styles.tabBtn} ${buyerTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('messages')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'messages' ? styles.tabBtnActive : ''}`} onClick={() => switchBuyerTab('messages')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
               Messages
             </button>
-            <button className={`${styles.tabBtn} ${buyerTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => setBuyerTab('settings')}>
+            <button className={`${styles.tabBtn} ${buyerTab === 'settings' ? styles.tabBtnActive : ''}`} onClick={() => switchBuyerTab('settings')}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="3"/>
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>

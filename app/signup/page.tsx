@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth/context'
 import styles from './signup.module.css'
+import { trackEvent } from '@/lib/analytics'
 
 type Step = 'form' | 'confirm'
 
@@ -43,12 +44,14 @@ export default function SignupPage() {
       return
     }
     setLoading(true)
+    trackEvent('signup_start', { account_type: 'buyer' })
     const { error, needsConfirmation } = await signUp(email, password, fullName, username)
     setLoading(false)
     if (error) {
       setError(error)
       return
     }
+    trackEvent('signup_complete', { account_type: 'buyer' })
     if (needsConfirmation) {
       setStep('confirm')
     } else {
@@ -66,6 +69,7 @@ export default function SignupPage() {
       setError(error)
       return
     }
+    trackEvent('login', { method: 'email' })
     router.push('/account')
   }
 
